@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: esim-mongodb
+    restart: always
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: esim_myanmar
+    ports:
+      - "27017:27017"
+    networks:
+      - esim-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: esim-backend
+    restart: always
+    ports:
+      - "8001:8001"
+    environment:
+      MONGO_URL: mongodb://mongodb:27017/esim_myanmar
+      SECRET_KEY: ${SECRET_KEY:-esim_myanmar_secret_key_2025}
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 10080
+    depends_on:
+      - mongodb
+    networks:
+      - esim-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: esim-frontend
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - esim-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  esim-network:
+    driver: bridge
