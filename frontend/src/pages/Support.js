@@ -148,15 +148,15 @@ const SupportPage = () => {
 
               <div className="mt-8 pt-8 border-t border-white/10 space-y-4">
                 <div className="flex items-center gap-3 text-gray-300">
-                  <span className="text-primary">📧</span>
+                  <span className="text-primary font-bold">E</span>
                   <span>info@esim.com.mm</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-300">
-                  <span className="text-primary">📱</span>
+                  <span className="text-primary font-bold">P</span>
                   <span>09650000172</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-300">
-                  <span className="text-primary">🌐</span>
+                  <span className="text-primary font-bold">W</span>
                   <span>esim.com.mm</span>
                 </div>
               </div>
