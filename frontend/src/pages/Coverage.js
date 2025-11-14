@@ -64,7 +64,7 @@ const CoveragePage = () => {
               viewport={{ once: true }}
               className="glass-card text-center card-hover"
             >
-              <div className="text-5xl mb-3">{country.icon}</div>
+              <div className="text-4xl font-bold text-primary mb-3">{country.code}</div>
               <h3 className="text-lg font-bold text-white mb-2">{country.name}</h3>
               <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">
                 {country.status}
