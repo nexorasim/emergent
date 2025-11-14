@@ -47,10 +47,10 @@ const HomePage = () => {
   ];
 
   const entertainmentServices = [
-    { name: 'TV Streaming', icon: '📺', description: '1000+ channels' },
-    { name: 'Movies', icon: '🎬', description: 'Unlimited content' },
-    { name: 'Games', icon: '🎮', description: 'Cloud gaming' },
-    { name: 'Music', icon: '🎵', description: 'Premium quality' }
+    { name: 'TV Streaming', icon: 'TV', description: '1000+ channels' },
+    { name: 'Movies', icon: 'MV', description: 'Unlimited content' },
+    { name: 'Games', icon: 'GM', description: 'Cloud gaming' },
+    { name: 'Music', icon: 'MS', description: 'Premium quality' }
   ];
 
   return (
