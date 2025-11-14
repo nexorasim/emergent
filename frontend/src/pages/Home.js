@@ -211,19 +211,19 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-400">
             <div className="flex items-center gap-2">
-              <span className="text-primary">🌐</span>
+              <span className="text-primary font-bold">W</span>
               <span>esim.com.mm</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-primary">✉</span>
+              <span className="text-primary font-bold">E</span>
               <span>info@esim.com.mm</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-primary">📱</span>
+              <span className="text-primary font-bold">P</span>
               <span>09650000172</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-primary">💬</span>
+              <span className="text-primary font-bold">S</span>
               <span>@eSIMMyanmar</span>
             </div>
           </div>
