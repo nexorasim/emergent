@@ -3,18 +3,18 @@ import { motion } from 'framer-motion';
 
 const CoveragePage = () => {
   const countries = [
-    { name: 'Myanmar', status: 'Full 5G', icon: '🇲🇲' },
-    { name: 'Thailand', status: 'Full 5G', icon: '🇹🇭' },
-    { name: 'Singapore', status: 'Full 5G', icon: '🇸🇬' },
-    { name: 'Vietnam', status: 'Full 5G', icon: '🇻🇳' },
-    { name: 'Malaysia', status: 'Full 5G', icon: '🇲🇾' },
-    { name: 'Indonesia', status: '4G+', icon: '🇮🇩' },
-    { name: 'Philippines', status: '4G+', icon: '🇵🇭' },
-    { name: 'Cambodia', status: '4G+', icon: '🇰🇭' },
-    { name: 'Laos', status: '4G', icon: '🇱🇦' },
-    { name: 'Japan', status: 'Full 5G', icon: '🇯🇵' },
-    { name: 'South Korea', status: 'Full 5G', icon: '🇰🇷' },
-    { name: 'China', status: 'Full 5G', icon: '🇨🇳' }
+    { name: 'Myanmar', status: 'Full 5G', code: 'MM' },
+    { name: 'Thailand', status: 'Full 5G', code: 'TH' },
+    { name: 'Singapore', status: 'Full 5G', code: 'SG' },
+    { name: 'Vietnam', status: 'Full 5G', code: 'VN' },
+    { name: 'Malaysia', status: 'Full 5G', code: 'MY' },
+    { name: 'Indonesia', status: '4G+', code: 'ID' },
+    { name: 'Philippines', status: '4G+', code: 'PH' },
+    { name: 'Cambodia', status: '4G+', code: 'KH' },
+    { name: 'Laos', status: '4G', code: 'LA' },
+    { name: 'Japan', status: 'Full 5G', code: 'JP' },
+    { name: 'South Korea', status: 'Full 5G', code: 'KR' },
+    { name: 'China', status: 'Full 5G', code: 'CN' }
   ];
 
   return (
