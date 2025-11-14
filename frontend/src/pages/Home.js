@@ -1,38 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const HomePage = () => {
+  const { t } = useLanguage();
+  
   const features = [
     {
       title: 'eSIM Transfer Android to Apple',
       description: 'Seamlessly transfer your eSIM between Android and Apple devices with zero downtime.',
-      icon: '📱'
+      icon: 'M'
     },
     {
       title: '5G Network Support',
       description: 'Experience blazing-fast 5G speeds across Myanmar and ASEAN region.',
-      icon: '⚡'
+      icon: '5G'
     },
     {
       title: 'VoLTE Enabled',
       description: 'Crystal-clear voice calls over LTE network with HD quality.',
-      icon: '📞'
+      icon: 'V'
     },
     {
       title: 'Advanced Roaming',
       description: 'Stay connected worldwide with our advanced international roaming solutions.',
-      icon: '🌍'
+      icon: 'R'
     },
     {
       title: 'Multi-Device Support',
       description: 'Connect smartphones, tablets, smartwatches, and iPads simultaneously.',
-      icon: '⌚'
+      icon: 'D'
     },
     {
       title: 'Instant Activation',
       description: 'Activate your eSIM in seconds with QR code scanning.',
-      icon: '⚡'
+      icon: 'Q'
     }
   ];
 
