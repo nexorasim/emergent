@@ -26,26 +26,33 @@ const Navigation = () => {
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/plans" className="nav-link">Plans</Link>
-            <Link to="/features" className="nav-link">Features</Link>
-            <Link to="/coverage" className="nav-link">Coverage</Link>
-            <Link to="/support" className="nav-link">Support</Link>
-            <Link to="/partners" className="nav-link">Partners</Link>
+            <Link to="/plans" className="nav-link">{t.plans}</Link>
+            <Link to="/features" className="nav-link">{t.features}</Link>
+            <Link to="/coverage" className="nav-link">{t.coverage}</Link>
+            <Link to="/support" className="nav-link">{t.support}</Link>
+            <Link to="/partners" className="nav-link">{t.partners}</Link>
+            
+            <button 
+              onClick={() => changeLanguage(language === 'en' ? 'mm' : 'en')}
+              className="nav-link text-sm font-semibold"
+            >
+              {language === 'en' ? 'MM' : 'EN'}
+            </button>
             
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
                 <Link to="/dashboard" className="nav-link">
-                  Dashboard
+                  {t.dashboard}
                 </Link>
                 <span className="text-sm text-gray-300">{user?.full_name}</span>
                 <button onClick={handleLogout} className="btn-primary text-sm">
-                  Logout
+                  {t.logout}
                 </button>
               </div>
             ) : (
               <div className="flex items-center space-x-4">
-                <Link to="/login" className="nav-link">Login</Link>
-                <Link to="/register" className="btn-primary text-sm">Get Started</Link>
+                <Link to="/login" className="nav-link">{t.login}</Link>
+                <Link to="/register" className="btn-primary text-sm">{t.getStarted}</Link>
               </div>
             )}
           </div>
