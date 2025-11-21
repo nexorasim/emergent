@@ -7,7 +7,6 @@ import QRCode from 'qrcode.react';
 const CustomerDashboard = () => {
   const { user } = useAuth();
   const [profiles, setProfiles] = useState([]);
-  const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateProfile, setShowCreateProfile] = useState(false);
 
