@@ -16,12 +16,8 @@ const CustomerDashboard = () => {
 
   const fetchData = async () => {
     try {
-      const [profilesRes, plansRes] = await Promise.all([
-        api.get('/esim/profiles'),
-        api.get('/plans')
-      ]);
+      const profilesRes = await api.get('/esim/profiles');
       setProfiles(profilesRes.data.profiles);
-      setPlans(plansRes.data.plans);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     } finally {
