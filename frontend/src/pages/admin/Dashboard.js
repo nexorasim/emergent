@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import api from '../../utils/api';
 
 const AdminDashboard = () => {
-  const [stats, setStats] = useState({
-    totalUsers: 0,
-    activeProfiles: 0,
-    revenue: 0,
-    supportTickets: 0
-  });
 
   return (
     <div className="min-h-screen py-20">
