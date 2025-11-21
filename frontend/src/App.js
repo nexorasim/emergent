@@ -20,28 +20,30 @@ import './App.css';
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="App min-h-screen bg-gradient-to-br from-background via-background-light to-background-dark text-white">
-          <Navigation />
-          <main className="pt-20">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/plans" element={<PlansPage />} />
-              <Route path="/features" element={<FeaturesPage />} />
-              <Route path="/coverage" element={<CoveragePage />} />
-              <Route path="/support" element={<SupportPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/admin/*" element={<AdminDashboard />} />
-              <Route path="/partner/*" element={<PartnerDashboard />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <Router>
+          <div className="App min-h-screen bg-gradient-to-br from-background via-background-light to-background-dark text-white">
+            <Navigation />
+            <main className="pt-20">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/plans" element={<PlansPage />} />
+                <Route path="/features" element={<FeaturesPage />} />
+                <Route path="/coverage" element={<CoveragePage />} />
+                <Route path="/support" element={<SupportPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/admin/*" element={<AdminDashboard />} />
+                <Route path="/partner/*" element={<PartnerDashboard />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 
