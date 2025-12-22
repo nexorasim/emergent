@@ -1,23 +1,45 @@
 # Christmas Audio Assets
 
-Place your royalty-free Christmas ambient music file here.
+This folder contains audio assets for the seasonal Christmas music feature.
 
-## Required File
-- `christmas-ambient.mp3` - Soft, ambient Christmas music (recommended: 2-3 minutes, loopable)
+## Required Files
 
-## Recommended Sources for Royalty-Free Music
-- Pixabay Music (https://pixabay.com/music/)
-- Free Music Archive (https://freemusicarchive.org/)
-- Incompetech (https://incompetech.com/)
+For MP3 audio playback, add the following file:
+- `christmas-music.mp3` - Holiday background music (optional)
+
+## Current Implementation
+
+The ChristmasMusic.js component uses Web Audio API to generate synthesized holiday music (Jingle Bells melody) without requiring external audio files. This approach:
+
+1. Reduces bundle size
+2. Eliminates licensing concerns
+3. Provides consistent playback across devices
+4. Allows dynamic volume control
+
+## Adding Custom MP3 (Optional)
+
+If you prefer to use a custom MP3 file:
+
+1. Add your licensed MP3 file as `christmas-music.mp3`
+2. Update ChristmasMusic.js to use the Audio API instead of Web Audio API
+3. Ensure the audio file is properly licensed for commercial use
 
 ## Audio Specifications
-- Format: MP3
-- Bitrate: 128-192 kbps (for web optimization)
-- Duration: 2-5 minutes (will loop automatically)
-- Style: Soft, ambient, non-intrusive background music
 
-## Notes
-- Music starts muted by default
-- Users can enable via the music toggle button
-- Volume is adjustable and preferences are saved
-- Automatically disabled outside seasonal period (Feb 1, 2026)
+If adding custom audio:
+- Format: MP3 (recommended) or OGG
+- Bitrate: 128-192 kbps
+- Duration: 2-5 minutes (will loop)
+- Volume: Normalized to -14 LUFS
+
+## Licensing
+
+Ensure any audio files added to this folder are:
+- Royalty-free
+- Licensed for commercial use
+- Properly attributed if required
+
+## Seasonal Period
+
+Audio features are active: December 15, 2025 - January 31, 2026
+Auto-disable: February 1, 2026
