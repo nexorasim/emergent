@@ -41,4 +41,7 @@ yarn-error.log*
 
 # Misc
 .cache/
-*.pid
+*.pid-e 
+# Environment files
+*.env
+*.env.*
