@@ -59,6 +59,11 @@ const PageLoader = () => (
 );
 
 function App() {
+  // Initialize copy protection on mount
+  useEffect(() => {
+    initCopyProtection();
+  }, []);
+
   return (
     <LanguageProvider>
       <AuthProvider>
