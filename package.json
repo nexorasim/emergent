@@ -1,0 +1,35 @@
+{
+  "name": "esim-myanmar",
+  "version": "2.0.0",
+  "description": "eSIM Myanmar Entertainment Server - Enterprise eSIM Management Platform",
+  "homepage": "https://esim.com.mm",
+  "author": {
+    "name": "ESIM MYANMAR COMPANY LIMITED",
+    "email": "info@esim.com.mm",
+    "url": "https://esim.com.mm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nexorasim/Jan.git"
+  },
+  "keywords": [
+    "esim",
+    "myanmar",
+    "entertainment",
+    "5g",
+    "volte",
+    "mobile",
+    "telecom"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "cd frontend && yarn start",
+    "dev:backend": "cd backend && python -m uvicorn server:app --reload --host 0.0.0.0 --port 8001",
+    "build": "cd frontend && yarn build",
+    "deploy:firebase": "cd frontend && firebase deploy --only hosting",
+    "deploy:vercel": "cd frontend && vercel --prod",
+    "deploy:cloudflare": "cd frontend && wrangler pages publish build",
+    "deploy:github": "bash scripts/deploy-github.sh"
+  }
+}
