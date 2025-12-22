@@ -7,10 +7,11 @@ import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../utils/api';
 
-// Provider data
+// Provider data - 4 separate providers
 const PROVIDERS = [
   { id: 'MPT', name: 'MPT', color: '#FFD700', supports5G: true, supportsVoLTE: true },
-  { id: 'ATOM', name: 'ATOM U9', color: '#FF6B35', supports5G: true, supportsVoLTE: true },
+  { id: 'ATOM', name: 'ATOM', color: '#FF6B35', supports5G: true, supportsVoLTE: true },
+  { id: 'U9', name: 'U9', color: '#9B59B6', supports5G: true, supportsVoLTE: true },
   { id: 'MYTEL', name: 'MYTEL', color: '#00A651', supports5G: true, supportsVoLTE: true }
 ];
 
@@ -379,7 +380,7 @@ const ESIMRegistration = () => {
 const ProviderSelection = ({ onSelect }) => (
   <div className="glass-card">
     <h2 className="text-2xl font-bold text-white mb-6">Select Your Provider</h2>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {PROVIDERS.map((provider) => (
         <motion.button
           key={provider.id}

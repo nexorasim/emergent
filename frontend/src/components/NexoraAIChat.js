@@ -34,14 +34,14 @@ const AI_KNOWLEDGE = {
     },
     U9: {
       name: 'U9',
-      fullName: 'ATOM U9 (Youth Plan)',
+      fullName: 'U9 Mobile (Youth Network)',
       esimPrice: '120,000 MMK',
       supports5G: true,
       supportsVoLTE: true,
       maxEsim: 2,
       transferCooldown: '14 days',
-      coverage: 'Same as ATOM network',
-      prefixes: ['094']
+      coverage: 'Urban areas with youth-focused plans',
+      prefixes: ['094', '0943']
     },
     MYTEL: {
       name: 'MYTEL',
@@ -193,10 +193,10 @@ const NexoraAIChat = () => {
   };
 
   const quickActions = [
-    { label: 'MPT eSIM', query: 'Tell me about MPT eSIM' },
-    { label: 'ATOM/U9', query: 'What is ATOM U9?' },
-    { label: 'MYTEL', query: 'MYTEL eSIM info' },
-    { label: 'Pricing', query: 'How much does eSIM cost?' }
+    { label: 'MPT', query: 'Tell me about MPT eSIM' },
+    { label: 'ATOM', query: 'Tell me about ATOM eSIM' },
+    { label: 'U9', query: 'Tell me about U9 eSIM' },
+    { label: 'MYTEL', query: 'Tell me about MYTEL eSIM' }
   ];
 
   return (
