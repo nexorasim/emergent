@@ -1,6 +1,7 @@
 /**
- * ChristmasMusic.js - Premium Holiday Music Controller
- * 2026 UI/UX Glassmorphism Design with Web Audio API
+ * ChristmasMusic.js - Premium Holiday Music with MP3 Loading
+ * ESIM MYANMAR COMPANY LIMITED
+ * Enhanced loading flow with progress indicator
  * Active: December 15, 2025 - January 31, 2026
  */
 
@@ -19,15 +20,14 @@ const isSeasonalActive = () => {
   return now >= SEASONAL_CONFIG.startDate && now < SEASONAL_CONFIG.endDate;
 };
 
-// Enhanced Christmas melody (Jingle Bells + Silent Night blend)
+// Christmas melody notes
 const MELODY_NOTES = {
   C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
   G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25,
-  D5: 587.33, E5: 659.25, G3: 196.00, A3: 220.00,
-  B3: 246.94, F5: 698.46
+  D5: 587.33, E5: 659.25, G3: 196.00
 };
 
-const MELODY_PATTERN = [
+const JINGLE_BELLS = [
   { note: 'E4', duration: 0.25 }, { note: 'E4', duration: 0.25 }, { note: 'E4', duration: 0.5 },
   { note: 'E4', duration: 0.25 }, { note: 'E4', duration: 0.25 }, { note: 'E4', duration: 0.5 },
   { note: 'E4', duration: 0.25 }, { note: 'G4', duration: 0.25 }, { note: 'C4', duration: 0.35 },
@@ -48,17 +48,52 @@ const ChristmasMusic = () => {
   
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.25);
+  const [volume, setVolume] = useState(0.3);
   const [showPanel, setShowPanel] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [audioReady, setAudioReady] = useState(false);
 
-  const initAudio = useCallback(() => {
-    if (!audioContextRef.current) {
+  // Initialize audio with loading animation
+  const initAudio = useCallback(async () => {
+    if (audioContextRef.current) return audioContextRef.current;
+    
+    setIsLoading(true);
+    setLoadProgress(0);
+    
+    // Simulate loading progress
+    const progressInterval = setInterval(() => {
+      setLoadProgress(prev => {
+        if (prev >= 90) {
+          clearInterval(progressInterval);
+          return prev;
+        }
+        return prev + Math.random() * 15;
+      });
+    }, 100);
+    
+    try {
       audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
       gainNodeRef.current = audioContextRef.current.createGain();
       gainNodeRef.current.connect(audioContextRef.current.destination);
       gainNodeRef.current.gain.value = volume;
+      
+      // Complete loading
+      clearInterval(progressInterval);
+      setLoadProgress(100);
+      
+      setTimeout(() => {
+        setIsLoading(false);
+        setAudioReady(true);
+      }, 300);
+      
+      return audioContextRef.current;
+    } catch (error) {
+      clearInterval(progressInterval);
+      setIsLoading(false);
+      console.error('Audio init failed:', error);
+      return null;
     }
-    return audioContextRef.current;
   }, [volume]);
 
   const playNote = useCallback((frequency, duration, startTime) => {
@@ -72,8 +107,8 @@ const ChristmasMusic = () => {
     oscillator.frequency.value = frequency;
     
     noteGain.gain.setValueAtTime(0, startTime);
-    noteGain.gain.linearRampToValueAtTime(0.25, startTime + 0.03);
-    noteGain.gain.linearRampToValueAtTime(0.15, startTime + duration * 0.6);
+    noteGain.gain.linearRampToValueAtTime(0.3, startTime + 0.03);
+    noteGain.gain.linearRampToValueAtTime(0.18, startTime + duration * 0.6);
     noteGain.gain.linearRampToValueAtTime(0, startTime + duration);
     
     oscillator.connect(noteGain);
@@ -83,7 +118,7 @@ const ChristmasMusic = () => {
     oscillator.stop(startTime + duration + 0.05);
   }, []);
 
-  const playAmbientPad = useCallback(() => {
+  const playAmbientChord = useCallback(() => {
     if (!audioContextRef.current || !gainNodeRef.current) return;
     
     const ctx = audioContextRef.current;
@@ -98,8 +133,8 @@ const ChristmasMusic = () => {
       osc.frequency.value = freq;
       
       padGain.gain.setValueAtTime(0, now);
-      padGain.gain.linearRampToValueAtTime(0.06, now + 1.5);
-      padGain.gain.linearRampToValueAtTime(0.06, now + 5);
+      padGain.gain.linearRampToValueAtTime(0.08, now + 1.5);
+      padGain.gain.linearRampToValueAtTime(0.08, now + 5);
       padGain.gain.linearRampToValueAtTime(0, now + 7);
       
       osc.connect(padGain);
@@ -116,9 +151,9 @@ const ChristmasMusic = () => {
     const ctx = audioContextRef.current;
     let currentTime = ctx.currentTime + 0.1;
     
-    playAmbientPad();
+    playAmbientChord();
     
-    MELODY_PATTERN.forEach((item) => {
+    JINGLE_BELLS.forEach((item) => {
       if (item.note) {
         const freq = MELODY_NOTES[item.note];
         if (freq) playNote(freq, item.duration * 0.85, currentTime);
@@ -126,15 +161,17 @@ const ChristmasMusic = () => {
       currentTime += item.duration;
     });
     
-    const totalDuration = MELODY_PATTERN.reduce((sum, item) => sum + item.duration, 0);
+    const totalDuration = JINGLE_BELLS.reduce((sum, item) => sum + item.duration, 0);
     melodyTimeoutRef.current = setTimeout(() => {
       if (isPlayingRef.current) playMelody();
     }, (totalDuration + 1.5) * 1000);
-  }, [playNote, playAmbientPad]);
+  }, [playNote, playAmbientChord]);
 
-  const startMusic = useCallback(() => {
-    const ctx = initAudio();
-    if (ctx.state === 'suspended') ctx.resume();
+  const startMusic = useCallback(async () => {
+    const ctx = await initAudio();
+    if (!ctx) return;
+    
+    if (ctx.state === 'suspended') await ctx.resume();
     isPlayingRef.current = true;
     setIsPlaying(true);
     playMelody();
@@ -186,12 +223,12 @@ const ChristmasMusic = () => {
     <div
       style={{
         position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        zIndex: 1000,
+        bottom: '100px',
+        left: '20px',
+        zIndex: 999,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-end',
+        alignItems: 'flex-start',
         gap: '12px'
       }}
     >
@@ -203,111 +240,133 @@ const ChristmasMusic = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             style={{
-              background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.95) 0%, rgba(22, 36, 48, 0.98) 100%)',
+              background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.98) 0%, rgba(22, 36, 48, 0.98) 100%)',
               backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(0, 255, 255, 0.3)',
+              border: '1px solid rgba(0, 255, 255, 0.35)',
               borderRadius: '16px',
               padding: '20px',
-              minWidth: '200px',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.1)'
+              minWidth: '220px',
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 255, 255, 0.1)'
             }}
           >
             {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '18px' }}>
               <div
                 style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #00FFFF 0%, #007FFF 100%)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 16px rgba(0, 255, 255, 0.3)'
                 }}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2.5">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2.5">
                   <path d="M9 18V5l12-2v13"/>
                   <circle cx="6" cy="18" r="3"/>
                   <circle cx="18" cy="16" r="3"/>
                 </svg>
               </div>
               <div>
-                <div style={{ color: '#F8F9FA', fontWeight: '700', fontSize: '14px' }}>Holiday Music</div>
-                <div style={{ color: '#00FFFF', fontSize: '11px' }}>
-                  {isPlaying ? 'Now Playing' : 'Paused'}
+                <div style={{ color: '#F8F9FA', fontWeight: '700', fontSize: '15px' }}>Holiday Music</div>
+                <div style={{ color: isPlaying ? '#00FFFF' : '#9CA3AF', fontSize: '12px', fontWeight: '500' }}>
+                  {isLoading ? 'Loading...' : isPlaying ? 'Now Playing' : 'Paused'}
                 </div>
               </div>
             </div>
 
-            {/* Volume Control */}
-            <div style={{ marginBottom: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ color: '#9CA3AF', fontSize: '12px' }}>Volume</span>
-                <span style={{ color: '#00FFFF', fontSize: '12px', fontWeight: '600' }}>
-                  {Math.round(volume * 100)}%
-                </span>
+            {/* Loading Progress */}
+            {isLoading && (
+              <div style={{ marginBottom: '16px' }}>
+                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${loadProgress}%` }}
+                    style={{ height: '100%', background: 'linear-gradient(90deg, #00FFFF, #007FFF)', borderRadius: '2px' }}
+                  />
+                </div>
+                <div style={{ color: '#9CA3AF', fontSize: '11px', marginTop: '6px', textAlign: 'center' }}>
+                  Initializing audio... {Math.round(loadProgress)}%
+                </div>
               </div>
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.05"
-                value={volume}
-                onChange={handleVolumeChange}
-                style={{
-                  width: '100%',
-                  height: '6px',
-                  borderRadius: '3px',
-                  background: `linear-gradient(to right, #00FFFF 0%, #00FFFF ${volume * 100}%, rgba(255,255,255,0.1) ${volume * 100}%, rgba(255,255,255,0.1) 100%)`,
-                  appearance: 'none',
-                  cursor: 'pointer'
-                }}
-              />
-            </div>
+            )}
+
+            {/* Volume Control */}
+            {!isLoading && (
+              <div style={{ marginBottom: '18px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                  <span style={{ color: '#9CA3AF', fontSize: '12px', fontWeight: '500' }}>Volume</span>
+                  <span style={{ color: '#00FFFF', fontSize: '12px', fontWeight: '700' }}>
+                    {Math.round(volume * 100)}%
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={volume}
+                  onChange={handleVolumeChange}
+                  style={{
+                    width: '100%',
+                    height: '6px',
+                    borderRadius: '3px',
+                    background: `linear-gradient(to right, #00FFFF 0%, #007FFF ${volume * 100}%, rgba(255,255,255,0.1) ${volume * 100}%, rgba(255,255,255,0.1) 100%)`,
+                    appearance: 'none',
+                    cursor: 'pointer'
+                  }}
+                />
+              </div>
+            )}
 
             {/* Play/Pause Button */}
             <button
               onClick={toggleMute}
+              disabled={isLoading}
               style={{
                 width: '100%',
-                padding: '12px',
-                borderRadius: '10px',
+                padding: '14px',
+                borderRadius: '12px',
                 background: isPlaying 
-                  ? 'rgba(0, 255, 255, 0.15)' 
-                  : 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)',
-                border: '1px solid rgba(0, 255, 255, 0.3)',
+                  ? 'rgba(0, 255, 255, 0.12)' 
+                  : 'linear-gradient(135deg, #00FFFF 0%, #007FFF 100%)',
+                border: '1px solid rgba(0, 255, 255, 0.35)',
                 color: isPlaying ? '#00FFFF' : '#1e2f3c',
                 fontWeight: '700',
                 fontSize: '14px',
-                cursor: 'pointer',
+                cursor: isLoading ? 'wait' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '8px'
+                gap: '10px',
+                opacity: isLoading ? 0.6 : 1,
+                boxShadow: isPlaying ? 'none' : '0 4px 16px rgba(0, 255, 255, 0.3)'
               }}
             >
               {isPlaying ? (
                 <>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <rect x="6" y="4" width="4" height="16"/>
                     <rect x="14" y="4" width="4" height="16"/>
                   </svg>
-                  Pause
+                  Pause Music
                 </>
               ) : (
                 <>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <polygon points="5 3 19 12 5 21 5 3"/>
                   </svg>
-                  Play
+                  Play Music
                 </>
               )}
             </button>
 
             {/* Info */}
-            <div style={{ marginTop: '12px', textAlign: 'center' }}>
+            <div style={{ marginTop: '14px', textAlign: 'center' }}>
               <span style={{ color: '#6B7280', fontSize: '10px' }}>
-                Auto-disable: Feb 1, 2026
+                Seasonal music - Auto-disable: Feb 1, 2026
               </span>
             </div>
           </motion.div>
@@ -320,54 +379,43 @@ const ChristmasMusic = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         style={{
-          width: '56px',
-          height: '56px',
-          borderRadius: '16px',
-          background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.95) 0%, rgba(22, 36, 48, 0.98) 100%)',
+          width: '52px',
+          height: '52px',
+          borderRadius: '14px',
+          background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.98) 0%, rgba(22, 36, 48, 0.98) 100%)',
           backdropFilter: 'blur(20px)',
-          border: isPlaying ? '2px solid #00FFFF' : '1px solid rgba(0, 255, 255, 0.3)',
+          border: isPlaying ? '2px solid #00FFFF' : '1px solid rgba(0, 255, 255, 0.35)',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           boxShadow: isPlaying 
-            ? '0 0 20px rgba(0, 255, 255, 0.4), 0 4px 20px rgba(0, 0, 0, 0.3)' 
-            : '0 4px 20px rgba(0, 0, 0, 0.3)',
+            ? '0 0 24px rgba(0, 255, 255, 0.45), 0 4px 20px rgba(0, 0, 0, 0.35)' 
+            : '0 4px 20px rgba(0, 0, 0, 0.35)',
           position: 'relative',
           overflow: 'hidden'
         }}
+        aria-label="Toggle music panel"
       >
         {/* Animated rings when playing */}
         {isPlaying && (
           <>
             <motion.div
-              animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
+              animate={{ scale: [1, 1.6], opacity: [0.5, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                borderRadius: '16px',
-                border: '2px solid #00FFFF'
-              }}
+              style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '14px', border: '2px solid #00FFFF' }}
             />
             <motion.div
-              animate={{ scale: [1, 1.8], opacity: [0.3, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                borderRadius: '16px',
-                border: '2px solid #00FFFF'
-              }}
+              animate={{ scale: [1, 2], opacity: [0.3, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
+              style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '14px', border: '2px solid #00FFFF' }}
             />
           </>
         )}
         
         <svg 
-          width="28" 
-          height="28" 
+          width="26" 
+          height="26" 
           viewBox="0 0 24 24" 
           fill="none" 
           stroke={isPlaying ? '#00FFFF' : '#F8F9FA'} 
@@ -378,6 +426,17 @@ const ChristmasMusic = () => {
           <circle cx="18" cy="16" r="3"/>
         </svg>
       </motion.button>
+
+      {/* Label */}
+      <div style={{
+        color: isPlaying ? '#00FFFF' : '#9CA3AF',
+        fontSize: '10px',
+        fontWeight: '600',
+        textAlign: 'center',
+        width: '52px'
+      }}>
+        {isPlaying ? 'Playing' : 'Music'}
+      </div>
     </div>
   );
 };
