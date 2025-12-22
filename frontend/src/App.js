@@ -6,6 +6,7 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import SeasonalBanner from './components/SeasonalBanner';
 import SeasonalSanta from './components/SeasonalSanta';
+import ChristmasMusic from './components/ChristmasMusic';
 
 import HomePage from './pages/Home';
 import PlansPage from './pages/Plans';
@@ -45,6 +46,7 @@ function App() {
             <Footer />
           </div>
           <SeasonalSanta />
+          <ChristmasMusic />
         </Router>
       </AuthProvider>
     </LanguageProvider>

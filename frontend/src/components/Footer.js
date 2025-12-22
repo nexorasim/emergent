@@ -61,7 +61,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-primary/10">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <p>© 2025 {SITE_NAME}. All rights reserved.</p>
+            <p>2025-2026 {SITE_NAME}. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>

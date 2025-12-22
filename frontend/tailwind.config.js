@@ -15,6 +15,15 @@ module.exports = {
           light: '#2a3f4f',
           dark: '#141f28',
         },
+        pearl: {
+          DEFAULT: '#F8F9FA',
+          dark: '#E9ECEF',
+          light: '#FFFFFF',
+        },
+        glass: {
+          DEFAULT: 'rgba(248, 249, 250, 0.08)',
+          border: 'rgba(255, 255, 255, 0.18)',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -26,6 +35,7 @@ module.exports = {
       animation: {
         'float': 'float 6s ease-in-out infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
+        'pulse-slow': 'pulse 3s ease-in-out infinite',
       },
       keyframes: {
         float: {

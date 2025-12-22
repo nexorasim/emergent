@@ -2,9 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
+import Countdown2026 from '../components/Countdown2026';
+import { isSeasonalActive, isNewYearPeriod } from '../utils/seasonalConfig';
 
 const HomePage = () => {
   const { t } = useLanguage();
+  const showSeasonal = isSeasonalActive();
+  const isNewYear = isNewYearPeriod();
   
   const features = [
     {
@@ -55,6 +59,38 @@ const HomePage = () => {
 
   return (
     <div className="relative overflow-hidden">
+      {/* Seasonal Countdown Section */}
+      {showSeasonal && !isNewYear && (
+        <section className="py-6 relative bg-gradient-to-r from-background via-background-light to-background">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h3 className="text-lg font-semibold text-gray-300 mb-4">Countdown to 2026</h3>
+              <Countdown2026 />
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* New Year Celebration Banner */}
+      {showSeasonal && isNewYear && (
+        <section className="py-8 relative bg-gradient-to-r from-background via-primary/10 to-background">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-4xl font-bold gradient-text mb-2">Happy New Year 2026</h2>
+              <p className="text-gray-300">Wishing you seamless connectivity throughout the year</p>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center hero-pattern grid-pattern">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
