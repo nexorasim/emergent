@@ -2,41 +2,41 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>eSIM Myanmar Entertainment Server</title>
   <subtitle>ESIM MYANMAR COMPANY LIMITED - Enterprise eSIM Management Platform - MPT, ATOM, U9, MYTEL</subtitle>
-  <link href="https://www.esim.com.mm/atom.xml" rel="self"/>
-  <link href="https://www.esim.com.mm/"/>
-  <id>https://www.esim.com.mm/</id>
-  <updated>2025-12-22T00:00:00Z</updated>
-  <rights>ESIM MYANMAR COMPANY LIMITED</rights>
+  <link href="https://esim.com.mm/atom.xml" rel="self"/>
+  <link href="https://esim.com.mm/"/>
+  <id>https://esim.com.mm/</id>
+  <updated>2025-12-23T00:00:00Z</updated>
+  <rights>ESIM MYANMAR COMPANY LIMITED 2024-2026</rights>
   <author>
     <name>ESIM MYANMAR COMPANY LIMITED</name>
     <email>info@esim.com.mm</email>
-    <uri>https://www.esim.com.mm</uri>
+    <uri>https://esim.com.mm</uri>
   </author>
   <entry>
     <title>eSIM Registration - 4 Providers Available</title>
-    <link href="https://www.esim.com.mm/esim-register"/>
-    <id>https://www.esim.com.mm/esim-register</id>
-    <updated>2025-12-22T00:00:00Z</updated>
+    <link href="https://esim.com.mm/esim-register"/>
+    <id>https://esim.com.mm/esim-register</id>
+    <updated>2025-12-23T00:00:00Z</updated>
     <summary>Register your eSIM with MPT, ATOM, U9, or MYTEL. 120,000 MMK activation with instant QR code delivery and Nexora AI verification.</summary>
   </entry>
   <entry>
     <title>Nexora AI Chat Assistant</title>
-    <link href="https://www.esim.com.mm/"/>
-    <id>https://www.esim.com.mm/nexora-ai</id>
-    <updated>2025-12-22T00:00:00Z</updated>
+    <link href="https://esim.com.mm/"/>
+    <id>https://esim.com.mm/nexora-ai</id>
+    <updated>2025-12-23T00:00:00Z</updated>
     <summary>Ask AI for instant support on eSIM activation, pricing, device compatibility, and provider information.</summary>
   </entry>
   <entry>
     <title>5G and VoLTE Support</title>
-    <link href="https://www.esim.com.mm/features"/>
-    <id>https://www.esim.com.mm/features-5g</id>
-    <updated>2025-12-21T00:00:00Z</updated>
+    <link href="https://esim.com.mm/features"/>
+    <id>https://esim.com.mm/features-5g</id>
+    <updated>2025-12-23T00:00:00Z</updated>
     <summary>All providers now support 5G networks and VoLTE for high-quality voice calls over LTE.</summary>
   </entry>
   <entry>
     <title>Holiday Season 2025-2026</title>
-    <link href="https://www.esim.com.mm/"/>
-    <id>https://www.esim.com.mm/seasonal</id>
+    <link href="https://esim.com.mm/"/>
+    <id>https://esim.com.mm/seasonal</id>
     <updated>2025-12-15T00:00:00Z</updated>
     <summary>Festive theme with animated Santa guide and New Year 2026 countdown. Active until January 31, 2026.</summary>
   </entry>

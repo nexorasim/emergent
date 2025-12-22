@@ -1,14 +1,12 @@
-# .firebaserc - Firebase Project Configuration
-# ESIM MYANMAR COMPANY LIMITED
 {
   "projects": {
-    "default": "esim-myanmar-ia6gw"
+    "default": "esimmyanmar-09289140-4db73"
   },
   "targets": {
-    "esim-myanmar-ia6gw": {
+    "esimmyanmar-09289140-4db73": {
       "hosting": {
         "esim-myanmar": [
-          "esim-myanmar-ia6gw"
+          "esimmyanmar-09289140-4db73"
         ]
       }
     }

@@ -15,7 +15,7 @@ export const COMPANY_INFO = {
   // Domains
   primaryDomain: 'esim.com.mm',
   domains: ['esim.com.mm', 'www.esim.com.mm'],
-  firebaseUrl: 'esim-myanmar-ia6gw.web.app',
+  firebaseUrl: 'esimmyanmar-09289140-4db73.web.app',
   
   // Contact Information
   email: 'info@esim.com.mm',

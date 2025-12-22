@@ -3,8 +3,10 @@ Allow: /
 Disallow: /admin/
 Disallow: /partner/
 Disallow: /dashboard/
+Disallow: /customer/
 
-Sitemap: https://www.esim.com.mm/sitemap.xml
+Sitemap: https://esim.com.mm/sitemap.xml
 
 # ESIM MYANMAR COMPANY LIMITED
+# https://esim.com.mm
 # https://www.esim.com.mm

@@ -1,7 +1,7 @@
 {
   "hosting": {
     "public": "build",
-    "site": "esim-myanmar-ia6gw",
+    "site": "esimmyanmar-09289140-4db73",
     "ignore": [
       "firebase.json",
       "**/.*",
