@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import accessibility styles */
-@import './styles/accessibility.css';
-
 @layer base {
   * {
     @apply antialiased;
@@ -115,4 +112,96 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #00cccc;
+}
+
+
+/* ============================================
+   ACCESSIBILITY STYLES - WCAG 2.2 AA
+   ============================================ */
+
+/* Focus indicators */
+:focus-visible {
+  outline: 3px solid #00FFFF;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible {
+  outline: 3px solid #00FFFF;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(0, 255, 255, 0.25);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00FFFF;
+  color: #1e2f3c;
+  padding: 12px 24px;
+  font-weight: 600;
+  z-index: 9999;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Myanmar Unicode support */
+.myanmar-text,
+[lang="my"] {
+  font-family: 'Noto Sans Myanmar', 'Padauk', 'Myanmar Text', sans-serif;
+  line-height: 2;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(0, 255, 255, 0.3);
+  border-top-color: #00FFFF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

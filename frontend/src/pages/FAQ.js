@@ -303,7 +303,7 @@ const FAQ = () => {
                   Contact Support
                 </Link>
                 <Link
-                  to="/help"
+                  to="/contact"
                   className="inline-flex items-center justify-center px-8 py-4 rounded-lg font-semibold"
                   style={{
                     background: 'transparent',
@@ -312,7 +312,7 @@ const FAQ = () => {
                     minHeight: '48px'
                   }}
                 >
-                  Visit Help Center
+                  Send Us a Message
                 </Link>
               </div>
             </div>

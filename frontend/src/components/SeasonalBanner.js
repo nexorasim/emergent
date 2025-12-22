@@ -34,7 +34,7 @@ const getSeasonalMessage = () => {
 };
 
 const SeasonalBanner = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible] = useState(true);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {

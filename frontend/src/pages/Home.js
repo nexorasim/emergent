@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useLanguage } from '../context/LanguageContext';
 import Countdown2026 from '../components/Countdown2026';
 import { isSeasonalActive, isNewYearPeriod } from '../utils/seasonalConfig';
 
 const HomePage = () => {
-  const { t } = useLanguage();
   const showSeasonal = isSeasonalActive();
   const isNewYear = isNewYearPeriod();
   
