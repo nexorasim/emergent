@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -8,7 +8,9 @@ import SeasonalBanner from './components/SeasonalBanner';
 import SeasonalSanta from './components/SeasonalSanta';
 import ChristmasMusic from './components/ChristmasMusic';
 import NexoraAIChat from './components/NexoraAIChat';
+import './App.css';
 
+// Core Pages
 import HomePage from './pages/Home';
 import PlansPage from './pages/Plans';
 import FeaturesPage from './pages/Features';
@@ -22,7 +24,33 @@ import PartnerDashboard from './pages/partner/Dashboard';
 import ESIMRegistration from './pages/ESIMRegistration';
 import Partners from './pages/Partners';
 
-import './App.css';
+// New Pages - Lazy loaded for performance
+const About = lazy(() => import('./pages/About'));
+const HowItWorks = lazy(() => import('./pages/HowItWorks'));
+const SupportedDevices = lazy(() => import('./pages/SupportedDevices'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const Contact = lazy(() => import('./pages/Contact'));
+
+// Legal Pages - Lazy loaded
+const PrivacyPolicy = lazy(() => import('./pages/legal/PrivacyPolicy'));
+const Terms = lazy(() => import('./pages/legal/Terms'));
+const RefundPolicy = lazy(() => import('./pages/legal/RefundPolicy'));
+const CookiePolicy = lazy(() => import('./pages/legal/CookiePolicy'));
+
+// Loading component for Suspense
+const PageLoader = () => (
+  <div 
+    className="min-h-screen flex items-center justify-center"
+    style={{ background: '#1e2f3c' }}
+  >
+    <div 
+      className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin"
+      style={{ borderColor: '#00FFFF', borderTopColor: 'transparent' }}
+      role="status"
+      aria-label="Loading"
+    />
+  </div>
+);
 
 function App() {
   return (
@@ -32,21 +60,41 @@ function App() {
           <SeasonalBanner />
           <div className="App min-h-screen bg-gradient-to-br from-background via-background-light to-background-dark text-white">
             <Navigation />
-            <main className="pt-20">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/plans" element={<PlansPage />} />
-                <Route path="/features" element={<FeaturesPage />} />
-                <Route path="/coverage" element={<CoveragePage />} />
-                <Route path="/support" element={<SupportPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/esim-register" element={<ESIMRegistration />} />
-                <Route path="/partners" element={<Partners />} />
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/admin/*" element={<AdminDashboard />} />
-                <Route path="/partner/*" element={<PartnerDashboard />} />
-              </Routes>
+            <main className="pt-20" id="main-content" role="main">
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  {/* Core Pages */}
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/plans" element={<PlansPage />} />
+                  <Route path="/features" element={<FeaturesPage />} />
+                  <Route path="/coverage" element={<CoveragePage />} />
+                  <Route path="/support" element={<SupportPage />} />
+                  <Route path="/esim-register" element={<ESIMRegistration />} />
+                  <Route path="/partners" element={<Partners />} />
+                  
+                  {/* Auth Pages */}
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                  
+                  {/* Dashboard Pages */}
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/admin/*" element={<AdminDashboard />} />
+                  <Route path="/partner/*" element={<PartnerDashboard />} />
+                  
+                  {/* Informational Pages */}
+                  <Route path="/about" element={<About />} />
+                  <Route path="/how-it-works" element={<HowItWorks />} />
+                  <Route path="/supported-devices" element={<SupportedDevices />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/contact" element={<Contact />} />
+                  
+                  {/* Legal Pages */}
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/refund-policy" element={<RefundPolicy />} />
+                  <Route path="/cookie-policy" element={<CookiePolicy />} />
+                </Routes>
+              </Suspense>
             </main>
             <Footer />
           </div>

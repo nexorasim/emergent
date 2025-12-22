@@ -110,31 +110,59 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     """
-    Add security headers to all responses
+    Add comprehensive security headers to all responses
+    Enterprise-grade security for telecom platform
     """
     
     async def dispatch(self, request: Request, call_next):
         response = await call_next(request)
         
-        # Security headers
+        # Core Security Headers
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["X-XSS-Protection"] = "1; mode=block"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-        response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
         
-        # Content Security Policy
-        response.headers["Content-Security-Policy"] = (
-            "default-src 'self'; "
-            "script-src 'self' 'unsafe-inline'; "
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-            "font-src 'self' https://fonts.gstatic.com; "
-            "img-src 'self' data: https:; "
-            "connect-src 'self' https://api.esim.com.mm;"
+        # Permissions Policy (Feature Policy)
+        response.headers["Permissions-Policy"] = (
+            "geolocation=(), "
+            "microphone=(), "
+            "camera=(), "
+            "payment=(), "
+            "usb=(), "
+            "magnetometer=(), "
+            "gyroscope=(), "
+            "accelerometer=()"
         )
         
-        # HSTS (only in production)
-        # response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        # Content Security Policy - Telecom Grade
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' https://fonts.gstatic.com; "
+            "img-src 'self' data: https: blob:; "
+            "connect-src 'self' https://api.esim.com.mm https://www.google-analytics.com; "
+            "frame-ancestors 'none'; "
+            "base-uri 'self'; "
+            "form-action 'self'; "
+            "upgrade-insecure-requests;"
+        )
+        
+        # Cross-Origin Policies
+        response.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+        response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+        response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
+        
+        # HSTS - Enable in production
+        # Preload submission: https://hstspreload.org/
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+        
+        # Cache Control for API responses
+        if request.url.path.startswith("/api/"):
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, proxy-revalidate"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
         
         return response
 
