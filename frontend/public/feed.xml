@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>eSIM Myanmar Entertainment Server</title>
+    <link>https://esim-myanmar-ia6gw.web.app</link>
+    <description>Enterprise eSIM Management Platform - MPT, ATOM, U9, MYTEL eSIM activation and management</description>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Dec 2025 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://esim-myanmar-ia6gw.web.app/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>eSIM Registration Now Available - MPT, ATOM, U9, MYTEL</title>
+      <link>https://esim-myanmar-ia6gw.web.app/esim-register</link>
+      <description>Register your eSIM with any of our 4 providers: MPT, ATOM, U9, or MYTEL. 120,000 MMK activation fee with instant QR code delivery.</description>
+      <pubDate>Sun, 22 Dec 2025 00:00:00 GMT</pubDate>
+      <guid>https://esim-myanmar-ia6gw.web.app/esim-register</guid>
+    </item>
+    <item>
+      <title>5G and VoLTE Support Across All Providers</title>
+      <link>https://esim-myanmar-ia6gw.web.app/features</link>
+      <description>All eSIM plans now include 5G and VoLTE support for crystal-clear calls and ultra-fast data speeds.</description>
+      <pubDate>Sat, 21 Dec 2025 00:00:00 GMT</pubDate>
+      <guid>https://esim-myanmar-ia6gw.web.app/features-5g</guid>
+    </item>
+    <item>
+      <title>Nexora AI Assistant - Ask AI for eSIM Support</title>
+      <link>https://esim-myanmar-ia6gw.web.app/</link>
+      <description>Get instant answers about eSIM activation, pricing, device compatibility, and more with our AI-powered assistant.</description>
+      <pubDate>Sat, 21 Dec 2025 00:00:00 GMT</pubDate>
+      <guid>https://esim-myanmar-ia6gw.web.app/nexora-ai</guid>
+    </item>
+    <item>
+      <title>Holiday Season 2025-2026 Special Theme</title>
+      <link>https://esim-myanmar-ia6gw.web.app/</link>
+      <description>Celebrate the holidays with our festive theme featuring animated Santa guide and countdown to 2026.</description>
+      <pubDate>Sun, 15 Dec 2025 00:00:00 GMT</pubDate>
+      <guid>https://esim-myanmar-ia6gw.web.app/seasonal-2026</guid>
+    </item>
+  </channel>
+</rss>

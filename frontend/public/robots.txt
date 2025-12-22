@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /partner/
+Disallow: /dashboard/
 
-Sitemap: https://esim.com.mm/sitemap.xml
+Sitemap: https://esim-myanmar-ia6gw.web.app/sitemap.xml
+
+# eSIM Myanmar Entertainment Server
+# https://esim.com.mm

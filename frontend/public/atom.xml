@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>eSIM Myanmar Entertainment Server</title>
+  <subtitle>Enterprise eSIM Management Platform - MPT, ATOM, U9, MYTEL</subtitle>
+  <link href="https://esim-myanmar-ia6gw.web.app/atom.xml" rel="self"/>
+  <link href="https://esim-myanmar-ia6gw.web.app/"/>
+  <id>https://esim-myanmar-ia6gw.web.app/</id>
+  <updated>2025-12-22T00:00:00Z</updated>
+  <author>
+    <name>eSIM Myanmar</name>
+    <email>info@esim.com.mm</email>
+  </author>
+  <entry>
+    <title>eSIM Registration - 4 Providers Available</title>
+    <link href="https://esim-myanmar-ia6gw.web.app/esim-register"/>
+    <id>https://esim-myanmar-ia6gw.web.app/esim-register</id>
+    <updated>2025-12-22T00:00:00Z</updated>
+    <summary>Register your eSIM with MPT, ATOM, U9, or MYTEL. 120,000 MMK activation with instant QR code delivery and Nexora AI verification.</summary>
+  </entry>
+  <entry>
+    <title>Nexora AI Chat Assistant</title>
+    <link href="https://esim-myanmar-ia6gw.web.app/"/>
+    <id>https://esim-myanmar-ia6gw.web.app/nexora-ai</id>
+    <updated>2025-12-22T00:00:00Z</updated>
+    <summary>Ask AI for instant support on eSIM activation, pricing, device compatibility, and provider information.</summary>
+  </entry>
+  <entry>
+    <title>5G and VoLTE Support</title>
+    <link href="https://esim-myanmar-ia6gw.web.app/features"/>
+    <id>https://esim-myanmar-ia6gw.web.app/features-5g</id>
+    <updated>2025-12-21T00:00:00Z</updated>
+    <summary>All providers now support 5G networks and VoLTE for high-quality voice calls over LTE.</summary>
+  </entry>
+  <entry>
+    <title>Holiday Season 2025-2026</title>
+    <link href="https://esim-myanmar-ia6gw.web.app/"/>
+    <id>https://esim-myanmar-ia6gw.web.app/seasonal</id>
+    <updated>2025-12-15T00:00:00Z</updated>
+    <summary>Festive theme with animated Santa guide and New Year 2026 countdown. Active until January 31, 2026.</summary>
+  </entry>
+</feed>
