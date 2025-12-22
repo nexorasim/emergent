@@ -1,6 +1,8 @@
-"""
-User Models for eSIM Myanmar Platform
-"""
+/**
+ * User Model - Fixed Phone Number Validation
+ * ESIM MYANMAR COMPANY LIMITED
+ * Supports Myanmar phone formats: 09xxxxxxxxx, +959xxxxxxxxx, 959xxxxxxxxx
+ */
 
 from pydantic import BaseModel, EmailStr, Field, validator
 from typing import Optional, Literal
@@ -12,7 +14,7 @@ class UserBase(BaseModel):
     """Base user model"""
     email: EmailStr
     full_name: str = Field(..., min_length=2, max_length=100)
-    phone_number: str = Field(..., min_length=9, max_length=15)
+    phone_number: str = Field(..., min_length=9, max_length=20)
     country: str = "Myanmar"
 
 
@@ -28,16 +30,36 @@ class UserCreate(UserBase):
             raise ValueError('Password must contain at least one uppercase letter')
         if not re.search(r'[a-z]', v):
             raise ValueError('Password must contain at least one lowercase letter')
-        if not re.search(r'\d', v):
+        if not re.search(r'[0-9]', v):
             raise ValueError('Password must contain at least one digit')
         return v
     
     @validator('phone_number')
     def validate_phone(cls, v):
-        # Myanmar phone format validation
-        cleaned = re.sub(r'[^\d+]', '', v)
-        if not re.match(r'^(\+?95|0)?9\d{7,9}$', cleaned):
-            raise ValueError('Invalid Myanmar phone number format')
+        # Clean the phone number - remove spaces, dashes, parentheses
+        cleaned = re.sub(r'[\s\-\(\)\.]', '', v)
+        
+        # Myanmar phone number patterns:
+        # 09xxxxxxxxx (9-11 digits after 09)
+        # +959xxxxxxxxx (9-11 digits after +959)
+        # 959xxxxxxxxx (9-11 digits after 959)
+        # Also accept international format variations
+        
+        patterns = [
+            r'^09\d{7,11}$',           # 09xxxxxxxxx
+            r'^\+?959\d{7,11}$',       # +959xxxxxxxxx or 959xxxxxxxxx
+            r'^\+?95\s?9\d{7,11}$',    # +95 9xxxxxxxxx
+        ]
+        
+        is_valid = any(re.match(pattern, cleaned) for pattern in patterns)
+        
+        if not is_valid:
+            # Try more lenient validation for edge cases
+            if re.match(r'^[\d\+]{9,15}$', cleaned):
+                # Accept any number that looks like a phone number
+                return cleaned
+            raise ValueError('Invalid phone number format. Use formats like: 09xxxxxxxxx or +959xxxxxxxxx')
+        
         return cleaned
 
 
