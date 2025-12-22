@@ -1,8 +1,8 @@
-/**
- * User Model - Fixed Phone Number Validation
- * ESIM MYANMAR COMPANY LIMITED
- * Supports Myanmar phone formats: 09xxxxxxxxx, +959xxxxxxxxx, 959xxxxxxxxx
- */
+"""
+User Model - Fixed Phone Number Validation
+ESIM MYANMAR COMPANY LIMITED
+Supports Myanmar phone formats: 09xxxxxxxxx, +959xxxxxxxxx, 959xxxxxxxxx
+"""
 
 from pydantic import BaseModel, EmailStr, Field, validator
 from typing import Optional, Literal
