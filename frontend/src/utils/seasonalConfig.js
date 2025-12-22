@@ -1,8 +1,24 @@
 /**
  * seasonalConfig.js - Centralized Seasonal Feature Configuration
+ * ESIM MYANMAR COMPANY LIMITED
  * Controls all seasonal theming and features
  * Auto-reversion: February 1, 2026
  */
+
+// Company Information - esim.com.mm
+export const COMPANY_INFO = {
+  name: 'ESIM MYANMAR COMPANY LIMITED',
+  siteName: 'eSIM Myanmar Entertainment Server',
+  domain: 'esim.com.mm',
+  domains: ['esim.com.mm', 'www.esim.com.mm'],
+  email: 'info@esim.com.mm',
+  phone: '09650000172',
+  social: '@eSIMMyanmar',
+  founded: 2024,
+  users: '50M+',
+  coverage: '190+ countries',
+  uptime: '99.9%'
+};
 
 export const SEASONAL_CONFIG = {
   // Feature toggle - master switch
