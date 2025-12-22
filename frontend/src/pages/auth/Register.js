@@ -51,28 +51,28 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-8 sm:py-12 px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-md w-full"
+        className="w-full max-w-md"
       >
-        <div className="glass-card p-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold gradient-text mb-2">Create Account</h2>
-            <p className="text-gray-400">Join 50M+ users on eSIM Myanmar</p>
+        <div className="glass-card">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold gradient-text mb-2">Create Account</h2>
+            <p className="text-xs sm:text-sm text-gray-400">Join 50M+ users on eSIM Myanmar</p>
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-500/10 border border-red-500/50 text-xs sm:text-sm text-red-400 px-3 sm:px-4 py-2 sm:py-3 rounded-lg mb-4 sm:mb-6" role="alert">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <div>
-              <label htmlFor="full_name" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="full_name" className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
                 Full Name
               </label>
               <input
@@ -84,11 +84,12 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 className="input-field"
                 placeholder="Your full name"
+                autoComplete="name"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
                 Email Address
               </label>
               <input
@@ -100,11 +101,12 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 className="input-field"
                 placeholder="your@email.com"
+                autoComplete="email"
               />
             </div>
 
             <div>
-              <label htmlFor="phone_number" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="phone_number" className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
                 Phone Number
               </label>
               <input
@@ -116,11 +118,12 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 className="input-field"
                 placeholder="09xxxxxxxxx"
+                autoComplete="tel"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
                 Password
               </label>
               <input
@@ -132,11 +135,12 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 className="input-field"
                 placeholder="Create a strong password"
+                autoComplete="new-password"
               />
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="confirmPassword" className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
                 Confirm Password
               </label>
               <input
@@ -148,20 +152,21 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 className="input-field"
                 placeholder="Confirm your password"
+                autoComplete="new-password"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary"
+              className="btn-primary w-full"
             >
               {loading ? 'Creating Account...' : 'Create Account'}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-gray-400">
+          <div className="mt-4 sm:mt-6 text-center">
+            <p className="text-xs sm:text-sm text-gray-400">
               Already have an account?{' '}
               <Link to="/login" className="text-primary hover:text-primary-light font-medium">
                 Sign In

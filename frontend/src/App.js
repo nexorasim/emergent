@@ -8,6 +8,7 @@ import SeasonalBanner from './components/SeasonalBanner';
 import SeasonalSanta from './components/SeasonalSanta';
 import ChristmasMusic from './components/ChristmasMusic';
 import NexoraAIChat from './components/NexoraAIChat';
+import './styles/design-system.css';
 import './App.css';
 
 // Core Pages

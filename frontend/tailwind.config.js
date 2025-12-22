@@ -26,8 +26,32 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        myanmar: ['Pyidaungsu', 'Arial', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        myanmar: ['Noto Sans Myanmar', 'Padauk', 'Myanmar Text', 'sans-serif'],
+      },
+      fontSize: {
+        'xs': ['0.75rem', { lineHeight: '1.5' }],      // 12px
+        'sm': ['0.8125rem', { lineHeight: '1.5' }],   // 13px
+        'base': ['0.875rem', { lineHeight: '1.625' }], // 14px - Mobile
+        'md': ['0.9375rem', { lineHeight: '1.625' }],  // 15px - Tablet
+        'lg': ['1rem', { lineHeight: '1.625' }],       // 16px - Desktop
+        'xl': ['1.125rem', { lineHeight: '1.5' }],     // 18px
+        '2xl': ['1.25rem', { lineHeight: '1.375' }],   // 20px
+        '3xl': ['1.5rem', { lineHeight: '1.375' }],    // 24px
+        '4xl': ['1.875rem', { lineHeight: '1.25' }],   // 30px
+        '5xl': ['2.25rem', { lineHeight: '1.25' }],    // 36px
+        '6xl': ['3rem', { lineHeight: '1.25' }],       // 48px
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+      },
+      borderRadius: {
+        'sm': '0.25rem',
+        'md': '0.5rem',
+        'lg': '0.75rem',
+        'xl': '1rem',
+        '2xl': '1.5rem',
       },
       backdropBlur: {
         xs: '2px',

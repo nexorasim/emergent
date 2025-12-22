@@ -273,36 +273,36 @@ const ESIMRegistration = () => {
   };
 
   return (
-    <div className="min-h-screen py-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 sm:py-16 lg:py-20">
+      <div className="container max-w-4xl">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-10 lg:mb-12"
         >
-          <h1 className="text-4xl font-bold mb-4">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
             <span className="gradient-text">eSIM Registration</span>
           </h1>
-          <p className="text-gray-400">
+          <p className="text-sm sm:text-base text-gray-400">
             Register your MPT, ATOM U9, or MYTEL eSIM in minutes
           </p>
         </motion.div>
 
         {/* Progress Steps */}
-        <div className="mb-12">
-          <div className="flex justify-between items-center">
+        <div className="mb-8 sm:mb-10 lg:mb-12 overflow-x-auto">
+          <div className="flex justify-between items-center min-w-max px-2">
             {STEPS.map((step, index) => (
               <div key={step.id} className="flex items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all ${
                     currentStep >= step.id
                       ? 'bg-primary text-background'
                       : 'bg-white/10 text-gray-400'
                   }`}
                 >
                   {currentStep > step.id ? (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   ) : (
@@ -311,7 +311,7 @@ const ESIMRegistration = () => {
                 </div>
                 {index < STEPS.length - 1 && (
                   <div
-                    className={`w-12 md:w-20 h-1 mx-2 transition-all ${
+                    className={`w-8 sm:w-12 lg:w-20 h-0.5 sm:h-1 mx-1 sm:mx-2 transition-all ${
                       currentStep > step.id ? 'bg-primary' : 'bg-white/10'
                     }`}
                   />
@@ -319,9 +319,9 @@ const ESIMRegistration = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-between mt-2">
+          <div className="flex justify-between mt-2 min-w-max px-2">
             {STEPS.map((step) => (
-              <div key={step.id} className="text-center" style={{ width: '80px' }}>
+              <div key={step.id} className="text-center" style={{ width: '60px' }}>
                 <p className={`text-xs ${currentStep >= step.id ? 'text-primary' : 'text-gray-500'}`}>
                   {step.name}
                 </p>
@@ -337,12 +337,14 @@ const ESIMRegistration = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-400"
+              className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-xs sm:text-sm text-red-400"
+              role="alert"
             >
               {error}
               <button
                 onClick={() => setError(null)}
                 className="ml-4 text-red-300 hover:text-red-200"
+                aria-label="Dismiss error"
               >
                 Dismiss
               </button>
@@ -365,8 +367,8 @@ const ESIMRegistration = () => {
 
         {/* Order ID Display */}
         {orderId && (
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-400">
+          <div className="mt-6 sm:mt-8 text-center">
+            <p className="text-xs sm:text-sm text-gray-400">
               Order ID: <span className="text-primary font-mono">{orderId}</span>
             </p>
           </div>
@@ -379,24 +381,24 @@ const ESIMRegistration = () => {
 // Step 1: Provider Selection Component
 const ProviderSelection = ({ onSelect }) => (
   <div className="glass-card">
-    <h2 className="text-2xl font-bold text-white mb-6">Select Your Provider</h2>
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4 sm:mb-6">Select Your Provider</h2>
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       {PROVIDERS.map((provider) => (
         <motion.button
           key={provider.id}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onSelect(provider.id)}
-          className="glass-card card-hover text-center p-8 cursor-pointer border-2 border-transparent hover:border-primary"
+          className="glass-card card-hover text-center p-4 sm:p-6 lg:p-8 cursor-pointer border-2 border-transparent hover:border-primary"
         >
           <div
-            className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold"
+            className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center text-lg sm:text-xl lg:text-2xl font-bold"
             style={{ backgroundColor: provider.color + '20', color: provider.color }}
           >
             {provider.id[0]}
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">{provider.name}</h3>
-          <div className="flex justify-center gap-4 text-sm">
+          <h3 className="text-base sm:text-lg lg:text-xl font-bold text-white mb-2">{provider.name}</h3>
+          <div className="flex justify-center gap-2 sm:gap-4 text-xs">
             {provider.supports5G && (
               <span className="px-2 py-1 bg-primary/20 text-primary rounded">5G</span>
             )}
@@ -407,7 +409,7 @@ const ProviderSelection = ({ onSelect }) => (
         </motion.button>
       ))}
     </div>
-    <p className="text-center text-gray-400 mt-6">
+    <p className="text-center text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6">
       eSIM Price: <span className="text-primary font-bold">120,000 MMK</span>
     </p>
   </div>
@@ -416,13 +418,13 @@ const ProviderSelection = ({ onSelect }) => (
 // Step 2: Phone Input Component
 const PhoneInput = ({ value, provider, onChange, onSubmit, loading }) => (
   <div className="glass-card">
-    <h2 className="text-2xl font-bold text-white mb-6">Enter Your Phone Number</h2>
-    <p className="text-gray-400 mb-6">
+    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4 sm:mb-6">Enter Your Phone Number</h2>
+    <p className="text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6">
       Enter your {provider} phone number to register for eSIM
     </p>
     <div className="max-w-md mx-auto">
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-300 mb-2">
+      <div className="mb-4 sm:mb-6">
+        <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
           Myanmar Phone Number
         </label>
         <input
@@ -430,16 +432,17 @@ const PhoneInput = ({ value, provider, onChange, onSubmit, loading }) => (
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="09xxxxxxxxx"
-          className="input-field text-lg"
+          className="input-field"
+          aria-describedby="phone-format"
         />
-        <p className="text-xs text-gray-500 mt-2">
+        <p id="phone-format" className="text-xs text-gray-500 mt-2">
           Format: 09xxxxxxxxx or +959xxxxxxxxx
         </p>
       </div>
       <button
         onClick={onSubmit}
         disabled={loading || !value}
-        className="w-full btn-primary"
+        className="btn-primary w-full"
       >
         {loading ? 'Validating...' : 'Validate Phone Number'}
       </button>
@@ -450,33 +453,33 @@ const PhoneInput = ({ value, provider, onChange, onSubmit, loading }) => (
 // Step 3: Device Input Component
 const DeviceInput = ({ formData, onChange, onSubmit, loading }) => (
   <div className="glass-card">
-    <h2 className="text-2xl font-bold text-white mb-6">Device Information</h2>
+    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4 sm:mb-6">Device Information</h2>
     
-    <div className="mb-8">
-      <label className="block text-sm font-medium text-gray-300 mb-4">
+    <div className="mb-6 sm:mb-8">
+      <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-3 sm:mb-4">
         Select Device Type
       </label>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {DEVICE_TYPES.map((device) => (
           <button
             key={device.id}
             onClick={() => onChange('deviceType', device.id)}
-            className={`p-4 rounded-xl border-2 transition-all ${
+            className={`p-3 sm:p-4 rounded-xl border-2 transition-all ${
               formData.deviceType === device.id
                 ? 'border-primary bg-primary/10'
                 : 'border-white/10 hover:border-white/30'
             }`}
           >
-            <div className="text-2xl mb-2 text-center">{device.icon}</div>
-            <p className="text-sm text-center text-white">{device.name}</p>
+            <div className="text-xl sm:text-2xl mb-2 text-center">{device.icon}</div>
+            <p className="text-xs sm:text-sm text-center text-white">{device.name}</p>
           </button>
         ))}
       </div>
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
+        <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
           Device Model
         </label>
         <input
@@ -488,7 +491,7 @@ const DeviceInput = ({ formData, onChange, onSubmit, loading }) => (
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
+        <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
           OS Version
         </label>
         <input
@@ -504,7 +507,7 @@ const DeviceInput = ({ formData, onChange, onSubmit, loading }) => (
     <button
       onClick={onSubmit}
       disabled={loading || !formData.deviceType || !formData.deviceModel || !formData.osVersion}
-      className="w-full btn-primary"
+      className="btn-primary w-full"
     >
       {loading ? 'Checking Compatibility...' : 'Check Device Compatibility'}
     </button>
@@ -514,20 +517,20 @@ const DeviceInput = ({ formData, onChange, onSubmit, loading }) => (
 // Step 4: Payment Component
 const PaymentStep = ({ orderId, formData, onChange, onScreenshotUpload, onSubmit, loading }) => (
   <div className="glass-card">
-    <h2 className="text-2xl font-bold text-white mb-6">MMQR Payment</h2>
+    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4 sm:mb-6">MMQR Payment</h2>
     
-    <div className="bg-primary/10 border border-primary/30 rounded-xl p-6 mb-6">
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-gray-300">Amount Due</span>
-        <span className="text-3xl font-bold text-primary">120,000 MMK</span>
+    <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
+      <div className="flex justify-between items-center mb-3 sm:mb-4">
+        <span className="text-xs sm:text-sm text-gray-300">Amount Due</span>
+        <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary">120,000 MMK</span>
       </div>
-      <p className="text-sm text-gray-400">
+      <p className="text-xs sm:text-sm text-gray-400">
         Order ID: <span className="font-mono text-white">{orderId}</span>
       </p>
     </div>
 
-    <div className="mb-6">
-      <label className="block text-sm font-medium text-gray-300 mb-2">
+    <div className="mb-4 sm:mb-6">
+      <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
         MMQR Payment Data
       </label>
       <textarea
@@ -535,24 +538,25 @@ const PaymentStep = ({ orderId, formData, onChange, onScreenshotUpload, onSubmit
         onChange={(e) => onChange('mmqrData', e.target.value)}
         placeholder="Paste MMQR string here (starts with 00020101...)"
         rows={4}
-        className="input-field font-mono text-sm"
+        className="input-field font-mono text-xs sm:text-sm"
+        style={{ height: 'auto', minHeight: '100px' }}
       />
       <p className="text-xs text-gray-500 mt-2">
         Scan the payment QR code and paste the data string here
       </p>
     </div>
 
-    <div className="mb-6">
-      <label className="block text-sm font-medium text-gray-300 mb-2">
+    <div className="mb-4 sm:mb-6">
+      <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
         Payment Screenshot (Optional)
       </label>
-      <div className="border-2 border-dashed border-white/20 rounded-xl p-6 text-center">
+      <div className="border-2 border-dashed border-white/20 rounded-xl p-4 sm:p-6 text-center">
         {formData.screenshot ? (
           <div>
-            <p className="text-green-400 mb-2">Screenshot uploaded</p>
+            <p className="text-xs sm:text-sm text-green-400 mb-2">Screenshot uploaded</p>
             <button
               onClick={() => onChange('screenshot', null)}
-              className="text-sm text-gray-400 hover:text-white"
+              className="text-xs sm:text-sm text-gray-400 hover:text-white"
             >
               Remove
             </button>
@@ -568,7 +572,7 @@ const PaymentStep = ({ orderId, formData, onChange, onScreenshotUpload, onSubmit
             />
             <label
               htmlFor="screenshot-upload"
-              className="cursor-pointer text-gray-400 hover:text-white"
+              className="cursor-pointer text-xs sm:text-sm text-gray-400 hover:text-white"
             >
               Click to upload payment screenshot
             </label>
@@ -580,7 +584,7 @@ const PaymentStep = ({ orderId, formData, onChange, onScreenshotUpload, onSubmit
     <button
       onClick={onSubmit}
       disabled={loading || !formData.mmqrData}
-      className="w-full btn-primary"
+      className="btn-primary w-full"
     >
       {loading ? 'Verifying Payment...' : 'Verify Payment'}
     </button>
@@ -590,20 +594,20 @@ const PaymentStep = ({ orderId, formData, onChange, onScreenshotUpload, onSubmit
 // Step 5: Verification Component
 const VerificationStep = ({ verificationStatus, loading }) => (
   <div className="glass-card text-center">
-    <h2 className="text-2xl font-bold text-white mb-6">AI Verification</h2>
+    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4 sm:mb-6">AI Verification</h2>
     
     {loading ? (
-      <div className="py-12">
-        <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-gray-400">Nexora AI is verifying your registration...</p>
+      <div className="py-8 sm:py-12">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" role="status" aria-label="Verifying" />
+        <p className="text-xs sm:text-sm text-gray-400">Nexora AI is verifying your registration...</p>
       </div>
     ) : verificationStatus ? (
       <div>
-        <div className="space-y-4 mb-8">
+        <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
           {verificationStatus.verifications?.map((v, index) => (
             <div
               key={index}
-              className={`flex items-center justify-between p-4 rounded-xl ${
+              className={`flex items-center justify-between p-3 sm:p-4 rounded-xl ${
                 v.status === 'verified'
                   ? 'bg-green-500/10 border border-green-500/30'
                   : v.status === 'failed'
@@ -611,9 +615,9 @@ const VerificationStep = ({ verificationStatus, loading }) => (
                   : 'bg-yellow-500/10 border border-yellow-500/30'
               }`}
             >
-              <span className="text-white capitalize">{v.type.replace('_', ' ')}</span>
+              <span className="text-xs sm:text-sm text-white capitalize">{v.type.replace('_', ' ')}</span>
               <span
-                className={`px-3 py-1 rounded-full text-sm ${
+                className={`px-2 sm:px-3 py-1 rounded-full text-xs ${
                   v.status === 'verified'
                     ? 'bg-green-500/20 text-green-400'
                     : v.status === 'failed'
@@ -627,14 +631,14 @@ const VerificationStep = ({ verificationStatus, loading }) => (
           ))}
         </div>
         
-        <div className={`text-lg font-bold ${
+        <div className={`text-sm sm:text-base lg:text-lg font-bold ${
           verificationStatus.status === 'verified' ? 'text-green-400' : 'text-yellow-400'
         }`}>
           Overall Status: {verificationStatus.status.toUpperCase()}
         </div>
       </div>
     ) : (
-      <p className="text-gray-400">Waiting for verification...</p>
+      <p className="text-xs sm:text-sm text-gray-400">Waiting for verification...</p>
     )}
   </div>
 );
@@ -642,36 +646,36 @@ const VerificationStep = ({ verificationStatus, loading }) => (
 // Step 6: eSIM Issuance Component
 const ESIMIssuance = ({ esimQR, orderId, provider }) => (
   <div className="glass-card text-center">
-    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-      <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+      <svg className="w-8 h-8 sm:w-10 sm:h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
       </svg>
     </div>
     
-    <h2 className="text-2xl font-bold text-white mb-2">eSIM Ready</h2>
-    <p className="text-gray-400 mb-8">Your {provider} eSIM has been issued successfully</p>
+    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">eSIM Ready</h2>
+    <p className="text-xs sm:text-sm text-gray-400 mb-6 sm:mb-8">Your {provider} eSIM has been issued successfully</p>
     
     {esimQR && (
-      <div className="mb-8">
-        <div className="bg-white p-6 rounded-xl inline-block mb-4">
+      <div className="mb-6 sm:mb-8">
+        <div className="bg-white p-4 sm:p-6 rounded-xl inline-block mb-4">
           {/* QR Code placeholder - in production use a QR library */}
-          <div className="w-48 h-48 bg-gray-100 flex items-center justify-center">
+          <div className="w-36 h-36 sm:w-48 sm:h-48 bg-gray-100 flex items-center justify-center">
             <p className="text-gray-600 text-xs text-center font-mono break-all p-2">
               {esimQR.esim_qr}
             </p>
           </div>
         </div>
         
-        <p className="text-sm text-gray-400 mb-4">
+        <p className="text-xs sm:text-sm text-gray-400 mb-4">
           Scan this QR code with your device to activate eSIM
         </p>
         
         {esimQR.activation_instructions && (
-          <div className="text-left bg-white/5 rounded-xl p-6 max-w-md mx-auto">
-            <h3 className="text-white font-bold mb-4">Activation Instructions</h3>
+          <div className="text-left bg-white/5 rounded-xl p-4 sm:p-6 max-w-md mx-auto">
+            <h3 className="text-sm sm:text-base text-white font-bold mb-3 sm:mb-4">Activation Instructions</h3>
             <ol className="space-y-2">
               {esimQR.activation_instructions.map((instruction, index) => (
-                <li key={index} className="text-gray-400 text-sm flex gap-3">
+                <li key={index} className="text-xs sm:text-sm text-gray-400 flex gap-2 sm:gap-3">
                   <span className="text-primary font-bold">{index + 1}.</span>
                   {instruction}
                 </li>
@@ -682,7 +686,7 @@ const ESIMIssuance = ({ esimQR, orderId, provider }) => (
       </div>
     )}
     
-    <div className="text-sm text-gray-500">
+    <div className="text-xs sm:text-sm text-gray-500">
       <p>Order ID: <span className="font-mono text-primary">{orderId}</span></p>
       <p className="mt-2">Support: info@esim.com.mm</p>
     </div>

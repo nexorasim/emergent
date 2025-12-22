@@ -27,28 +27,28 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-8 sm:py-12 px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-md w-full"
+        className="w-full max-w-md"
       >
-        <div className="glass-card p-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold gradient-text mb-2">Welcome Back</h2>
-            <p className="text-gray-400">Sign in to your eSIM Myanmar account</p>
+        <div className="glass-card">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold gradient-text mb-2">Welcome Back</h2>
+            <p className="text-xs sm:text-sm text-gray-400">Sign in to your eSIM Myanmar account</p>
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-500/10 border border-red-500/50 text-xs sm:text-sm text-red-400 px-3 sm:px-4 py-2 sm:py-3 rounded-lg mb-4 sm:mb-6" role="alert">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
                 Email Address
               </label>
               <input
@@ -59,11 +59,12 @@ const LoginPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 className="input-field"
                 placeholder="your@email.com"
+                autoComplete="email"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
                 Password
               </label>
               <input
@@ -74,6 +75,7 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="input-field"
                 placeholder="Enter your password"
+                autoComplete="current-password"
               />
             </div>
 
@@ -84,12 +86,12 @@ const LoginPage = () => {
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-600 bg-gray-700 text-primary focus:ring-primary"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-400">
+                <label htmlFor="remember-me" className="ml-2 block text-xs sm:text-sm text-gray-400">
                   Remember me
                 </label>
               </div>
 
-              <div className="text-sm">
+              <div className="text-xs sm:text-sm">
                 <Link to="/forgot-password" className="text-primary hover:text-primary-light">
                   Forgot password?
                 </Link>
@@ -99,14 +101,14 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary"
+              className="btn-primary w-full"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-gray-400">
+          <div className="mt-4 sm:mt-6 text-center">
+            <p className="text-xs sm:text-sm text-gray-400">
               Don't have an account?{' '}
               <Link to="/register" className="text-primary hover:text-primary-light font-medium">
                 Create Account

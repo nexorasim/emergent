@@ -2,61 +2,207 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   ESIM MYANMAR - TAILWIND INTEGRATION
+   Works with design-system.css
+   ============================================ */
+
 @layer base {
   * {
-    @apply antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   body {
-    @apply overflow-x-hidden;
-    font-size: 18px;
-    line-height: 1.75;
-  }
-  
-  /* Ensure minimum font size */
-  html {
-    font-size: 100%;
+    overflow-x: hidden;
   }
 }
 
 @layer components {
+  /* Glass Effects */
   .glass-effect {
-    @apply bg-white/5 backdrop-blur-md border border-white/10;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl, 1rem);
+    padding: var(--space-5, 1.25rem);
+    transition: all 200ms ease;
   }
   
-  /* Buttons with 48px minimum height for accessibility */
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 255, 255, 0.2);
+  }
+  
+  @media (min-width: 640px) {
+    .glass-card { padding: var(--space-6, 1.5rem); }
+  }
+  
+  @media (min-width: 1024px) {
+    .glass-card { padding: var(--space-8, 2rem); }
+  }
+  
+  /* Buttons - Unified with design system */
   .btn-primary {
-    @apply bg-gradient-to-r from-primary to-primary-dark text-background font-semibold px-6 py-3 rounded-xl hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 inline-flex items-center justify-center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--color-primary, #00FFFF) 0%, var(--color-primary-dark, #00CCCC) 100%);
+    color: var(--color-background, #1e2f3c);
+    font-weight: 600;
+    padding: 0 var(--space-6, 1.5rem);
+    height: var(--btn-height-lg, 48px);
     min-height: 48px;
+    border-radius: var(--radius-lg, 0.75rem);
+    border: none;
+    cursor: pointer;
+    transition: all 200ms ease;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: var(--font-size-sm, 0.8125rem);
+  }
+  
+  .btn-primary:hover {
+    box-shadow: 0 4px 16px rgba(0, 255, 255, 0.4);
+    transform: translateY(-1px);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  
+  .btn-primary:focus-visible {
+    outline: 3px solid var(--color-primary, #00FFFF);
+    outline-offset: 2px;
+  }
+  
+  @media (min-width: 640px) {
+    .btn-primary { font-size: var(--font-size-base, 0.875rem); }
   }
   
   .btn-secondary {
-    @apply bg-white/10 backdrop-blur-sm text-white border border-white/20 font-semibold px-6 py-3 rounded-xl hover:bg-white/20 transition-all duration-300 inline-flex items-center justify-center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-text, #F8F9FA);
+    font-weight: 600;
+    padding: 0 var(--space-6, 1.5rem);
+    height: var(--btn-height-lg, 48px);
     min-height: 48px;
+    border-radius: var(--radius-lg, 0.75rem);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    transition: all 200ms ease;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: var(--font-size-sm, 0.8125rem);
   }
   
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(0, 255, 255, 0.3);
+  }
+  
+  .btn-secondary:focus-visible {
+    outline: 3px solid var(--color-primary, #00FFFF);
+    outline-offset: 2px;
+  }
+  
+  @media (min-width: 640px) {
+    .btn-secondary { font-size: var(--font-size-base, 0.875rem); }
+  }
+  
+  /* Gradient Text */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary via-blue-400 to-primary-light bg-clip-text text-transparent;
+    background: linear-gradient(135deg, var(--color-primary, #00FFFF) 0%, #60A5FA 50%, var(--color-primary-light, #66FFFF) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   
-  /* Form inputs with 48px minimum height */
+  /* Form Inputs - Unified with design system */
   .input-field {
-    @apply w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all;
+    display: block;
+    width: 100%;
+    height: var(--btn-height-lg, 48px);
     min-height: 48px;
-    font-size: 16px;
+    padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+    font-family: inherit;
+    font-size: var(--font-size-base, 0.875rem);
+    line-height: var(--line-height-normal, 1.5);
+    color: var(--color-text, #F8F9FA);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg, 0.75rem);
+    transition: all 200ms ease;
   }
   
+  .input-field::placeholder {
+    color: var(--color-text-subtle, #6B7280);
+  }
+  
+  .input-field:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: var(--color-primary, #00FFFF);
+    box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.15);
+  }
+  
+  @media (min-width: 640px) {
+    .input-field { font-size: var(--font-size-md, 0.9375rem); }
+  }
+  
+  @media (min-width: 1024px) {
+    .input-field { font-size: var(--font-size-lg, 1rem); }
+  }
+  
+  /* Card Hover Effect */
   .card-hover {
-    @apply hover:scale-105 hover:-translate-y-2 transition-transform duration-300;
+    transition: transform 300ms ease;
   }
   
+  .card-hover:hover {
+    transform: translateY(-4px);
+  }
+  
+  /* Animated Gradient */
   .animate-gradient {
     background-size: 200% 200%;
     animation: gradient 8s ease infinite;
+  }
+  
+  /* Navigation Link */
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 var(--space-3, 0.75rem);
+    font-size: var(--font-size-sm, 0.8125rem);
+    font-weight: 500;
+    color: var(--color-text, #F8F9FA);
+    text-decoration: none;
+    border-radius: var(--radius-md, 0.5rem);
+    transition: all 150ms ease;
+  }
+  
+  .nav-link:hover {
+    color: var(--color-primary, #00FFFF);
+    background: rgba(0, 255, 255, 0.08);
   }
 }
 

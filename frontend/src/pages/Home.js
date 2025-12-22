@@ -59,14 +59,14 @@ const HomePage = () => {
     <div className="relative overflow-hidden">
       {/* Seasonal Countdown Section */}
       {showSeasonal && !isNewYear && (
-        <section className="py-6 relative bg-gradient-to-r from-background via-background-light to-background">
-          <div className="max-w-4xl mx-auto px-4 text-center">
+        <section className="py-4 sm:py-6 relative bg-gradient-to-r from-background via-background-light to-background">
+          <div className="container text-center">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-lg font-semibold text-gray-300 mb-4">Countdown to 2026</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-300 mb-3 sm:mb-4">Countdown to 2026</h3>
               <Countdown2026 />
             </motion.div>
           </div>
@@ -75,15 +75,15 @@ const HomePage = () => {
 
       {/* New Year Celebration Banner */}
       {showSeasonal && isNewYear && (
-        <section className="py-8 relative bg-gradient-to-r from-background via-primary/10 to-background">
-          <div className="max-w-4xl mx-auto px-4 text-center">
+        <section className="py-6 sm:py-8 relative bg-gradient-to-r from-background via-primary/10 to-background">
+          <div className="container text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl font-bold gradient-text mb-2">Happy New Year 2026</h2>
-              <p className="text-gray-300">Wishing you seamless connectivity throughout the year</p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-2">Happy New Year 2026</h2>
+              <p className="text-sm sm:text-base text-gray-300">Wishing you seamless connectivity throughout the year</p>
             </motion.div>
           </div>
         </section>
@@ -93,25 +93,25 @@ const HomePage = () => {
       <section className="relative min-h-screen flex items-center justify-center hero-pattern grid-pattern">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 container text-center py-12 sm:py-16 lg:py-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
               <span className="gradient-text text-glow">eSIM Myanmar</span>
               <br />
               <span className="text-white">Entertainment Server</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
               Enterprise eSIM Management Platform serving 50M+ users across ASEAN with 5G, VoLTE, and seamless device transfer capabilities.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/register" className="btn-primary text-lg px-8 py-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <Link to="/register" className="btn-primary">
                 Get Started Now
               </Link>
-              <Link to="/features" className="btn-secondary text-lg px-8 py-4">
+              <Link to="/features" className="btn-secondary">
                 Explore Features
               </Link>
             </div>
@@ -122,41 +122,41 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mt-12 sm:mt-16 lg:mt-20"
           >
             {stats.map((stat, index) => (
               <div key={index} className="glass-card text-center">
-                <div className="text-4xl font-bold gradient-text mb-2">{stat.value}</div>
-                <div className="text-gray-400">{stat.label}</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-1 sm:mb-2">{stat.value}</div>
+                <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
               </div>
             ))}
           </motion.div>
         </div>
 
         {/* Animated background elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-blue-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 lg:py-20 relative">
+        <div className="container">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-10 sm:mb-12 lg:mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
               <span className="gradient-text">Advanced eSIM Features</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto">
               Industry-leading eSIM technology with enterprise-grade security and reliability
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -166,9 +166,9 @@ const HomePage = () => {
                 viewport={{ once: true }}
                 className="glass-card card-hover"
               >
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h3 className="text-2xl font-bold mb-3 text-white">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
+                <div className="text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4">{feature.icon}</div>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-3 text-white">{feature.title}</h3>
+                <p className="text-sm sm:text-base text-gray-400">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -176,24 +176,24 @@ const HomePage = () => {
       </section>
 
       {/* Entertainment Section */}
-      <section className="py-20 relative bg-gradient-to-b from-transparent to-background-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 lg:py-20 relative bg-gradient-to-b from-transparent to-background-dark">
+        <div className="container">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-10 sm:mb-12 lg:mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
               <span className="gradient-text">Entertainment Services</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto">
               Premium streaming and entertainment bundled with your eSIM
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
             {entertainmentServices.map((service, index) => (
               <motion.div
                 key={index}
@@ -203,9 +203,9 @@ const HomePage = () => {
                 viewport={{ once: true }}
                 className="glass-card text-center card-hover cursor-pointer"
               >
-                <div className="text-6xl mb-4">{service.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-white">{service.name}</h3>
-                <p className="text-gray-400 text-sm">{service.description}</p>
+                <div className="text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4">{service.icon}</div>
+                <h3 className="text-base sm:text-lg lg:text-xl font-bold mb-1 sm:mb-2 text-white">{service.name}</h3>
+                <p className="text-xs sm:text-sm text-gray-400">{service.description}</p>
               </motion.div>
             ))}
           </div>
@@ -213,26 +213,26 @@ const HomePage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 relative">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-12 sm:py-16 lg:py-20 relative">
+        <div className="container max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="glass-card box-glow p-12"
+            className="glass-card box-glow p-6 sm:p-8 lg:p-12"
           >
-            <h2 className="text-4xl font-bold mb-6 gradient-text">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 gradient-text">
               Ready to Get Started?
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-300 mb-6 sm:mb-8">
               Join 50 million users across ASEAN experiencing the future of mobile connectivity
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/register" className="btn-primary text-lg px-8 py-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <Link to="/register" className="btn-primary">
                 Create Account
               </Link>
-              <Link to="/contact" className="btn-secondary text-lg px-8 py-4">
+              <Link to="/contact" className="btn-secondary">
                 Contact Sales
               </Link>
             </div>
@@ -241,9 +241,9 @@ const HomePage = () => {
       </section>
 
       {/* Contact Info Bar */}
-      <section className="py-8 glass-effect border-t border-primary/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-400">
+      <section className="py-6 sm:py-8 glass-effect border-t border-primary/20">
+        <div className="container">
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-sm text-gray-400">
             <div className="flex items-center gap-2">
               <span className="text-primary font-bold">W</span>
               <span>esim.com.mm</span>
