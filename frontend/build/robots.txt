@@ -4,7 +4,7 @@ Disallow: /admin/
 Disallow: /partner/
 Disallow: /dashboard/
 
-Sitemap: https://esim-myanmar-ia6gw.web.app/sitemap.xml
+Sitemap: https://www.esim.com.mm/sitemap.xml
 
-# eSIM Myanmar Entertainment Server
-# https://esim.com.mm
+# ESIM MYANMAR COMPANY LIMITED
+# https://www.esim.com.mm
