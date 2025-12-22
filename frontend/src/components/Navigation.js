@@ -9,6 +9,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { isSeasonalActive } from '../utils/seasonalConfig';
+import Logo from './Logo';
 import Countdown2026 from './Countdown2026';
 
 const Navigation = () => {
