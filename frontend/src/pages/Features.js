@@ -96,7 +96,7 @@ const FeaturesPage = () => {
               <ul className="space-y-2">
                 {feature.benefits.map((benefit, idx) => (
                   <li key={idx} className="text-gray-300 flex items-center gap-2">
-                    <span className="text-primary">✓</span>
+                    <span className="text-primary font-bold">-</span>
                     {benefit}
                   </li>
                 ))}

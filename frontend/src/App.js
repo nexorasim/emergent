@@ -4,6 +4,8 @@ import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
+import SeasonalBanner from './components/SeasonalBanner';
+import SeasonalSanta from './components/SeasonalSanta';
 
 import HomePage from './pages/Home';
 import PlansPage from './pages/Plans';
@@ -23,6 +25,7 @@ function App() {
     <LanguageProvider>
       <AuthProvider>
         <Router>
+          <SeasonalBanner />
           <div className="App min-h-screen bg-gradient-to-br from-background via-background-light to-background-dark text-white">
             <Navigation />
             <main className="pt-20">
@@ -41,6 +44,7 @@ function App() {
             </main>
             <Footer />
           </div>
+          <SeasonalSanta />
         </Router>
       </AuthProvider>
     </LanguageProvider>

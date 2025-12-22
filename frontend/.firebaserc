@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "esim-myanmar-ia6gw"
+  },
+  "targets": {
+    "esim-myanmar-ia6gw": {
+      "hosting": {
+        "esim-myanmar": [
+          "esim-myanmar-ia6gw"
+        ]
+      }
+    }
+  }
+}

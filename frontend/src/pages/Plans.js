@@ -62,7 +62,7 @@ const PlansPage = () => {
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="text-gray-300 flex items-center justify-center gap-2">
-                    <span className="text-primary">✓</span>
+                    <span className="text-primary font-bold">-</span>
                     {feature}
                   </li>
                 ))}

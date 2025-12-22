@@ -1,459 +1,427 @@
+/**
+ * EnterpriseHome.js - Enterprise Landing Page with Seasonal Design
+ * 2026 UI/UX Standards with IoT-first thinking
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/enterprise.css';
+import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import Countdown2026 from '../components/Countdown2026';
+import { isSeasonalActive, getSeasonalMessage } from '../utils/seasonalConfig';
 
 const EnterpriseHome = () => {
+  const { t } = useLanguage();
+  const seasonal = isSeasonalActive();
+  const seasonalMessage = getSeasonalMessage();
+
+  const features = [
+    {
+      title: 'eSIM Transfer',
+      subtitle: 'Android to Apple',
+      description: 'Seamlessly transfer your eSIM between devices with zero downtime.',
+      icon: 'T'
+    },
+    {
+      title: '5G Network',
+      subtitle: 'Ultra-fast speeds',
+      description: 'Experience blazing-fast 5G speeds across Myanmar and ASEAN.',
+      icon: '5G'
+    },
+    {
+      title: 'VoLTE Enabled',
+      subtitle: 'HD Voice',
+      description: 'Crystal-clear voice calls over LTE network.',
+      icon: 'V'
+    },
+    {
+      title: 'Global Roaming',
+      subtitle: '150+ Countries',
+      description: 'Stay connected worldwide with advanced roaming.',
+      icon: 'R'
+    },
+    {
+      title: 'Multi-Device',
+      subtitle: 'Watch, iPad, Phone',
+      description: 'Connect all your devices simultaneously.',
+      icon: 'M'
+    },
+    {
+      title: 'Instant QR',
+      subtitle: 'Activate in seconds',
+      description: 'Scan and activate your eSIM instantly.',
+      icon: 'Q'
+    }
+  ];
+
+  const stats = [
+    { value: '50M+', label: 'Active Users', sublabel: 'Across ASEAN' },
+    { value: '99.9%', label: 'Uptime SLA', sublabel: 'Enterprise Grade' },
+    { value: '15+', label: 'Countries', sublabel: 'Coverage' },
+    { value: '24/7', label: 'Support', sublabel: 'Always Available' }
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="enterprise-page">
-      {/* Hero Section - Enterprise Focus */}
-      <section className="hero-enterprise">
-        <div className="container text-center">
-          <p className="text-caption" style={{color: 'var(--color-cyan-400)', marginBottom: '16px'}}>
-            ENTERPRISE eSIM CONNECTIVITY PLATFORM
-          </p>
-          <h1>
-            Secure, Scalable Mobile Solutions<br />for Myanmar and ASEAN Markets
-          </h1>
-          <p className="text-large" style={{maxWidth: '720px', margin: '0 auto 40px'}}>
-            Trusted by leading telecom operators and enterprise clients. Deploy eSIM connectivity 
-            for IoT, corporate mobility, and government applications with enterprise-grade security 
-            and 99.9% uptime SLA.
-          </p>
-          <div className="flex gap-md" style={{justifyContent: 'center', flexWrap: 'wrap'}}>
-            <Link to="/request-demo" className="btn btn-primary btn-large">
-              Request Enterprise Demo
+    <div className="relative overflow-hidden">
+      {/* Hero Section */}
+      <section 
+        className="relative min-h-screen flex items-center justify-center"
+        style={{
+          background: 'linear-gradient(135deg, #1e2f3c 0%, #2a4a5c 50%, #1e2f3c 100%)'
+        }}
+      >
+        {/* Grid pattern overlay */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+          {/* Seasonal Greeting */}
+          {seasonal && seasonalMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8"
+            >
+              <span 
+                style={{
+                  background: 'linear-gradient(135deg, #FFD700, #00FFFF)',
+                  color: '#1e2f3c',
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  fontSize: '14px',
+                  fontWeight: '700',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}
+              >
+                {seasonalMessage.greeting}
+              </span>
+            </motion.div>
+          )}
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl md:text-7xl font-bold mb-6"
+          >
+            <span 
+              style={{
+                background: 'linear-gradient(135deg, #F8F9FA 0%, #00FFFF 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}
+            >
+              eSIM Myanmar
+            </span>
+            <br />
+            <span style={{ color: '#F8F9FA' }}>Entertainment Server</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto"
+            style={{ color: 'rgba(248, 249, 250, 0.8)' }}
+          >
+            Enterprise eSIM Management Platform serving 50M+ users across ASEAN 
+            with 5G, VoLTE, and seamless device transfer capabilities.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          >
+            <Link
+              to="/register"
+              style={{
+                background: 'linear-gradient(135deg, #00FFFF 0%, #008B9C 100%)',
+                color: '#1e2f3c',
+                padding: '16px 32px',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: '700',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(0, 255, 255, 0.3)',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 8px 25px rgba(0, 255, 255, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 15px rgba(0, 255, 255, 0.3)';
+              }}
+            >
+              Get Started Now
             </Link>
-            <Link to="/solutions" className="btn btn-secondary btn-large">
-              View Solutions
+            <Link
+              to="/features"
+              style={{
+                background: 'transparent',
+                color: '#00FFFF',
+                padding: '14px 30px',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: '700',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '2px solid #00FFFF',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#00FFFF';
+                e.target.style.color = '#1e2f3c';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'transparent';
+                e.target.style.color = '#00FFFF';
+              }}
+            >
+              Explore Features
             </Link>
-          </div>
-          <div style={{marginTop: '48px', paddingTop: '48px', borderTop: '1px solid rgba(255,255,255,0.2)'}}>
-            <p className="text-small" style={{color: 'var(--color-pearl-300)', marginBottom: '16px'}}>
-              Trusted by Leading Organizations
-            </p>
-            {/* Placeholder for partner logos */}
-            <div className="flex gap-lg" style={{justifyContent: 'center', flexWrap: 'wrap', opacity: 0.7}}>
-              <div style={{padding: '12px 24px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px'}}>
-                Telecom Partner 1
-              </div>
-              <div style={{padding: '12px 24px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px'}}>
-                Telecom Partner 2
-              </div>
-              <div style={{padding: '12px 24px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px'}}>
-                Enterprise Client
-              </div>
-              <div style={{padding: '12px 24px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px'}}>
-                Government Agency
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+          </motion.div>
 
-      {/* Trust Bar - Certifications */}
-      <section className="trust-bar">
-        <div className="container">
-          <div className="flex gap-lg" style={{justifyContent: 'center', flexWrap: 'wrap'}}>
-            <div className="certification-badge">GSMA CERTIFIED</div>
-            <div className="certification-badge">ISO 27001</div>
-            <div className="certification-badge">SOC 2 TYPE II</div>
-            <div className="certification-badge">SM-DP+ COMPLIANT</div>
-            <div className="certification-badge">99.9% UPTIME SLA</div>
-          </div>
-        </div>
-      </section>
+          {/* Countdown (Seasonal) */}
+          {seasonal && <Countdown2026 />}
 
-      {/* Key Benefits Section */}
-      <section className="section-light section-padding-large">
-        <div className="container">
-          <div className="text-center" style={{marginBottom: '64px'}}>
-            <h2>Why Leading Organizations Choose eSIM Myanmar</h2>
-            <p className="text-large" style={{color: 'var(--color-graphite-600)', maxWidth: '640px', margin: '16px auto 0'}}>
-              Enterprise-grade connectivity platform built for scale, security, and reliability
-            </p>
-          </div>
-          
-          <div className="grid grid-3">
-            <div className="card-enterprise">
-              <div style={{width: '56px', height: '56px', background: 'var(--color-cyan-600)', borderRadius: '12px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold'}}>
-                1
-              </div>
-              <h3>Enterprise Security</h3>
-              <p style={{color: 'var(--color-graphite-600)'}}>
-                Bank-grade encryption, multi-factor authentication, and compliance with international 
-                security standards including ISO 27001 and SOC 2 Type II.
-              </p>
-              <ul style={{marginTop: '16px', paddingLeft: '20px', color: 'var(--color-graphite-700)'}}>
-                <li>End-to-end encryption</li>
-                <li>Role-based access control</li>
-                <li>Audit logging and monitoring</li>
-                <li>Data residency compliance</li>
-              </ul>
-            </div>
-
-            <div className="card-enterprise">
-              <div style={{width: '56px', height: '56px', background: 'var(--color-teal-600)', borderRadius: '12px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold'}}>
-                2
-              </div>
-              <h3>Global Connectivity</h3>
-              <p style={{color: 'var(--color-graphite-600)'}}>
-                Seamless coverage across Myanmar and 150+ countries with direct carrier integrations 
-                and advanced roaming capabilities for your mobile workforce.
-              </p>
-              <ul style={{marginTop: '16px', paddingLeft: '20px', color: 'var(--color-graphite-700)'}}>
-                <li>150+ country coverage</li>
-                <li>Multi-carrier support</li>
-                <li>5G and VoLTE enabled</li>
-                <li>Real-time network switching</li>
-              </ul>
-            </div>
-
-            <div className="card-enterprise">
-              <div style={{width: '56px', height: '56px', background: 'var(--color-navy-700)', borderRadius: '12px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '24px', fontWeight: 'bold'}}>
-                3
-              </div>
-              <h3>API-First Platform</h3>
-              <p style={{color: 'var(--color-graphite-600)'}}>
-                Comprehensive RESTful APIs for seamless integration with your existing systems. 
-                Full documentation, SDKs, and dedicated technical support.
-              </p>
-              <ul style={{marginTop: '16px', paddingLeft: '20px', color: 'var(--color-graphite-700)'}}>
-                <li>RESTful API architecture</li>
-                <li>Webhooks and real-time events</li>
-                <li>SDKs for major platforms</li>
-                <li>Technical support included</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases Section */}
-      <section className="section-neutral section-padding-large">
-        <div className="container">
-          <div className="text-center" style={{marginBottom: '64px'}}>
-            <h2>Enterprise Solutions by Industry</h2>
-            <p className="text-large" style={{color: 'var(--color-graphite-600)'}}>
-              Tailored eSIM connectivity for your specific business needs
-            </p>
-          </div>
-          
-          <div className="grid grid-2" style={{gap: '32px'}}>
-            <div className="card-enterprise">
-              <h4 style={{color: 'var(--color-navy-900)', marginBottom: '16px'}}>
-                Corporate & Enterprise Mobility
-              </h4>
-              <p style={{color: 'var(--color-graphite-600)', marginBottom: '16px'}}>
-                Manage mobile connectivity for your entire workforce with centralized control, 
-                usage tracking, and cost optimization.
-              </p>
-              <ul style={{paddingLeft: '20px', color: 'var(--color-graphite-700)', marginBottom: '20px'}}>
-                <li>Centralized SIM management</li>
-                <li>Usage analytics and reporting</li>
-                <li>Cost center allocation</li>
-                <li>Employee self-service portal</li>
-              </ul>
-              <Link to="/solutions/enterprise" className="btn btn-secondary">
-                Learn More
-              </Link>
-            </div>
-
-            <div className="card-enterprise">
-              <h4 style={{color: 'var(--color-navy-900)', marginBottom: '16px'}}>
-                IoT & M2M Solutions
-              </h4>
-              <p style={{color: 'var(--color-graphite-600)', marginBottom: '16px'}}>
-                Connect millions of IoT devices with automated provisioning, lifecycle management, 
-                and real-time monitoring.
-              </p>
-              <ul style={{paddingLeft: '20px', color: 'var(--color-graphite-700)', marginBottom: '20px'}}>
-                <li>Mass device provisioning</li>
-                <li>Remote SIM management</li>
-                <li>Network automation</li>
-                <li>IoT-specific data plans</li>
-              </ul>
-              <Link to="/solutions/iot" className="btn btn-secondary">
-                Learn More
-              </Link>
-            </div>
-
-            <div className="card-enterprise">
-              <h4 style={{color: 'var(--color-navy-900)', marginBottom: '16px'}}>
-                Government & Public Sector
-              </h4>
-              <p style={{color: 'var(--color-graphite-600)', marginBottom: '16px'}}>
-                Secure connectivity solutions for government agencies with enhanced security, 
-                compliance, and data sovereignty.
-              </p>
-              <ul style={{paddingLeft: '20px', color: 'var(--color-graphite-700)', marginBottom: '20px'}}>
-                <li>Government-grade security</li>
-                <li>Local data residency</li>
-                <li>Compliance reporting</li>
-                <li>Emergency services integration</li>
-              </ul>
-              <Link to="/solutions/government" className="btn btn-secondary">
-                Learn More
-              </Link>
-            </div>
-
-            <div className="card-enterprise">
-              <h4 style={{color: 'var(--color-navy-900)', marginBottom: '16px'}}>
-                Travel & Hospitality
-              </h4>
-              <p style={{color: 'var(--color-graphite-600)', marginBottom: '16px'}}>
-                Provide seamless connectivity for business travelers with instant activation 
-                and global coverage.
-              </p>
-              <ul style={{paddingLeft: '20px', color: 'var(--color-graphite-700)', marginBottom: '20px'}}>
-                <li>Instant global activation</li>
-                <li>Travel-specific plans</li>
-                <li>Multi-device support</li>
-                <li>24/7 traveler support</li>
-              </ul>
-              <Link to="/solutions/travel" className="btn btn-secondary">
-                Learn More
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Technology Platform Section */}
-      <section className="section-light section-padding-large">
-        <div className="container">
-          <div className="grid grid-2" style={{alignItems: 'center', gap: '64px'}}>
-            <div>
-              <p className="text-caption" style={{color: 'var(--color-cyan-600)', marginBottom: '16px'}}>
-                ENTERPRISE PLATFORM
-              </p>
-              <h2>Built on Cloud-Native<br />Microservices Architecture</h2>
-              <p className="text-body" style={{marginBottom: '24px'}}>
-                Our platform is designed for scale, reliability, and performance. Built with modern 
-                cloud-native technologies, we deliver 99.9% uptime SLA with automatic scaling and 
-                redundancy across multiple data centers.
-              </p>
-              <div style={{marginBottom: '32px'}}>
-                <h4 style={{fontSize: '18px', marginBottom: '16px'}}>Core Capabilities:</h4>
-                <div className="grid grid-2" style={{gap: '16px'}}>
-                  <div>
-                    <strong style={{display: 'block', marginBottom: '4px'}}>GSMA Compliant</strong>
-                    <span style={{color: 'var(--color-graphite-600)', fontSize: '14px'}}>Full SM-DP+ integration</span>
-                  </div>
-                  <div>
-                    <strong style={{display: 'block', marginBottom: '4px'}}>Multi-Tenant</strong>
-                    <span style={{color: 'var(--color-graphite-600)', fontSize: '14px'}}>Isolated environments</span>
-                  </div>
-                  <div>
-                    <strong style={{display: 'block', marginBottom: '4px'}}>Real-Time APIs</strong>
-                    <span style={{color: 'var(--color-graphite-600)', fontSize: '14px'}}>Webhooks & events</span>
-                  </div>
-                  <div>
-                    <strong style={{display: 'block', marginBottom: '4px'}}>Auto-Scaling</strong>
-                    <span style={{color: 'var(--color-graphite-600)', fontSize: '14px'}}>Handle any load</span>
-                  </div>
+          {/* Stats */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
+          >
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                style={{
+                  background: 'rgba(248, 249, 250, 0.08)',
+                  backdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  borderRadius: '16px',
+                  padding: '24px',
+                  textAlign: 'center'
+                }}
+              >
+                <div 
+                  style={{ 
+                    fontSize: '36px', 
+                    fontWeight: '800', 
+                    color: '#00FFFF',
+                    marginBottom: '8px',
+                    textShadow: '0 0 20px rgba(0, 255, 255, 0.5)'
+                  }}
+                >
+                  {stat.value}
                 </div>
-              </div>
-              <Link to="/platform" className="btn btn-primary">
-                Explore Platform
-              </Link>
-            </div>
-            <div>
-              {/* Placeholder for architecture diagram */}
-              <div style={{background: 'var(--color-pearl-100)', borderRadius: '12px', padding: '48px', textAlign: 'center', minHeight: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <div>
-                  <p style={{color: 'var(--color-graphite-600)', marginBottom: '16px'}}>Platform Architecture Diagram</p>
-                  <p style={{color: 'var(--color-graphite-500)', fontSize: '14px'}}>Visual representation of microservices,<br />API gateway, and carrier integrations</p>
+                <div style={{ color: '#F8F9FA', fontWeight: '600', marginBottom: '4px' }}>
+                  {stat.label}
                 </div>
-              </div>
-            </div>
-          </div>
+                <div style={{ color: 'rgba(248, 249, 250, 0.6)', fontSize: '12px' }}>
+                  {stat.sublabel}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
+
+        {/* Animated background elements */}
+        <div 
+          className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
+          style={{ 
+            background: 'rgba(0, 255, 255, 0.1)',
+            animation: 'float 6s ease-in-out infinite'
+          }}
+        />
+        <div 
+          className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl"
+          style={{ 
+            background: 'rgba(0, 139, 156, 0.1)',
+            animation: 'float 6s ease-in-out infinite',
+            animationDelay: '2s'
+          }}
+        />
       </section>
 
-      {/* Social Proof - Case Studies */}
-      <section className="section-neutral section-padding-large">
-        <div className="container">
-          <div className="text-center" style={{marginBottom: '64px'}}>
-            <h2>Trusted by Leading Organizations</h2>
-            <p className="text-large" style={{color: 'var(--color-graphite-600)'}}>
-              See how enterprises are transforming connectivity with eSIM Myanmar
+      {/* Features Section */}
+      <section className="py-20" style={{ background: '#1e2f3c' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 
+              className="text-4xl md:text-5xl font-bold mb-4"
+              style={{
+                background: 'linear-gradient(135deg, #F8F9FA 0%, #00FFFF 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}
+            >
+              Advanced eSIM Features
+            </h2>
+            <p style={{ color: 'rgba(248, 249, 250, 0.7)', fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}>
+              Industry-leading eSIM technology with enterprise-grade security and reliability
             </p>
-          </div>
-          
-          <div className="grid grid-3">
-            <div className="card-enterprise">
-              <div style={{color: 'var(--color-cyan-600)', fontSize: '32px', marginBottom: '16px'}}>
-                "
-              </div>
-              <p style={{color: 'var(--color-graphite-700)', fontSize: '18px', fontStyle: 'italic', marginBottom: '24px'}}>
-                eSIM Myanmar enabled us to deploy 50,000 IoT devices across ASEAN in just 3 months. 
-                The platform's reliability and API integration made it seamless.
-              </p>
-              <div style={{borderTop: '1px solid var(--color-pearl-300)', paddingTop: '16px'}}>
-                <strong style={{display: 'block'}}>Regional Logistics Company</strong>
-                <span style={{color: 'var(--color-graphite-500)', fontSize: '14px'}}>Transportation & Fleet Management</span>
-              </div>
-            </div>
+          </motion.div>
 
-            <div className="card-enterprise">
-              <div style={{color: 'var(--color-cyan-600)', fontSize: '32px', marginBottom: '16px'}}>
-                "
-              </div>
-              <p style={{color: 'var(--color-graphite-700)', fontSize: '18px', fontStyle: 'italic', marginBottom: '24px'}}>
-                The security and compliance features met our strict government requirements. 
-                Best-in-class support and local data residency sealed the deal.
-              </p>
-              <div style={{borderTop: '1px solid var(--color-pearl-300)', paddingTop: '16px'}}>
-                <strong style={{display: 'block'}}>Myanmar Government Agency</strong>
-                <span style={{color: 'var(--color-graphite-500)', fontSize: '14px'}}>Public Sector Digital Transformation</span>
-              </div>
-            </div>
-
-            <div className="card-enterprise">
-              <div style={{color: 'var(--color-cyan-600)', fontSize: '32px', marginBottom: '16px'}}>
-                "
-              </div>
-              <p style={{color: 'var(--color-graphite-700)', fontSize: '18px', fontStyle: 'italic', marginBottom: '24px'}}>
-                Cost savings of 40% compared to traditional roaming while improving connectivity 
-                for our international workforce. ROI achieved in 6 months.
-              </p>
-              <div style={{borderTop: '1px solid var(--color-pearl-300)', paddingTop: '16px'}}>
-                <strong style={{display: 'block'}}>Multinational Corporation</strong>
-                <span style={{color: 'var(--color-graphite-500)', fontSize: '14px'}}>Enterprise Mobility Management</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center" style={{marginTop: '48px'}}>
-            <Link to="/case-studies" className="btn btn-secondary">
-              View All Case Studies
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Tiers */}
-      <section className="section-light section-padding-large">
-        <div className="container">
-          <div className="text-center" style={{marginBottom: '64px'}}>
-            <h2>Transparent Enterprise Pricing</h2>
-            <p className="text-large" style={{color: 'var(--color-graphite-600)'}}>
-              Choose the plan that fits your organization's needs
-            </p>
-          </div>
-          
-          <div className="grid grid-3">
-            <div className="card-enterprise">
-              <h4>Business</h4>
-              <div style={{margin: '24px 0'}}>
-                <div style={{fontSize: '48px', fontWeight: 'bold', color: 'var(--color-navy-900)'}}>
-                  $299
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                style={{
+                  background: 'rgba(248, 249, 250, 0.05)',
+                  backdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '16px',
+                  padding: '32px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                <div 
+                  style={{
+                    width: '56px',
+                    height: '56px',
+                    background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(0, 139, 156, 0.2))',
+                    borderRadius: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '20px',
+                    fontSize: '24px',
+                    fontWeight: '800',
+                    color: '#00FFFF'
+                  }}
+                >
+                  {feature.icon}
                 </div>
-                <div style={{color: 'var(--color-graphite-500)'}}>per month</div>
-              </div>
-              <p style={{color: 'var(--color-graphite-600)', marginBottom: '24px'}}>
-                For small to medium businesses
-              </p>
-              <ul style={{paddingLeft: '20px', marginBottom: '32px', color: 'var(--color-graphite-700)'}}>
-                <li>Up to 100 users</li>
-                <li>Basic API access</li>
-                <li>Email support</li>
-                <li>99% uptime SLA</li>
-                <li>Standard reporting</li>
-              </ul>
-              <Link to="/pricing" className="btn btn-secondary" style={{width: '100%'}}>
-                Get Started
-              </Link>
-            </div>
-
-            <div className="card-enterprise" style={{border: '2px solid var(--color-cyan-600)', position: 'relative'}}>
-              <div style={{position: 'absolute', top: '-16px', left: '50%', transform: 'translateX(-50%)', background: 'var(--color-cyan-600)', color: 'white', padding: '6px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: '600'}}>
-                MOST POPULAR
-              </div>
-              <h4>Enterprise</h4>
-              <div style={{margin: '24px 0'}}>
-                <div style={{fontSize: '48px', fontWeight: 'bold', color: 'var(--color-navy-900)'}}>
-                  $999
-                </div>
-                <div style={{color: 'var(--color-graphite-500)'}}>per month</div>
-              </div>
-              <p style={{color: 'var(--color-graphite-600)', marginBottom: '24px'}}>
-                For growing enterprises
-              </p>
-              <ul style={{paddingLeft: '20px', marginBottom: '32px', color: 'var(--color-graphite-700)'}}>
-                <li>Up to 1,000 users</li>
-                <li>Full API access</li>
-                <li>Priority support</li>
-                <li>99.9% uptime SLA</li>
-                <li>Advanced analytics</li>
-                <li>Dedicated account manager</li>
-              </ul>
-              <Link to="/pricing" className="btn btn-primary" style={{width: '100%'}}>
-                Get Started
-              </Link>
-            </div>
-
-            <div className="card-enterprise">
-              <h4>Custom</h4>
-              <div style={{margin: '24px 0'}}>
-                <div style={{fontSize: '48px', fontWeight: 'bold', color: 'var(--color-navy-900)'}}>
-                  Custom
-                </div>
-                <div style={{color: 'var(--color-graphite-500)'}}>contact sales</div>
-              </div>
-              <p style={{color: 'var(--color-graphite-600)', marginBottom: '24px'}}>
-                For large organizations
-              </p>
-              <ul style={{paddingLeft: '20px', marginBottom: '32px', color: 'var(--color-graphite-700)'}}>
-                <li>Unlimited users</li>
-                <li>Custom integration</li>
-                <li>24/7 support</li>
-                <li>99.99% uptime SLA</li>
-                <li>Custom reporting</li>
-                <li>On-premise options</li>
-                <li>Professional services</li>
-              </ul>
-              <Link to="/contact-sales" className="btn btn-secondary" style={{width: '100%'}}>
-                Contact Sales
-              </Link>
-            </div>
-          </div>
+                <h3 style={{ color: '#F8F9FA', fontSize: '20px', fontWeight: '700', marginBottom: '4px' }}>
+                  {feature.title}
+                </h3>
+                <p style={{ color: '#00FFFF', fontSize: '14px', marginBottom: '12px' }}>
+                  {feature.subtitle}
+                </p>
+                <p style={{ color: 'rgba(248, 249, 250, 0.7)', fontSize: '14px', lineHeight: '1.6' }}>
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section-dark section-padding-large">
-        <div className="container text-center">
-          <h2 style={{color: 'white', marginBottom: '24px'}}>
-            Ready to Transform Your Connectivity?
-          </h2>
-          <p className="text-large" style={{color: 'var(--color-pearl-200)', maxWidth: '640px', margin: '0 auto 40px'}}>
-            Join leading organizations in Myanmar and ASEAN who trust eSIM Myanmar for 
-            their enterprise connectivity needs.
-          </p>
-          <div className="flex gap-md" style={{justifyContent: 'center', flexWrap: 'wrap'}}>
-            <Link to="/request-demo" className="btn btn-primary btn-large">
-              Request a Demo
-            </Link>
-            <Link to="/contact-sales" className="btn btn-secondary btn-large">
-              Talk to Sales
-            </Link>
-          </div>
-          <div style={{marginTop: '48px', paddingTop: '48px', borderTop: '1px solid rgba(255,255,255,0.2)'}}>
-            <p style={{color: 'var(--color-pearl-300)', marginBottom: '16px'}}>
-              Questions? Contact our enterprise team
+      <section className="py-20" style={{ background: 'linear-gradient(135deg, #1e2f3c 0%, #2a4a5c 100%)' }}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{
+              background: 'rgba(248, 249, 250, 0.08)',
+              backdropFilter: 'blur(16px)',
+              border: '1px solid rgba(0, 255, 255, 0.3)',
+              borderRadius: '24px',
+              padding: '48px',
+              boxShadow: '0 0 40px rgba(0, 255, 255, 0.15)'
+            }}
+          >
+            <h2 
+              className="text-4xl font-bold mb-6"
+              style={{ color: '#00FFFF' }}
+            >
+              Ready to Get Started?
+            </h2>
+            <p style={{ color: 'rgba(248, 249, 250, 0.8)', fontSize: '18px', marginBottom: '32px' }}>
+              Join 50 million users across ASEAN experiencing the future of mobile connectivity
             </p>
-            <div className="flex gap-lg" style={{justifyContent: 'center', color: 'white', fontSize: '18px', flexWrap: 'wrap'}}>
-              <div>
-                <strong>Email:</strong> enterprise@esim.com.mm
-              </div>
-              <div>
-                <strong>Phone:</strong> +95 9 650 000 172
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/register"
+                style={{
+                  background: 'linear-gradient(135deg, #00FFFF 0%, #008B9C 100%)',
+                  color: '#1e2f3c',
+                  padding: '16px 32px',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  textDecoration: 'none'
+                }}
+              >
+                Create Account
+              </Link>
+              <Link
+                to="/support"
+                style={{
+                  background: 'transparent',
+                  color: '#F8F9FA',
+                  padding: '14px 30px',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                  border: '2px solid rgba(248, 249, 250, 0.3)'
+                }}
+              >
+                Contact Sales
+              </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
+
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+      `}</style>
     </div>
   );
 };
