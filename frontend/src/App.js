@@ -98,6 +98,10 @@ function App() {
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/refund-policy" element={<RefundPolicy />} />
                   <Route path="/cookie-policy" element={<CookiePolicy />} />
+                  
+                  {/* Enterprise Pages */}
+                  <Route path="/audit-dashboard" element={<EnterpriseAuditDashboard />} />
+                  <Route path="/iot-dashboard" element={<IoTDashboard />} />
                 </Routes>
               </Suspense>
             </main>
