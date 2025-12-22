@@ -72,25 +72,7 @@ const Navigation = () => {
             className="flex items-center gap-2 sm:gap-3 group" 
             aria-label="eSIM Myanmar Home"
           >
-            <div 
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105"
-              style={{
-                background: 'linear-gradient(135deg, #00FFFF 0%, #00CCCC 100%)',
-                boxShadow: '0 4px 16px rgba(0, 255, 255, 0.3)'
-              }}
-            >
-              <span className="text-lg sm:text-xl font-bold" style={{ color: '#1e2f3c' }}>e</span>
-            </div>
-            <span 
-              className="text-base sm:text-lg font-bold hidden sm:block"
-              style={{ 
-                background: 'linear-gradient(135deg, #00FFFF 0%, #60A5FA 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}
-            >
-              eSIM Myanmar
-            </span>
+            <Logo size="default" showText={true} />
           </Link>
 
           {/* Desktop Navigation */}
