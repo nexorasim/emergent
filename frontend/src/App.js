@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -8,6 +8,7 @@ import SeasonalBanner from './components/SeasonalBanner';
 import SeasonalSanta from './components/SeasonalSanta';
 import ChristmasMusic from './components/ChristmasMusic';
 import NexoraAIChat from './components/NexoraAIChat';
+import initCopyProtection from './utils/copyProtection';
 import './styles/design-system.css';
 import './App.css';
 
