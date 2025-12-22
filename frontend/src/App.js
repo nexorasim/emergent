@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import SeasonalBanner from './components/SeasonalBanner';
 import SeasonalSanta from './components/SeasonalSanta';
 import ChristmasMusic from './components/ChristmasMusic';
+import NexoraAIChat from './components/NexoraAIChat';
 
 import HomePage from './pages/Home';
 import PlansPage from './pages/Plans';
@@ -49,6 +50,7 @@ function App() {
           </div>
           <SeasonalSanta />
           <ChristmasMusic />
+          <NexoraAIChat />
         </Router>
       </AuthProvider>
     </LanguageProvider>
