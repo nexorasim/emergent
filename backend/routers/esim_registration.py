@@ -388,6 +388,31 @@ async def get_providers():
     return {"providers": providers}
 
 
+@router.get("/nexora-ai/status")
+async def get_nexora_ai_status():
+    """
+    Get Nexora AI system status and capabilities
+    """
+    return {
+        "success": True,
+        "data": nexora_ai.get_system_status(),
+        "timestamp": datetime.utcnow().isoformat()
+    }
+
+
+@router.get("/nexora-ai/audit-log")
+async def get_audit_log(limit: int = 50):
+    """
+    Get Nexora AI audit log entries
+    """
+    return {
+        "success": True,
+        "entries": nexora_ai.get_audit_log(limit),
+        "total": len(nexora_ai.audit_log),
+        "timestamp": datetime.utcnow().isoformat()
+    }
+
+
 # Helper functions
 
 def _get_status_message(status: VerificationStatus) -> str:
