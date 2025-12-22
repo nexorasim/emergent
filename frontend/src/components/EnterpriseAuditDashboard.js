@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Chart component using canvas for performance
 const LineChart = ({ data, color = '#00FFFF', height = 120, animated = true }) => {
@@ -292,12 +292,12 @@ const StatusBadge = ({ status, label }) => {
 const EnterpriseAuditDashboard = () => {
   const [activeNav, setActiveNav] = useState('dashboard');
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [metrics, setMetrics] = useState({
+  const metrics = {
     activeESIMs: 52847,
     dailyActivations: 1284,
     networkUptime: 99.94,
     revenue: 154.08
-  });
+  };
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);

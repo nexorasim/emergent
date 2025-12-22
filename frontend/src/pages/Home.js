@@ -5,7 +5,7 @@
  * Zero emoji - Professional enterprise design
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import Countdown2026 from '../components/Countdown2026';

@@ -9,74 +9,73 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import api from '../utils/api';
 
+// Default plans if API fails
+const DEFAULT_PLANS = [
+  {
+    plan_id: 'basic',
+    name: 'Basic',
+    price: 15000,
+    currency: 'MMK',
+    data_gb: 5,
+    validity_days: 30,
+    features: ['5G Network Access', 'VoLTE Enabled', 'Myanmar Coverage', '24/7 Support'],
+    popular: false
+  },
+  {
+    plan_id: 'standard',
+    name: 'Standard',
+    price: 35000,
+    currency: 'MMK',
+    data_gb: 15,
+    validity_days: 30,
+    features: ['5G Network Access', 'VoLTE Enabled', 'ASEAN Roaming', 'Priority Support', 'Multi-device'],
+    popular: true
+  },
+  {
+    plan_id: 'premium',
+    name: 'Premium',
+    price: 75000,
+    currency: 'MMK',
+    data_gb: 50,
+    validity_days: 30,
+    features: ['5G Network Access', 'VoLTE Enabled', 'Global Roaming 190+ Countries', 'Dedicated Support', 'Multi-device', 'Entertainment Bundle'],
+    popular: false
+  },
+  {
+    plan_id: 'enterprise',
+    name: 'Enterprise',
+    price: 150000,
+    currency: 'MMK',
+    data_gb: 100,
+    validity_days: 30,
+    features: ['5G Network Access', 'VoLTE Enabled', 'Global Roaming Unlimited', 'Account Manager', 'Unlimited Devices', 'Full Entertainment Suite', 'SLA 99.9%'],
+    popular: false
+  }
+];
+
 const PlansPage = () => {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState('monthly');
 
-  // Default plans if API fails
-  const defaultPlans = [
-    {
-      plan_id: 'basic',
-      name: 'Basic',
-      price: 15000,
-      currency: 'MMK',
-      data_gb: 5,
-      validity_days: 30,
-      features: ['5G Network Access', 'VoLTE Enabled', 'Myanmar Coverage', '24/7 Support'],
-      popular: false
-    },
-    {
-      plan_id: 'standard',
-      name: 'Standard',
-      price: 35000,
-      currency: 'MMK',
-      data_gb: 15,
-      validity_days: 30,
-      features: ['5G Network Access', 'VoLTE Enabled', 'ASEAN Roaming', 'Priority Support', 'Multi-device'],
-      popular: true
-    },
-    {
-      plan_id: 'premium',
-      name: 'Premium',
-      price: 75000,
-      currency: 'MMK',
-      data_gb: 50,
-      validity_days: 30,
-      features: ['5G Network Access', 'VoLTE Enabled', 'Global Roaming 190+ Countries', 'Dedicated Support', 'Multi-device', 'Entertainment Bundle'],
-      popular: false
-    },
-    {
-      plan_id: 'enterprise',
-      name: 'Enterprise',
-      price: 150000,
-      currency: 'MMK',
-      data_gb: 100,
-      validity_days: 30,
-      features: ['5G Network Access', 'VoLTE Enabled', 'Global Roaming Unlimited', 'Account Manager', 'Unlimited Devices', 'Full Entertainment Suite', 'SLA 99.9%'],
-      popular: false
-    }
-  ];
-
   useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const response = await api.get('/plans');
+        if (response.data?.plans?.length > 0) {
+          setPlans(response.data.plans);
+        } else {
+          setPlans(DEFAULT_PLANS);
+        }
+      } catch (error) {
+        console.error('Using default plans');
+        setPlans(DEFAULT_PLANS);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchPlans();
   }, []);
-
-  const fetchPlans = async () => {
-    try {
-      const response = await api.get('/plans');
-      if (response.data?.plans?.length > 0) {
-        setPlans(response.data.plans);
-      } else {
-        setPlans(defaultPlans);
-      }
-    } catch (error) {
-      console.error('Using default plans');
-      setPlans(defaultPlans);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return (

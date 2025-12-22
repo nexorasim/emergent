@@ -51,7 +51,6 @@ const ChristmasMusic = () => {
   const [showPanel, setShowPanel] = useState(false);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [ready, setReady] = useState(false);
   const [loadingText, setLoadingText] = useState('Initializing...');
 
   // Initialize audio with loading animation
@@ -86,7 +85,6 @@ const ChristmasMusic = () => {
       
       setTimeout(() => {
         setLoading(false);
-        setReady(true);
       }, 400);
       
       return audioCtxRef.current;
