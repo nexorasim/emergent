@@ -1,13 +1,13 @@
 /**
- * NexoraAIChat.js - Nexora AI Assistant Chat Interface
- * Premium UI/UX floating chat widget for eSIM support
- * Supports MPT, ATOM, U9, MYTEL queries
+ * NexoraAIChat.js - Premium AI Assistant Interface
+ * 2026 UI/UX Glassmorphism Design
+ * MPT, ATOM, U9, MYTEL eSIM Support
  */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// AI Knowledge Base
+// AI Knowledge Base - 4 Providers
 const AI_KNOWLEDGE = {
   providers: {
     MPT: {
@@ -19,7 +19,8 @@ const AI_KNOWLEDGE = {
       maxEsim: 3,
       transferCooldown: '30 days',
       coverage: 'Nationwide coverage with 5G in major cities',
-      prefixes: ['09', '097', '098']
+      prefixes: ['09', '097', '098'],
+      color: '#FFD700'
     },
     ATOM: {
       name: 'ATOM',
@@ -30,7 +31,8 @@ const AI_KNOWLEDGE = {
       maxEsim: 2,
       transferCooldown: '14 days',
       coverage: 'Urban and suburban coverage',
-      prefixes: ['094', '0944', '0945']
+      prefixes: ['094', '0944', '0945'],
+      color: '#FF6B35'
     },
     U9: {
       name: 'U9',
@@ -41,7 +43,8 @@ const AI_KNOWLEDGE = {
       maxEsim: 2,
       transferCooldown: '14 days',
       coverage: 'Urban areas with youth-focused plans',
-      prefixes: ['094', '0943']
+      prefixes: ['094', '0943'],
+      color: '#9B59B6'
     },
     MYTEL: {
       name: 'MYTEL',
@@ -52,7 +55,8 @@ const AI_KNOWLEDGE = {
       maxEsim: 3,
       transferCooldown: '7 days',
       coverage: 'Expanding nationwide coverage',
-      prefixes: ['096', '0966', '0967', '0968', '0969']
+      prefixes: ['096', '0966', '0967', '0968', '0969'],
+      color: '#00A651'
     }
   },
   faqs: [
@@ -65,28 +69,19 @@ const AI_KNOWLEDGE = {
   ]
 };
 
-// AI Response Generator
 const generateAIResponse = (query) => {
   const lowerQuery = query.toLowerCase();
   
-  // Check for provider-specific queries
   for (const [key, provider] of Object.entries(AI_KNOWLEDGE.providers)) {
     if (lowerQuery.includes(key.toLowerCase()) || lowerQuery.includes(provider.name.toLowerCase())) {
       return {
         type: 'provider',
-        content: `Here is information about ${provider.fullName}:\n\n` +
-          `- eSIM Price: ${provider.esimPrice}\n` +
-          `- 5G Support: ${provider.supports5G ? 'Yes' : 'No'}\n` +
-          `- VoLTE Support: ${provider.supportsVoLTE ? 'Yes' : 'No'}\n` +
-          `- Max eSIM per user: ${provider.maxEsim}\n` +
-          `- Transfer Cooldown: ${provider.transferCooldown}\n` +
-          `- Coverage: ${provider.coverage}\n` +
-          `- Phone Prefixes: ${provider.prefixes.join(', ')}`
+        provider: key,
+        content: `${provider.fullName}\n\neSIM Price: ${provider.esimPrice}\n5G Support: ${provider.supports5G ? 'Yes' : 'No'}\nVoLTE Support: ${provider.supportsVoLTE ? 'Yes' : 'No'}\nMax eSIM: ${provider.maxEsim}\nTransfer Cooldown: ${provider.transferCooldown}\nCoverage: ${provider.coverage}\nPhone Prefixes: ${provider.prefixes.join(', ')}`
       };
     }
   }
   
-  // Check for FAQ matches
   for (const faq of AI_KNOWLEDGE.faqs) {
     const keywords = faq.q.toLowerCase().split(' ').filter(w => w.length > 3);
     const matchCount = keywords.filter(kw => lowerQuery.includes(kw)).length;
@@ -95,35 +90,29 @@ const generateAIResponse = (query) => {
     }
   }
   
-  // Price query
   if (lowerQuery.includes('price') || lowerQuery.includes('cost') || lowerQuery.includes('how much')) {
     return { type: 'info', content: 'eSIM activation costs 120,000 MMK for all providers (MPT, ATOM, U9, MYTEL). This includes instant activation and QR code delivery.' };
   }
   
-  // Device query
   if (lowerQuery.includes('device') || lowerQuery.includes('iphone') || lowerQuery.includes('samsung') || lowerQuery.includes('android')) {
-    return { type: 'info', content: 'eSIM is supported on:\n\n- iPhone XS and newer\n- iPad Pro (3rd gen+), iPad Air (3rd gen+)\n- Apple Watch Series 3+\n- Samsung Galaxy S20+, Z Fold, Z Flip\n- Google Pixel 3+\n- Huawei P40+\n- Xiaomi 12+\n- OnePlus 9+\n\nCheck your device settings for eSIM compatibility.' };
+    return { type: 'info', content: 'eSIM Supported Devices:\n\niPhone XS and newer\niPad Pro (3rd gen+), iPad Air (3rd gen+)\nApple Watch Series 3+\nSamsung Galaxy S20+, Z Fold, Z Flip\nGoogle Pixel 3+\nHuawei P40+\nXiaomi 12+\nOnePlus 9+' };
   }
   
-  // Activation query
   if (lowerQuery.includes('activate') || lowerQuery.includes('how to') || lowerQuery.includes('setup')) {
-    return { type: 'steps', content: 'To activate your eSIM:\n\n1. Complete registration at /esim-register\n2. Select your provider (MPT, ATOM, U9, or MYTEL)\n3. Enter your phone number\n4. Verify device compatibility\n5. Complete MMQR payment (120,000 MMK)\n6. Receive your eSIM QR code\n7. Scan QR code in device settings\n8. Your eSIM is now active' };
+    return { type: 'steps', content: 'eSIM Activation Steps:\n\n1. Go to /esim-register\n2. Select provider (MPT, ATOM, U9, MYTEL)\n3. Enter phone number\n4. Verify device compatibility\n5. Complete MMQR payment (120,000 MMK)\n6. Receive eSIM QR code\n7. Scan QR in device settings\n8. eSIM activated' };
   }
   
-  // Transfer query
   if (lowerQuery.includes('transfer') || lowerQuery.includes('move') || lowerQuery.includes('new phone')) {
-    return { type: 'info', content: 'eSIM Transfer Information:\n\n- MPT: 30-day cooldown between transfers\n- ATOM/U9: 14-day cooldown\n- MYTEL: 7-day cooldown\n\nTo transfer, log into your dashboard and select "Transfer eSIM". You can transfer between Android and iOS devices.' };
+    return { type: 'info', content: 'eSIM Transfer Cooldowns:\n\nMPT: 30 days\nATOM: 14 days\nU9: 14 days\nMYTEL: 7 days\n\nTransfer between Android and iOS supported.' };
   }
   
-  // Payment query
   if (lowerQuery.includes('payment') || lowerQuery.includes('pay') || lowerQuery.includes('mmqr')) {
-    return { type: 'info', content: 'Payment Methods:\n\n- MMQR (Myanmar QR Payment)\n- KBZ Pay\n- Wave Money\n- AYA Pay\n\nAll payments are processed securely. After payment verification, your eSIM QR code will be generated instantly.' };
+    return { type: 'info', content: 'Payment Methods:\n\nMMQR (Myanmar QR Payment)\nKBZ Pay\nWave Money\nAYA Pay\n\nAll payments processed securely with instant QR code delivery.' };
   }
   
-  // Default response
   return { 
     type: 'default', 
-    content: 'I can help you with:\n\n- eSIM pricing and activation\n- Provider information (MPT, ATOM, U9, MYTEL)\n- Device compatibility\n- Payment methods\n- eSIM transfer between devices\n\nPlease ask a specific question or type "help" for more options.' 
+    content: 'I can help you with:\n\neSIM pricing and activation\nProvider info (MPT, ATOM, U9, MYTEL)\nDevice compatibility\nPayment methods\neSIM transfer\n\nAsk a specific question or tap a provider below.' 
   };
 };
 
@@ -133,7 +122,7 @@ const NexoraAIChat = () => {
     { 
       id: 1, 
       type: 'ai', 
-      content: 'Hello! I am Nexora AI, your eSIM assistant. How can I help you today?\n\nYou can ask me about:\n- MPT, ATOM, U9, MYTEL eSIM\n- Pricing and activation\n- Device compatibility\n- Payment methods',
+      content: 'Hello! I am Nexora AI, your eSIM assistant.\n\nI can help with:\nMPT, ATOM, U9, MYTEL eSIM\nPricing and activation\nDevice compatibility\nPayment methods',
       timestamp: new Date()
     }
   ]);
@@ -170,7 +159,6 @@ const NexoraAIChat = () => {
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate AI thinking
     setTimeout(() => {
       const response = generateAIResponse(userMessage.content);
       const aiMessage = {
@@ -178,25 +166,55 @@ const NexoraAIChat = () => {
         type: 'ai',
         content: response.content,
         responseType: response.type,
+        provider: response.provider,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, aiMessage]);
       setIsTyping(false);
-    }, 800 + Math.random() * 700);
+    }, 600 + Math.random() * 400);
   }, [inputValue]);
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
 
-  const quickActions = [
-    { label: 'MPT', query: 'Tell me about MPT eSIM' },
-    { label: 'ATOM', query: 'Tell me about ATOM eSIM' },
-    { label: 'U9', query: 'Tell me about U9 eSIM' },
-    { label: 'MYTEL', query: 'Tell me about MYTEL eSIM' }
+  const handleQuickAction = (query) => {
+    setInputValue(query);
+    setTimeout(() => {
+      const userMessage = {
+        id: Date.now(),
+        type: 'user',
+        content: query,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, userMessage]);
+      setIsTyping(true);
+
+      setTimeout(() => {
+        const response = generateAIResponse(query);
+        const aiMessage = {
+          id: Date.now() + 1,
+          type: 'ai',
+          content: response.content,
+          responseType: response.type,
+          provider: response.provider,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, aiMessage]);
+        setIsTyping(false);
+        setInputValue('');
+      }, 600);
+    }, 100);
+  };
+
+  const providers = [
+    { id: 'MPT', color: '#FFD700' },
+    { id: 'ATOM', color: '#FF6B35' },
+    { id: 'U9', color: '#9B59B6' },
+    { id: 'MYTEL', color: '#00A651' }
   ];
 
   return (
@@ -204,7 +222,6 @@ const NexoraAIChat = () => {
       {/* Chat Toggle Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="nexora-chat-toggle"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         style={{
@@ -213,51 +230,54 @@ const NexoraAIChat = () => {
           left: '20px',
           width: '60px',
           height: '60px',
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)',
-          border: 'none',
+          borderRadius: '16px',
+          background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.95) 0%, rgba(22, 36, 48, 0.98) 100%)',
+          backdropFilter: 'blur(20px)',
+          border: isOpen ? '2px solid #00FFFF' : '1px solid rgba(0, 255, 255, 0.3)',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 4px 20px rgba(0, 255, 255, 0.4)',
+          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.15)',
           zIndex: 1000
         }}
       >
         {isOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" strokeWidth="2.5">
             <line x1="18" y1="6" x2="6" y2="18"/>
             <line x1="6" y1="6" x2="18" y2="18"/>
           </svg>
         ) : (
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            <circle cx="12" cy="10" r="1" fill="#1e2f3c"/>
-            <circle cx="8" cy="10" r="1" fill="#1e2f3c"/>
-            <circle cx="16" cy="10" r="1" fill="#1e2f3c"/>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" strokeWidth="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
           </svg>
         )}
       </motion.button>
 
       {/* Badge */}
       {!isOpen && (
-        <div
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
           style={{
             position: 'fixed',
-            bottom: '85px',
+            bottom: '88px',
             left: '20px',
-            background: '#1e2f3c',
+            background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.95) 0%, rgba(22, 36, 48, 0.98) 100%)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(0, 255, 255, 0.3)',
             color: '#00FFFF',
-            padding: '6px 12px',
-            borderRadius: '12px',
-            fontSize: '11px',
+            padding: '8px 14px',
+            borderRadius: '10px',
+            fontSize: '12px',
             fontWeight: '600',
             zIndex: 999,
-            border: '1px solid rgba(0, 255, 255, 0.3)'
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
           }}
         >
           Ask Nexora AI
-        </div>
+        </motion.div>
       )}
 
       {/* Chat Window */}
@@ -274,12 +294,13 @@ const NexoraAIChat = () => {
               left: '20px',
               width: '380px',
               maxWidth: 'calc(100vw - 40px)',
-              height: '500px',
+              height: '520px',
               maxHeight: 'calc(100vh - 120px)',
-              background: 'linear-gradient(180deg, #1e2f3c 0%, #162430 100%)',
-              borderRadius: '16px',
-              border: '1px solid rgba(0, 255, 255, 0.2)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+              background: 'linear-gradient(180deg, rgba(30, 47, 60, 0.98) 0%, rgba(22, 36, 48, 0.99) 100%)',
+              backdropFilter: 'blur(20px)',
+              borderRadius: '20px',
+              border: '1px solid rgba(0, 255, 255, 0.25)',
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 255, 255, 0.1)',
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
@@ -291,7 +312,7 @@ const NexoraAIChat = () => {
               style={{
                 padding: '16px 20px',
                 background: 'linear-gradient(90deg, rgba(0, 255, 255, 0.1) 0%, transparent 100%)',
-                borderBottom: '1px solid rgba(0, 255, 255, 0.1)',
+                borderBottom: '1px solid rgba(0, 255, 255, 0.15)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px'
@@ -299,16 +320,17 @@ const NexoraAIChat = () => {
             >
               <div
                 style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '10px',
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '12px',
                   background: 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 15px rgba(0, 255, 255, 0.3)'
                 }}
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2.5">
                   <circle cx="12" cy="12" r="3"/>
                   <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
                 </svg>
@@ -351,12 +373,13 @@ const NexoraAIChat = () => {
                       borderRadius: msg.type === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
                       background: msg.type === 'user' 
                         ? 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)'
-                        : 'rgba(255, 255, 255, 0.05)',
+                        : 'rgba(255, 255, 255, 0.06)',
                       color: msg.type === 'user' ? '#1e2f3c' : '#F8F9FA',
                       fontSize: '14px',
                       lineHeight: '1.5',
                       whiteSpace: 'pre-wrap',
-                      border: msg.type === 'ai' ? '1px solid rgba(0, 255, 255, 0.1)' : 'none'
+                      border: msg.type === 'ai' ? '1px solid rgba(0, 255, 255, 0.15)' : 'none',
+                      boxShadow: msg.type === 'user' ? '0 4px 15px rgba(0, 255, 255, 0.2)' : 'none'
                     }}
                   >
                     {msg.content}
@@ -368,13 +391,13 @@ const NexoraAIChat = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  style={{ display: 'flex', gap: '4px', padding: '12px 16px' }}
+                  style={{ display: 'flex', gap: '6px', padding: '12px 16px' }}
                 >
                   {[0, 1, 2].map((i) => (
                     <motion.div
                       key={i}
-                      animate={{ y: [0, -5, 0] }}
-                      transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
+                      animate={{ y: [0, -6, 0] }}
+                      transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.12 }}
                       style={{
                         width: '8px',
                         height: '8px',
@@ -388,37 +411,33 @@ const NexoraAIChat = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick Actions */}
+            {/* Provider Quick Actions */}
             <div
               style={{
-                padding: '8px 16px',
+                padding: '12px 16px',
+                borderTop: '1px solid rgba(0, 255, 255, 0.1)',
                 display: 'flex',
                 gap: '8px',
-                flexWrap: 'wrap',
-                borderTop: '1px solid rgba(0, 255, 255, 0.1)'
+                justifyContent: 'center'
               }}
             >
-              {quickActions.map((action, i) => (
+              {providers.map((p) => (
                 <button
-                  key={i}
-                  onClick={() => {
-                    setInputValue(action.query);
-                    setTimeout(() => handleSend(), 100);
-                  }}
+                  key={p.id}
+                  onClick={() => handleQuickAction(`Tell me about ${p.id} eSIM`)}
                   style={{
-                    padding: '6px 12px',
-                    borderRadius: '12px',
-                    background: 'rgba(0, 255, 255, 0.1)',
-                    border: '1px solid rgba(0, 255, 255, 0.2)',
-                    color: '#00FFFF',
-                    fontSize: '11px',
+                    padding: '8px 16px',
+                    borderRadius: '10px',
+                    background: `${p.color}20`,
+                    border: `1px solid ${p.color}50`,
+                    color: p.color,
+                    fontSize: '12px',
+                    fontWeight: '700',
                     cursor: 'pointer',
                     transition: 'all 0.2s'
                   }}
-                  onMouseEnter={(e) => e.target.style.background = 'rgba(0, 255, 255, 0.2)'}
-                  onMouseLeave={(e) => e.target.style.background = 'rgba(0, 255, 255, 0.1)'}
                 >
-                  {action.label}
+                  {p.id}
                 </button>
               ))}
             </div>
@@ -426,7 +445,7 @@ const NexoraAIChat = () => {
             {/* Input */}
             <div
               style={{
-                padding: '12px 16px',
+                padding: '12px 16px 16px',
                 borderTop: '1px solid rgba(0, 255, 255, 0.1)',
                 display: 'flex',
                 gap: '12px',
@@ -438,13 +457,13 @@ const NexoraAIChat = () => {
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyPress}
+                onKeyDown={handleKeyDown}
                 placeholder="Ask about eSIM..."
                 style={{
                   flex: 1,
-                  padding: '12px 16px',
+                  padding: '14px 18px',
                   borderRadius: '12px',
-                  background: 'rgba(255, 255, 255, 0.05)',
+                  background: 'rgba(255, 255, 255, 0.06)',
                   border: '1px solid rgba(0, 255, 255, 0.2)',
                   color: '#F8F9FA',
                   fontSize: '14px',
@@ -455,8 +474,8 @@ const NexoraAIChat = () => {
                 onClick={handleSend}
                 disabled={!inputValue.trim()}
                 style={{
-                  width: '44px',
-                  height: '44px',
+                  width: '48px',
+                  height: '48px',
                   borderRadius: '12px',
                   background: inputValue.trim() 
                     ? 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)'
@@ -466,10 +485,10 @@ const NexoraAIChat = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: 'all 0.2s'
+                  boxShadow: inputValue.trim() ? '0 4px 15px rgba(0, 255, 255, 0.3)' : 'none'
                 }}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={inputValue.trim() ? '#1e2f3c' : '#666'} strokeWidth="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={inputValue.trim() ? '#1e2f3c' : '#666'} strokeWidth="2.5">
                   <line x1="22" y1="2" x2="11" y2="13"/>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                 </svg>
