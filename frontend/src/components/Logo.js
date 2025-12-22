@@ -24,6 +24,7 @@ const MiniSanta = ({ size = 28 }) => (
     fill="none"
     animate={{ y: [0, -2, 0], rotate: [0, 3, 0, -3, 0] }}
     transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+    style={{ display: 'block' }}
   >
     <defs>
       <linearGradient id="santaBody" x1="50%" y1="0%" x2="50%" y2="100%">
