@@ -1,13 +1,12 @@
 /**
- * NexoraAIChat.js - Premium AI Assistant Interface
- * 2026 UI/UX Glassmorphism Design
- * MPT, ATOM, U9, MYTEL eSIM Support
+ * NexoraAIChat.js - Full Screen AI Assistant
+ * ESIM MYANMAR COMPANY LIMITED
+ * Premium Glassmorphism Design
  */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// AI Knowledge Base - 4 Providers
 const AI_KNOWLEDGE = {
   providers: {
     MPT: {
@@ -116,6 +115,7 @@ const generateAIResponse = (query) => {
   };
 };
 
+
 const NexoraAIChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -143,22 +143,27 @@ const NexoraAIChat = () => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isOpen]);
 
   const handleSend = useCallback(() => {
     if (!inputValue.trim()) return;
-
     const userMessage = {
       id: Date.now(),
       type: 'user',
       content: inputValue.trim(),
       timestamp: new Date()
     };
-
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsTyping(true);
-
     setTimeout(() => {
       const response = generateAIResponse(userMessage.content);
       const aiMessage = {
@@ -184,25 +189,12 @@ const NexoraAIChat = () => {
   const handleQuickAction = (query) => {
     setInputValue(query);
     setTimeout(() => {
-      const userMessage = {
-        id: Date.now(),
-        type: 'user',
-        content: query,
-        timestamp: new Date()
-      };
+      const userMessage = { id: Date.now(), type: 'user', content: query, timestamp: new Date() };
       setMessages(prev => [...prev, userMessage]);
       setIsTyping(true);
-
       setTimeout(() => {
         const response = generateAIResponse(query);
-        const aiMessage = {
-          id: Date.now() + 1,
-          type: 'ai',
-          content: response.content,
-          responseType: response.type,
-          provider: response.provider,
-          timestamp: new Date()
-        };
+        const aiMessage = { id: Date.now() + 1, type: 'ai', content: response.content, responseType: response.type, provider: response.provider, timestamp: new Date() };
         setMessages(prev => [...prev, aiMessage]);
         setIsTyping(false);
         setInputValue('');
@@ -217,20 +209,29 @@ const NexoraAIChat = () => {
     { id: 'MYTEL', color: '#00A651' }
   ];
 
+  const quickQuestions = [
+    'What is eSIM?',
+    'How much does it cost?',
+    'Supported devices',
+    'How to activate?',
+    'Payment methods'
+  ];
+
+
   return (
     <>
-      {/* Chat Toggle Button */}
+      {/* Toggle Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         style={{
           position: 'fixed',
-          bottom: '20px',
-          left: '20px',
-          width: '60px',
-          height: '60px',
-          borderRadius: '16px',
+          bottom: '24px',
+          left: '24px',
+          width: '64px',
+          height: '64px',
+          borderRadius: '20px',
           background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.95) 0%, rgba(22, 36, 48, 0.98) 100%)',
           backdropFilter: 'blur(20px)',
           border: isOpen ? '2px solid #00FFFF' : '1px solid rgba(0, 255, 255, 0.3)',
@@ -238,17 +239,17 @@ const NexoraAIChat = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.15)',
-          zIndex: 1000
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 255, 255, 0.2)',
+          zIndex: 9999
         }}
       >
         {isOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" strokeWidth="2.5">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" strokeWidth="2.5">
             <line x1="18" y1="6" x2="6" y2="18"/>
             <line x1="6" y1="6" x2="18" y2="18"/>
           </svg>
         ) : (
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" strokeWidth="2">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" strokeWidth="2">
             <circle cx="12" cy="12" r="3"/>
             <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
           </svg>
@@ -262,237 +263,331 @@ const NexoraAIChat = () => {
           animate={{ opacity: 1, x: 0 }}
           style={{
             position: 'fixed',
-            bottom: '88px',
-            left: '20px',
+            bottom: '96px',
+            left: '24px',
             background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.95) 0%, rgba(22, 36, 48, 0.98) 100%)',
             backdropFilter: 'blur(20px)',
             border: '1px solid rgba(0, 255, 255, 0.3)',
             color: '#00FFFF',
-            padding: '8px 14px',
-            borderRadius: '10px',
-            fontSize: '12px',
+            padding: '10px 16px',
+            borderRadius: '12px',
+            fontSize: '13px',
             fontWeight: '600',
-            zIndex: 999,
+            zIndex: 9998,
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
           }}
         >
-          Ask Nexora AI
+          Ask AI
         </motion.div>
       )}
 
-      {/* Chat Window */}
+
+      {/* Full Screen Chat */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             style={{
               position: 'fixed',
-              bottom: '90px',
-              left: '20px',
-              width: '380px',
-              maxWidth: 'calc(100vw - 40px)',
-              height: '520px',
-              maxHeight: 'calc(100vh - 120px)',
-              background: 'linear-gradient(180deg, rgba(30, 47, 60, 0.98) 0%, rgba(22, 36, 48, 0.99) 100%)',
-              backdropFilter: 'blur(20px)',
-              borderRadius: '20px',
-              border: '1px solid rgba(0, 255, 255, 0.25)',
-              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 255, 255, 0.1)',
+              inset: 0,
+              background: 'linear-gradient(180deg, #0a1520 0%, #1e2f3c 50%, #0a1520 100%)',
+              zIndex: 9998,
               display: 'flex',
               flexDirection: 'column',
-              overflow: 'hidden',
-              zIndex: 1001
+              overflow: 'hidden'
             }}
           >
+            {/* Background Pattern */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(100, 149, 237, 0.08) 0%, transparent 50%)',
+              pointerEvents: 'none'
+            }} />
+
             {/* Header */}
-            <div
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1 }}
               style={{
-                padding: '16px 20px',
-                background: 'linear-gradient(90deg, rgba(0, 255, 255, 0.1) 0%, transparent 100%)',
+                padding: '20px 24px',
+                background: 'linear-gradient(180deg, rgba(0, 255, 255, 0.08) 0%, transparent 100%)',
                 borderBottom: '1px solid rgba(0, 255, 255, 0.15)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px'
+                justifyContent: 'space-between',
+                position: 'relative',
+                zIndex: 1
               }}
             >
-              <div
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{
+                  width: '56px',
+                  height: '56px',
+                  borderRadius: '16px',
                   background: 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 4px 15px rgba(0, 255, 255, 0.3)'
+                  boxShadow: '0 8px 32px rgba(0, 255, 255, 0.4)'
+                }}>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2.5">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                  </svg>
+                </div>
+                <div>
+                  <h1 style={{ color: '#F8F9FA', fontSize: '24px', fontWeight: '800', margin: 0, letterSpacing: '-0.02em' }}>
+                    Nexora AI
+                  </h1>
+                  <p style={{ color: '#00FFFF', fontSize: '14px', margin: 0, fontWeight: '500' }}>
+                    eSIM Assistant - Always Online
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '14px',
+                  background: 'rgba(255, 255, 255, 0.06)',
+                  border: '1px solid rgba(0, 255, 255, 0.2)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="3"/>
-                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
-              </div>
-              <div>
-                <h3 style={{ color: '#F8F9FA', fontSize: '16px', fontWeight: '700', margin: 0 }}>
-                  Nexora AI
-                </h3>
-                <p style={{ color: '#00FFFF', fontSize: '11px', margin: 0 }}>
-                  eSIM Assistant - Online
-                </p>
-              </div>
-            </div>
+              </button>
+            </motion.div>
 
-            {/* Messages */}
-            <div
-              style={{
+
+            {/* Main Content */}
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              maxWidth: '900px',
+              width: '100%',
+              margin: '0 auto',
+              padding: '0 24px',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              {/* Messages Area */}
+              <div style={{
                 flex: 1,
                 overflowY: 'auto',
-                padding: '16px',
+                padding: '24px 0',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '12px'
-              }}
-            >
-              {messages.map((msg) => (
-                <motion.div
-                  key={msg.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  style={{
-                    display: 'flex',
-                    justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start'
-                  }}
-                >
-                  <div
+                gap: '16px'
+              }}>
+                {messages.map((msg) => (
+                  <motion.div
+                    key={msg.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
                     style={{
-                      maxWidth: '85%',
-                      padding: '12px 16px',
-                      borderRadius: msg.type === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                      display: 'flex',
+                      justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start'
+                    }}
+                  >
+                    <div style={{
+                      maxWidth: '75%',
+                      padding: '16px 20px',
+                      borderRadius: msg.type === 'user' ? '20px 20px 6px 20px' : '20px 20px 20px 6px',
                       background: msg.type === 'user' 
                         ? 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)'
                         : 'rgba(255, 255, 255, 0.06)',
                       color: msg.type === 'user' ? '#1e2f3c' : '#F8F9FA',
-                      fontSize: '14px',
-                      lineHeight: '1.5',
+                      fontSize: '15px',
+                      lineHeight: '1.6',
                       whiteSpace: 'pre-wrap',
                       border: msg.type === 'ai' ? '1px solid rgba(0, 255, 255, 0.15)' : 'none',
-                      boxShadow: msg.type === 'user' ? '0 4px 15px rgba(0, 255, 255, 0.2)' : 'none'
+                      boxShadow: msg.type === 'user' 
+                        ? '0 8px 32px rgba(0, 255, 255, 0.25)' 
+                        : '0 4px 20px rgba(0, 0, 0, 0.2)',
+                      fontWeight: msg.type === 'user' ? '600' : '400'
+                    }}>
+                      {msg.content}
+                    </div>
+                  </motion.div>
+                ))}
+                
+                {isTyping && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    style={{ display: 'flex', gap: '8px', padding: '16px 20px' }}
+                  >
+                    {[0, 1, 2].map((i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.12 }}
+                        style={{
+                          width: '10px',
+                          height: '10px',
+                          borderRadius: '50%',
+                          background: '#00FFFF'
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+
+
+              {/* Quick Questions */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                style={{
+                  padding: '16px 0',
+                  borderTop: '1px solid rgba(0, 255, 255, 0.1)',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '10px',
+                  justifyContent: 'center'
+                }}
+              >
+                {quickQuestions.map((q, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleQuickAction(q)}
+                    style={{
+                      padding: '10px 18px',
+                      borderRadius: '12px',
+                      background: 'rgba(0, 255, 255, 0.08)',
+                      border: '1px solid rgba(0, 255, 255, 0.2)',
+                      color: '#00FFFF',
+                      fontSize: '13px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
                     }}
                   >
-                    {msg.content}
-                  </div>
-                </motion.div>
-              ))}
-              
-              {isTyping && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  style={{ display: 'flex', gap: '6px', padding: '12px 16px' }}
-                >
-                  {[0, 1, 2].map((i) => (
-                    <motion.div
-                      key={i}
-                      animate={{ y: [0, -6, 0] }}
-                      transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.12 }}
-                      style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: '#00FFFF'
-                      }}
-                    />
-                  ))}
-                </motion.div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
+                    {q}
+                  </button>
+                ))}
+              </motion.div>
 
-            {/* Provider Quick Actions */}
-            <div
-              style={{
-                padding: '12px 16px',
-                borderTop: '1px solid rgba(0, 255, 255, 0.1)',
-                display: 'flex',
-                gap: '8px',
-                justifyContent: 'center'
-              }}
-            >
-              {providers.map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => handleQuickAction(`Tell me about ${p.id} eSIM`)}
+              {/* Provider Buttons */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                style={{
+                  padding: '16px 0',
+                  display: 'flex',
+                  gap: '12px',
+                  justifyContent: 'center'
+                }}
+              >
+                {providers.map((p) => (
+                  <button
+                    key={p.id}
+                    onClick={() => handleQuickAction(`Tell me about ${p.id} eSIM`)}
+                    style={{
+                      padding: '12px 24px',
+                      borderRadius: '14px',
+                      background: `${p.color}15`,
+                      border: `2px solid ${p.color}60`,
+                      color: p.color,
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      boxShadow: `0 4px 20px ${p.color}20`
+                    }}
+                  >
+                    {p.id}
+                  </button>
+                ))}
+              </motion.div>
+
+
+              {/* Input Area */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                style={{
+                  padding: '20px 0 24px',
+                  display: 'flex',
+                  gap: '16px',
+                  alignItems: 'center'
+                }}
+              >
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask about eSIM, providers, pricing..."
                   style={{
-                    padding: '8px 16px',
-                    borderRadius: '10px',
-                    background: `${p.color}20`,
-                    border: `1px solid ${p.color}50`,
-                    color: p.color,
-                    fontSize: '12px',
-                    fontWeight: '700',
-                    cursor: 'pointer',
+                    flex: 1,
+                    padding: '18px 24px',
+                    borderRadius: '16px',
+                    background: 'rgba(255, 255, 255, 0.06)',
+                    border: '2px solid rgba(0, 255, 255, 0.2)',
+                    color: '#F8F9FA',
+                    fontSize: '16px',
+                    outline: 'none',
+                    transition: 'all 0.2s'
+                  }}
+                />
+                <button
+                  onClick={handleSend}
+                  disabled={!inputValue.trim()}
+                  style={{
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: '16px',
+                    background: inputValue.trim() 
+                      ? 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)'
+                      : 'rgba(255, 255, 255, 0.1)',
+                    border: 'none',
+                    cursor: inputValue.trim() ? 'pointer' : 'not-allowed',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: inputValue.trim() ? '0 8px 32px rgba(0, 255, 255, 0.4)' : 'none',
                     transition: 'all 0.2s'
                   }}
                 >
-                  {p.id}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={inputValue.trim() ? '#1e2f3c' : '#666'} strokeWidth="2.5">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
                 </button>
-              ))}
+              </motion.div>
             </div>
 
-            {/* Input */}
-            <div
-              style={{
-                padding: '12px 16px 16px',
-                borderTop: '1px solid rgba(0, 255, 255, 0.1)',
-                display: 'flex',
-                gap: '12px',
-                alignItems: 'center'
-              }}
-            >
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask about eSIM..."
-                style={{
-                  flex: 1,
-                  padding: '14px 18px',
-                  borderRadius: '12px',
-                  background: 'rgba(255, 255, 255, 0.06)',
-                  border: '1px solid rgba(0, 255, 255, 0.2)',
-                  color: '#F8F9FA',
-                  fontSize: '14px',
-                  outline: 'none'
-                }}
-              />
-              <button
-                onClick={handleSend}
-                disabled={!inputValue.trim()}
-                style={{
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '12px',
-                  background: inputValue.trim() 
-                    ? 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)'
-                    : 'rgba(255, 255, 255, 0.1)',
-                  border: 'none',
-                  cursor: inputValue.trim() ? 'pointer' : 'not-allowed',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: inputValue.trim() ? '0 4px 15px rgba(0, 255, 255, 0.3)' : 'none'
-                }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={inputValue.trim() ? '#1e2f3c' : '#666'} strokeWidth="2.5">
-                  <line x1="22" y1="2" x2="11" y2="13"/>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                </svg>
-              </button>
+            {/* Footer */}
+            <div style={{
+              padding: '12px 24px',
+              textAlign: 'center',
+              borderTop: '1px solid rgba(0, 255, 255, 0.1)',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              <p style={{ color: '#8B9CAF', fontSize: '12px', margin: 0 }}>
+                ESIM MYANMAR COMPANY LIMITED - esim.com.mm
+              </p>
             </div>
           </motion.div>
         )}
