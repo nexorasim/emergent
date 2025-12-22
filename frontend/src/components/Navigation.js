@@ -26,6 +26,7 @@ const Navigation = () => {
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
+            <Link to="/esim-register" className="nav-link text-primary font-semibold">Get eSIM</Link>
             <Link to="/plans" className="nav-link">{t.plans}</Link>
             <Link to="/features" className="nav-link">{t.features}</Link>
             <Link to="/coverage" className="nav-link">{t.coverage}</Link>
@@ -71,6 +72,7 @@ const Navigation = () => {
       {mobileMenuOpen && (
         <div className="md:hidden glass-effect border-t border-primary/20">
           <div className="px-4 py-4 space-y-3">
+            <Link to="/esim-register" className="block py-2 text-primary font-semibold">Get eSIM</Link>
             <Link to="/plans" className="block py-2 text-white hover:text-primary">Plans</Link>
             <Link to="/features" className="block py-2 text-white hover:text-primary">Features</Link>
             <Link to="/coverage" className="block py-2 text-white hover:text-primary">Coverage</Link>

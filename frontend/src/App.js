@@ -18,6 +18,7 @@ import RegisterPage from './pages/auth/Register';
 import DashboardPage from './pages/customer/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
 import PartnerDashboard from './pages/partner/Dashboard';
+import ESIMRegistration from './pages/ESIMRegistration';
 
 import './App.css';
 
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/support" element={<SupportPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/esim-register" element={<ESIMRegistration />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/admin/*" element={<AdminDashboard />} />
                 <Route path="/partner/*" element={<PartnerDashboard />} />

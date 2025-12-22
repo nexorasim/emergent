@@ -17,6 +17,7 @@ load_dotenv()
 
 # Import routers
 from routers import auth_router, esim_router, plans_router, payments_router, support_router
+from routers.esim_registration import router as esim_registration_router
 
 # Import services
 from services.auth_service import AuthService
@@ -202,6 +203,7 @@ app.include_router(esim_router)
 app.include_router(plans_router)
 app.include_router(payments_router)
 app.include_router(support_router)
+app.include_router(esim_registration_router)
 
 
 # Root endpoints
