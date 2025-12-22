@@ -7,6 +7,14 @@
     <meta name="theme-color" content="#1e2f3c" />
     <meta name="msapplication-TileColor" content="#1e2f3c" />
     
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
+    <meta name="format-detection" content="telephone=no" />
+    
     <!-- Primary Meta Tags -->
     <title>eSIM Myanmar Entertainment Server | Enterprise eSIM Platform | esim.com.mm</title>
     <meta name="title" content="eSIM Myanmar Entertainment Server | Enterprise eSIM Platform" />
@@ -14,6 +22,7 @@
     <meta name="keywords" content="eSIM, Myanmar, 5G, VoLTE, roaming, entertainment, streaming, mobile, ASEAN, enterprise, QR code, activation, transfer, Apple, Android, wearables, ESIM MYANMAR COMPANY LIMITED" />
     <meta name="author" content="ESIM MYANMAR COMPANY LIMITED" />
     <meta name="robots" content="index, follow" />
+    <meta name="copyright" content="ESIM MYANMAR COMPANY LIMITED 2024-2026. All Rights Reserved." />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -47,6 +56,25 @@
     
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Anti-Copy Protection Styles -->
+    <style>
+      /* Disable text selection on protected content */
+      .no-select {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      /* Disable image dragging */
+      img {
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+      }
+    </style>
     
     <!-- Structured Data - Organization -->
     <script type="application/ld+json">
@@ -121,6 +149,37 @@
         }
       }
     }
+    </script>
+    
+    <!-- Anti-Copy Protection Script -->
+    <script>
+      // Disable right-click context menu
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+      });
+      
+      // Disable keyboard shortcuts for copy/save
+      document.addEventListener('keydown', function(e) {
+        // Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12
+        if ((e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's')) ||
+            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            e.key === 'F12') {
+          e.preventDefault();
+          return false;
+        }
+      });
+      
+      // Disable drag and drop
+      document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
+      
+      // Console warning
+      console.log('%cSTOP!', 'color: red; font-size: 50px; font-weight: bold;');
+      console.log('%cThis is a protected website. Unauthorized copying or reproduction is prohibited.', 'color: #1e2f3c; font-size: 16px;');
+      console.log('%cESIM MYANMAR COMPANY LIMITED - All Rights Reserved 2024-2026', 'color: #00FFFF; font-size: 14px;');
     </script>
   </head>
   <body>

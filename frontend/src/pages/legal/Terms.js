@@ -12,8 +12,8 @@ const Terms = () => {
   const effectiveDate = 'December 22, 2025';
 
   return (
-    <div className="min-h-screen py-20" style={{ background: '#1e2f3c' }}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 sm:py-16 lg:py-20" style={{ background: '#1e2f3c' }}>
+      <div className="container max-w-4xl">
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -21,18 +21,18 @@ const Terms = () => {
           role="main"
           aria-labelledby="terms-title"
         >
-          <header className="mb-12 text-center">
+          <header className="mb-8 sm:mb-10 lg:mb-12 text-center">
             <h1 
               id="terms-title"
-              className="text-4xl md:text-5xl font-extrabold mb-4"
+              className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-extrabold mb-3 sm:mb-4"
               style={{ color: '#F8F9FA' }}
             >
               Terms and Conditions
             </h1>
-            <p style={{ color: 'rgba(248, 249, 250, 0.7)', fontSize: '18px' }}>
+            <p className="text-sm sm:text-base lg:text-lg" style={{ color: 'rgba(248, 249, 250, 0.7)' }}>
               ESIM MYANMAR COMPANY LIMITED
             </p>
-            <p style={{ color: 'rgba(248, 249, 250, 0.6)', fontSize: '14px', marginTop: '8px' }}>
+            <p className="text-xs sm:text-sm mt-2" style={{ color: 'rgba(248, 249, 250, 0.6)' }}>
               Effective Date: {effectiveDate} | Last Updated: {lastUpdated}
             </p>
           </header>

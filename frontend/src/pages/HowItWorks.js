@@ -56,23 +56,23 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="min-h-screen py-20" style={{ background: '#1e2f3c' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 sm:py-16 lg:py-20" style={{ background: '#1e2f3c' }}>
+      <div className="container">
         {/* Hero Section */}
         <motion.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12 lg:mb-16"
         >
           <h1 
-            className="text-4xl md:text-5xl font-extrabold mb-6"
+            className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-extrabold mb-4 sm:mb-6"
             style={{ color: '#F8F9FA' }}
           >
             How <span style={{ color: '#00FFFF' }}>eSIM</span> Works
           </h1>
           <p 
-            className="text-xl max-w-3xl mx-auto"
+            className="text-sm sm:text-base lg:text-lg xl:text-xl max-w-3xl mx-auto"
             style={{ color: 'rgba(248, 249, 250, 0.8)', lineHeight: '1.75' }}
           >
             Get connected in minutes with our simple 6-step activation process. 
