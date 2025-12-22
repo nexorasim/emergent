@@ -1,73 +1,201 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+/**
+ * Navigation.js - Premium Enterprise Navigation
+ * 2026 UI/UX Design with glassmorphism
+ * Zero emoji - Professional enterprise design
+ */
+
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import { isSeasonalActive } from '../utils/seasonalConfig';
+import Countdown2026 from './Countdown2026';
 
 const Navigation = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const { language, changeLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
+  const navLinks = [
+    { path: '/esim-register', label: 'Get eSIM', highlight: true },
+    { path: '/plans', label: t?.plans || 'Plans' },
+    { path: '/features', label: t?.features || 'Features' },
+    { path: '/coverage', label: t?.coverage || 'Coverage' },
+    { path: '/support', label: t?.support || 'Support' },
+    { path: '/partners', label: t?.partners || 'Partners' }
+  ];
+
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-effect" role="navigation" aria-label="Main navigation">
-      <div className="container">
-        <div className="flex justify-between items-center h-16 lg:h-18">
+    <nav 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-2' : 'py-3'}`}
+      role="navigation" 
+      aria-label="Main navigation"
+      style={{
+        background: scrolled 
+          ? 'rgba(30, 47, 60, 0.95)' 
+          : 'rgba(30, 47, 60, 0.8)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(0, 255, 255, 0.1)',
+        boxShadow: scrolled ? '0 4px 30px rgba(0, 0, 0, 0.3)' : 'none'
+      }}
+    >
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-14 lg:h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-3" aria-label="eSIM Myanmar Home">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary to-primary-dark rounded-lg flex items-center justify-center">
-              <span className="text-lg sm:text-2xl font-bold text-background">e</span>
+          <Link 
+            to="/" 
+            className="flex items-center gap-2 sm:gap-3 group" 
+            aria-label="eSIM Myanmar Home"
+          >
+            <div 
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105"
+              style={{
+                background: 'linear-gradient(135deg, #00FFFF 0%, #00CCCC 100%)',
+                boxShadow: '0 4px 16px rgba(0, 255, 255, 0.3)'
+              }}
+            >
+              <span className="text-lg sm:text-xl font-bold" style={{ color: '#1e2f3c' }}>e</span>
             </div>
-            <span className="text-base sm:text-lg font-bold gradient-text">eSIM Myanmar</span>
+            <span 
+              className="text-base sm:text-lg font-bold hidden sm:block"
+              style={{ 
+                background: 'linear-gradient(135deg, #00FFFF 0%, #60A5FA 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}
+            >
+              eSIM Myanmar
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1 xl:gap-2">
-            <Link to="/esim-register" className="nav-link text-primary font-semibold">Get eSIM</Link>
-            <Link to="/plans" className="nav-link">{t.plans}</Link>
-            <Link to="/features" className="nav-link">{t.features}</Link>
-            <Link to="/coverage" className="nav-link">{t.coverage}</Link>
-            <Link to="/support" className="nav-link">{t.support}</Link>
-            <Link to="/partners" className="nav-link">{t.partners}</Link>
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  isActive(link.path) 
+                    ? 'text-cyan-400' 
+                    : link.highlight 
+                      ? 'text-cyan-400 font-semibold' 
+                      : 'text-gray-300 hover:text-white'
+                }`}
+                style={
+                  isActive(link.path) 
+                    ? { background: 'rgba(0, 255, 255, 0.1)' } 
+                    : {}
+                }
+              >
+                {link.label}
+              </Link>
+            ))}
             
+            {/* Language Toggle */}
             <button 
               onClick={() => changeLanguage(language === 'en' ? 'mm' : 'en')}
-              className="nav-link font-semibold"
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-cyan-400 transition-colors"
               aria-label={`Switch to ${language === 'en' ? 'Myanmar' : 'English'} language`}
             >
               {language === 'en' ? 'MM' : 'EN'}
             </button>
-            
-            {isAuthenticated ? (
-              <div className="flex items-center gap-3 ml-2">
-                <Link to="/dashboard" className="nav-link">
-                  {t.dashboard}
-                </Link>
-                <span className="text-xs text-gray-300 hidden xl:inline">{user?.full_name}</span>
-                <button onClick={handleLogout} className="btn-primary h-9 px-4 text-xs">
-                  {t.logout}
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 ml-2">
-                <Link to="/login" className="nav-link">{t.login}</Link>
-                <Link to="/register" className="btn-primary h-9 px-4 text-xs">{t.getStarted}</Link>
+
+            {/* Seasonal Countdown (compact) */}
+            {isSeasonalActive() && (
+              <div className="ml-2">
+                <Countdown2026 compact />
               </div>
             )}
+            
+            {/* Auth Section */}
+            <div className="flex items-center gap-3 ml-4 pl-4 border-l border-white/10">
+              {isAuthenticated ? (
+                <>
+                  <Link 
+                    to="/dashboard" 
+                    className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors"
+                  >
+                    Dashboard
+                  </Link>
+                  <span className="text-xs text-gray-500 hidden xl:inline max-w-[100px] truncate">
+                    {user?.full_name}
+                  </span>
+                  <button 
+                    onClick={handleLogout} 
+                    className="px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
+                    style={{
+                      background: 'rgba(239, 68, 68, 0.15)',
+                      color: '#EF4444',
+                      border: '1px solid rgba(239, 68, 68, 0.3)'
+                    }}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link 
+                    to="/login" 
+                    className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                  >
+                    Login
+                  </Link>
+                  <Link 
+                    to="/register" 
+                    className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
+                    style={{
+                      background: 'linear-gradient(135deg, #00FFFF 0%, #00CCCC 100%)',
+                      color: '#1e2f3c',
+                      boxShadow: '0 4px 16px rgba(0, 255, 255, 0.25)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 255, 255, 0.4)';
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 255, 255, 0.25)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
           <button 
-            className="lg:hidden p-2 text-white hover:text-primary transition-colors"
+            className="lg:hidden p-2 rounded-lg text-white transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            style={{ background: mobileMenuOpen ? 'rgba(0, 255, 255, 0.1)' : 'transparent' }}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               {mobileMenuOpen ? (
@@ -84,65 +212,48 @@ const Navigation = () => {
       {mobileMenuOpen && (
         <div 
           id="mobile-menu"
-          className="lg:hidden glass-effect border-t border-primary/20"
+          className="lg:hidden"
+          style={{
+            background: 'rgba(30, 47, 60, 0.98)',
+            backdropFilter: 'blur(16px)',
+            borderTop: '1px solid rgba(0, 255, 255, 0.1)'
+          }}
           role="menu"
         >
-          <div className="container py-4 space-y-1">
-            <Link 
-              to="/esim-register" 
-              className="block py-3 px-4 text-sm text-primary font-semibold rounded-lg hover:bg-white/5 transition-colors"
-              role="menuitem"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Get eSIM
-            </Link>
-            <Link 
-              to="/plans" 
-              className="block py-3 px-4 text-sm text-white hover:text-primary hover:bg-white/5 rounded-lg transition-colors"
-              role="menuitem"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Plans
-            </Link>
-            <Link 
-              to="/features" 
-              className="block py-3 px-4 text-sm text-white hover:text-primary hover:bg-white/5 rounded-lg transition-colors"
-              role="menuitem"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Features
-            </Link>
-            <Link 
-              to="/coverage" 
-              className="block py-3 px-4 text-sm text-white hover:text-primary hover:bg-white/5 rounded-lg transition-colors"
-              role="menuitem"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Coverage
-            </Link>
-            <Link 
-              to="/support" 
-              className="block py-3 px-4 text-sm text-white hover:text-primary hover:bg-white/5 rounded-lg transition-colors"
-              role="menuitem"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Support
-            </Link>
-            <Link 
-              to="/partners" 
-              className="block py-3 px-4 text-sm text-white hover:text-primary hover:bg-white/5 rounded-lg transition-colors"
-              role="menuitem"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Partners
-            </Link>
+          <div className="container mx-auto px-4 py-4">
+            {/* Seasonal Countdown for Mobile */}
+            {isSeasonalActive() && (
+              <div className="mb-4 pb-4 border-b border-white/10">
+                <Countdown2026 compact />
+              </div>
+            )}
             
-            <div className="border-t border-white/10 pt-3 mt-3">
+            <div className="space-y-1">
+              {navLinks.map((link) => (
+                <Link 
+                  key={link.path}
+                  to={link.path} 
+                  className={`block py-3 px-4 rounded-lg text-sm font-medium transition-colors ${
+                    isActive(link.path)
+                      ? 'text-cyan-400 bg-cyan-400/10'
+                      : link.highlight
+                        ? 'text-cyan-400'
+                        : 'text-white hover:text-cyan-400 hover:bg-white/5'
+                  }`}
+                  role="menuitem"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            
+            <div className="border-t border-white/10 pt-4 mt-4 space-y-1">
               {isAuthenticated ? (
                 <>
                   <Link 
                     to="/dashboard" 
-                    className="block py-3 px-4 text-sm text-white hover:text-primary hover:bg-white/5 rounded-lg transition-colors"
+                    className="block py-3 px-4 rounded-lg text-sm text-white hover:text-cyan-400 hover:bg-white/5 transition-colors"
                     role="menuitem"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -150,7 +261,7 @@ const Navigation = () => {
                   </Link>
                   <button 
                     onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
-                    className="w-full text-left py-3 px-4 text-sm text-white hover:text-primary hover:bg-white/5 rounded-lg transition-colors"
+                    className="w-full text-left py-3 px-4 rounded-lg text-sm text-red-400 hover:bg-red-400/10 transition-colors"
                     role="menuitem"
                   >
                     Logout
@@ -160,7 +271,7 @@ const Navigation = () => {
                 <>
                   <Link 
                     to="/login" 
-                    className="block py-3 px-4 text-sm text-white hover:text-primary hover:bg-white/5 rounded-lg transition-colors"
+                    className="block py-3 px-4 rounded-lg text-sm text-white hover:text-cyan-400 hover:bg-white/5 transition-colors"
                     role="menuitem"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -168,7 +279,7 @@ const Navigation = () => {
                   </Link>
                   <Link 
                     to="/register" 
-                    className="block py-3 px-4 text-sm text-primary font-semibold hover:bg-white/5 rounded-lg transition-colors"
+                    className="block py-3 px-4 rounded-lg text-sm font-semibold text-cyan-400 bg-cyan-400/10 hover:bg-cyan-400/20 transition-colors"
                     role="menuitem"
                     onClick={() => setMobileMenuOpen(false)}
                   >
