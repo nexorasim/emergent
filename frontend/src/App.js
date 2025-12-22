@@ -25,6 +25,10 @@ import PartnerDashboard from './pages/partner/Dashboard';
 import ESIMRegistration from './pages/ESIMRegistration';
 import Partners from './pages/Partners';
 
+// Enterprise Dashboard - Lazy loaded
+const EnterpriseAuditDashboard = lazy(() => import('./components/EnterpriseAuditDashboard'));
+const IoTDashboard = lazy(() => import('./components/IoTDashboard'));
+
 // New Pages - Lazy loaded for performance
 const About = lazy(() => import('./pages/About'));
 const HowItWorks = lazy(() => import('./pages/HowItWorks'));
