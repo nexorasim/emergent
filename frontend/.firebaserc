@@ -1,3 +1,5 @@
+# .firebaserc - Firebase Project Configuration
+# ESIM MYANMAR COMPANY LIMITED
 {
   "projects": {
     "default": "esim-myanmar-ia6gw"
