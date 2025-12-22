@@ -1,8 +1,9 @@
 /**
- * SeasonalSanta.js - GSAP Animated Santa UI Guide
+ * SeasonalSanta.js - Premium GSAP Animated Santa UI Guide
  * Enterprise-grade seasonal animation component
  * Active: December 15, 2025 - January 31, 2026
  * Auto-disable: February 1, 2026
+ * Zero emoji - Professional enterprise design
  */
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
@@ -34,6 +35,7 @@ const SeasonalSanta = () => {
   const [gsapLoaded, setGsapLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const gsapRef = useRef(null);
   const timelineRef = useRef(null);
 
@@ -66,141 +68,156 @@ const SeasonalSanta = () => {
 
   // Initialize animations
   useEffect(() => {
-    if (!gsapLoaded || !santaRef.current || prefersReducedMotion) return;
+    if (!gsapLoaded || !santaRef.current || prefersReducedMotion || isMinimized) return;
 
     const gsap = gsapRef.current;
     const santa = santaRef.current;
 
-    // Entry animation with bounce
+    // Entry animation with elastic bounce
     const entryTl = gsap.timeline();
     entryTl
-      .set(santa, { opacity: 0, y: 150, scale: 0.5, rotation: -10 })
+      .set(santa, { opacity: 0, y: 200, scale: 0.3, rotation: -15 })
       .to(santa, {
         opacity: 1,
         y: 0,
         scale: 1,
         rotation: 0,
-        duration: 1.2,
-        ease: 'elastic.out(1, 0.5)',
+        duration: 1.5,
+        ease: 'elastic.out(1, 0.4)',
         onComplete: () => {
           setIsVisible(true);
-          // Show tooltip after entry
-          setTimeout(() => setShowTooltip(true), 500);
-          setTimeout(() => setShowTooltip(false), 4000);
+          setTimeout(() => setShowTooltip(true), 800);
+          setTimeout(() => setShowTooltip(false), 5000);
         }
       });
 
-    // Idle breathing animation
-    const idleTl = gsap.timeline({ repeat: -1, yoyo: true });
-    idleTl.to(santa, {
-      scaleY: 1.03,
-      scaleX: 0.98,
-      duration: 2.5,
-      ease: 'sine.inOut'
-    });
-
-    // Subtle floating animation
-    const floatTl = gsap.timeline({ repeat: -1, yoyo: true });
-    floatTl.to(santa, {
-      y: -8,
+    // Subtle breathing animation
+    const breatheTl = gsap.timeline({ repeat: -1, yoyo: true });
+    breatheTl.to(santa, {
+      scaleY: 1.02,
+      scaleX: 0.99,
       duration: 3,
       ease: 'sine.inOut'
     });
 
-    // Wave animation every 8-12 seconds
+    // Gentle floating animation
+    const floatTl = gsap.timeline({ repeat: -1, yoyo: true });
+    floatTl.to(santa, {
+      y: -10,
+      duration: 4,
+      ease: 'sine.inOut'
+    });
+
+    // Wave animation every 10-15 seconds
     const waveInterval = setInterval(() => {
-      if (!santaRef.current) return;
-      const hand = santa.querySelector('.santa-hand');
+      if (!santaRef.current || isMinimized) return;
+      const hand = santa.querySelector('.santa-wave-hand');
       if (hand) {
         gsap.timeline()
-          .to(hand, { rotation: 20, duration: 0.25, ease: 'power2.out' })
+          .to(hand, { rotation: 25, duration: 0.2, ease: 'power2.out', transformOrigin: 'bottom center' })
+          .to(hand, { rotation: -20, duration: 0.15 })
+          .to(hand, { rotation: 20, duration: 0.15 })
           .to(hand, { rotation: -15, duration: 0.15 })
-          .to(hand, { rotation: 15, duration: 0.15 })
-          .to(hand, { rotation: -10, duration: 0.15 })
-          .to(hand, { rotation: 0, duration: 0.25, ease: 'power2.in' });
+          .to(hand, { rotation: 10, duration: 0.15 })
+          .to(hand, { rotation: 0, duration: 0.3, ease: 'power2.in' });
       }
-    }, 8000 + Math.random() * 4000);
+    }, 10000 + Math.random() * 5000);
 
-    // Blink animation every 3-5 seconds
+    // Blink animation every 3-6 seconds
     const blinkInterval = setInterval(() => {
-      if (!santaRef.current) return;
+      if (!santaRef.current || isMinimized) return;
       const eyes = santa.querySelectorAll('.santa-eye');
       eyes.forEach(eye => {
         gsap.timeline()
-          .to(eye, { scaleY: 0.1, duration: 0.08 })
-          .to(eye, { scaleY: 1, duration: 0.08 });
+          .to(eye, { scaleY: 0.1, duration: 0.06 })
+          .to(eye, { scaleY: 1, duration: 0.06 });
       });
-    }, 3000 + Math.random() * 2000);
+    }, 3000 + Math.random() * 3000);
 
-    timelineRef.current = { entryTl, idleTl, floatTl };
+    // Occasional head tilt
+    const tiltInterval = setInterval(() => {
+      if (!santaRef.current || isMinimized) return;
+      const head = santa.querySelector('.santa-head-group');
+      if (head) {
+        const direction = Math.random() > 0.5 ? 1 : -1;
+        gsap.timeline()
+          .to(head, { rotation: 5 * direction, duration: 0.4, ease: 'power2.out' })
+          .to(head, { rotation: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+      }
+    }, 15000 + Math.random() * 10000);
+
+    timelineRef.current = { entryTl, breatheTl, floatTl };
 
     return () => {
       clearInterval(waveInterval);
       clearInterval(blinkInterval);
+      clearInterval(tiltInterval);
       entryTl.kill();
-      idleTl.kill();
+      breatheTl.kill();
       floatTl.kill();
     };
-  }, [gsapLoaded, prefersReducedMotion]);
+  }, [gsapLoaded, prefersReducedMotion, isMinimized]);
 
   // Scroll-based interactions
   useEffect(() => {
-    if (!gsapLoaded || !santaRef.current || prefersReducedMotion) return;
+    if (!gsapLoaded || !santaRef.current || prefersReducedMotion || isMinimized) return;
 
     const gsap = gsapRef.current;
     let lastScrollY = window.scrollY;
+    let scrollTimeout;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const delta = currentScrollY - lastScrollY;
       
-      // Santa leans in scroll direction
-      if (Math.abs(delta) > 5) {
+      if (Math.abs(delta) > 10) {
         gsap.to(santaRef.current, {
-          rotation: delta > 0 ? 3 : -3,
-          duration: 0.3,
+          rotation: delta > 0 ? 5 : -5,
+          duration: 0.2,
           ease: 'power2.out'
         });
         
-        setTimeout(() => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
           if (santaRef.current) {
             gsap.to(santaRef.current, {
               rotation: 0,
-              duration: 0.5,
-              ease: 'elastic.out(1, 0.5)'
+              duration: 0.6,
+              ease: 'elastic.out(1, 0.4)'
             });
           }
-        }, 300);
+        }, 150);
       }
       
       lastScrollY = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [gsapLoaded, prefersReducedMotion]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, [gsapLoaded, prefersReducedMotion, isMinimized]);
 
   // Interaction handlers
   const handleCTAHover = useCallback(() => {
-    if (!gsapRef.current || !santaRef.current || prefersReducedMotion) return;
+    if (!gsapRef.current || !santaRef.current || prefersReducedMotion || isMinimized) return;
     const gsap = gsapRef.current;
     
-    // Santa nods approvingly
     gsap.timeline()
-      .to(santaRef.current, { rotation: 8, y: -5, duration: 0.2, ease: 'power2.out' })
-      .to(santaRef.current, { rotation: -5, duration: 0.15 })
-      .to(santaRef.current, { rotation: 0, y: 0, duration: 0.3, ease: 'elastic.out(1, 0.5)' });
-  }, [prefersReducedMotion]);
+      .to(santaRef.current, { rotation: 10, y: -8, duration: 0.2, ease: 'power2.out' })
+      .to(santaRef.current, { rotation: -6, duration: 0.12 })
+      .to(santaRef.current, { rotation: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.4)' });
+  }, [prefersReducedMotion, isMinimized]);
 
   const handleSuccess = useCallback(() => {
-    if (!gsapRef.current || !santaRef.current || prefersReducedMotion) return;
+    if (!gsapRef.current || !santaRef.current || prefersReducedMotion || isMinimized) return;
     const gsap = gsapRef.current;
     
-    // Celebratory jump
     gsap.timeline()
-      .to(santaRef.current, { y: -30, scaleY: 1.1, duration: 0.25, ease: 'power2.out' })
-      .to(santaRef.current, { y: 0, scaleY: 1, duration: 0.5, ease: 'bounce.out' });
-  }, [prefersReducedMotion]);
+      .to(santaRef.current, { y: -40, scaleY: 1.15, scaleX: 0.9, duration: 0.3, ease: 'power2.out' })
+      .to(santaRef.current, { y: 0, scaleY: 1, scaleX: 1, duration: 0.6, ease: 'bounce.out' });
+  }, [prefersReducedMotion, isMinimized]);
 
   const handleMouseEnter = useCallback(() => {
     if (!gsapRef.current || !santaRef.current || prefersReducedMotion) return;
@@ -208,7 +225,7 @@ const SeasonalSanta = () => {
     const gsap = gsapRef.current;
     
     gsap.to(santaRef.current, {
-      scale: 1.1,
+      scale: 1.08,
       duration: 0.3,
       ease: 'power2.out'
     });
@@ -226,6 +243,29 @@ const SeasonalSanta = () => {
     });
   }, [prefersReducedMotion]);
 
+  const handleMinimize = useCallback(() => {
+    if (!gsapRef.current || !santaRef.current) return;
+    const gsap = gsapRef.current;
+    
+    if (isMinimized) {
+      setIsMinimized(false);
+      gsap.to(santaRef.current, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.4,
+        ease: 'back.out(1.7)'
+      });
+    } else {
+      gsap.to(santaRef.current, {
+        scale: 0.3,
+        opacity: 0.6,
+        duration: 0.3,
+        ease: 'power2.in',
+        onComplete: () => setIsMinimized(true)
+      });
+    }
+  }, [isMinimized]);
+
   // Expose methods globally for other components
   useEffect(() => {
     window.santaAnimations = {
@@ -239,17 +279,18 @@ const SeasonalSanta = () => {
   if (!isSeasonalActive() || prefersReducedMotion) return null;
 
   const seasonMessage = isNewYearPeriod() 
-    ? { title: 'Happy 2026', subtitle: 'New Year Blessings' }
-    : { title: 'Season Greetings', subtitle: 'Happy Holidays' };
+    ? { title: 'Happy 2026', subtitle: 'New Year Blessings from eSIM Myanmar' }
+    : { title: 'Season Greetings', subtitle: 'Happy Holidays from eSIM Myanmar' };
 
   return (
     <div
       ref={containerRef}
       className="santa-container"
+      data-testid="seasonal-santa-container"
       style={{
         position: 'fixed',
-        bottom: '20px',
-        right: '20px',
+        bottom: '24px',
+        right: '24px',
         zIndex: 1000,
         pointerEvents: 'auto',
         willChange: 'transform'
@@ -257,40 +298,71 @@ const SeasonalSanta = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Minimize/Expand Button */}
+      <button
+        onClick={handleMinimize}
+        aria-label={isMinimized ? 'Expand Santa' : 'Minimize Santa'}
+        style={{
+          position: 'absolute',
+          top: '-8px',
+          right: '-8px',
+          width: '24px',
+          height: '24px',
+          background: 'linear-gradient(135deg, #1e2f3c 0%, #2a4a5c 100%)',
+          border: '1px solid rgba(0, 255, 255, 0.4)',
+          borderRadius: '50%',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10,
+          opacity: isHovered || isMinimized ? 1 : 0,
+          transition: 'opacity 0.2s ease'
+        }}
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00FFFF" strokeWidth="2">
+          {isMinimized ? (
+            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+          ) : (
+            <path d="M4 14h6v6M14 4h6v6M20 4l-6 6M4 20l6-6" />
+          )}
+        </svg>
+      </button>
+
       {/* Tooltip */}
-      {(showTooltip || isHovered) && isVisible && (
+      {(showTooltip || isHovered) && isVisible && !isMinimized && (
         <div
           style={{
             position: 'absolute',
-            bottom: '115px',
+            bottom: '140px',
             right: '0',
             background: 'linear-gradient(135deg, #1e2f3c 0%, #2a4a5c 100%)',
-            border: '1px solid #00FFFF',
+            border: '1px solid rgba(0, 255, 255, 0.4)',
             borderRadius: '12px',
-            padding: '12px 16px',
+            padding: '14px 18px',
             fontSize: '12px',
             color: '#F8F9FA',
             whiteSpace: 'nowrap',
-            boxShadow: '0 8px 24px rgba(0, 255, 255, 0.25)',
-            animation: 'fadeInUp 0.3s ease-out'
+            boxShadow: '0 8px 32px rgba(0, 255, 255, 0.2), 0 0 60px rgba(0, 255, 255, 0.1)',
+            animation: 'tooltipFadeIn 0.3s ease-out',
+            backdropFilter: 'blur(12px)'
           }}
         >
-          <div style={{ color: '#00FFFF', fontWeight: '700', marginBottom: '4px' }}>
+          <div style={{ color: '#00FFFF', fontWeight: '700', marginBottom: '6px', fontSize: '13px' }}>
             {seasonMessage.title}
           </div>
-          <div style={{ opacity: 0.8, fontSize: '11px' }}>
+          <div style={{ opacity: 0.85, fontSize: '11px', lineHeight: 1.4 }}>
             {seasonMessage.subtitle}
           </div>
-          {/* Arrow */}
           <div
             style={{
               position: 'absolute',
-              bottom: '-6px',
-              right: '30px',
-              width: '12px',
-              height: '12px',
-              background: '#2a4a5c',
-              border: '1px solid #00FFFF',
+              bottom: '-7px',
+              right: '35px',
+              width: '14px',
+              height: '14px',
+              background: 'linear-gradient(135deg, #2a4a5c 0%, #1e2f3c 100%)',
+              border: '1px solid rgba(0, 255, 255, 0.4)',
               borderTop: 'none',
               borderLeft: 'none',
               transform: 'rotate(45deg)'
@@ -302,85 +374,148 @@ const SeasonalSanta = () => {
       <div
         ref={santaRef}
         className="santa-character"
+        data-testid="santa-animation"
         style={{
-          width: '90px',
-          height: '110px',
+          width: '100px',
+          height: '130px',
           opacity: 0,
           transform: 'translateZ(0)',
           cursor: 'pointer',
-          filter: isHovered ? 'drop-shadow(0 0 12px rgba(0, 255, 255, 0.5))' : 'none',
+          filter: isHovered ? 'drop-shadow(0 0 20px rgba(0, 255, 255, 0.4))' : 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))',
           transition: 'filter 0.3s ease'
         }}
       >
-        {/* Enhanced Santa SVG - Enterprise IoT Style */}
-        <svg viewBox="0 0 90 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Glow effect */}
+        {/* Premium Enterprise IoT-Style Santa SVG */}
+        <svg viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
+            {/* Glow effects */}
             <filter id="santaGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
               <feMerge>
                 <feMergeNode in="coloredBlur"/>
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
-            <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="1.5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            
+            {/* Gradients */}
+            <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#1e2f3c"/>
-              <stop offset="100%" stopColor="#2a4a5c"/>
+              <stop offset="50%" stopColor="#2a4a5c"/>
+              <stop offset="100%" stopColor="#1e2f3c"/>
             </linearGradient>
+            <linearGradient id="beltGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#141f28"/>
+              <stop offset="100%" stopColor="#1e2f3c"/>
+            </linearGradient>
+            <linearGradient id="trimGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#FFFFFF"/>
+              <stop offset="100%" stopColor="#E8E8E8"/>
+            </linearGradient>
+            <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#00FFFF"/>
+              <stop offset="100%" stopColor="#00CCCC"/>
+            </linearGradient>
+            
+            {/* Patterns */}
+            <pattern id="subtlePattern" patternUnits="userSpaceOnUse" width="4" height="4">
+              <circle cx="2" cy="2" r="0.5" fill="rgba(0,255,255,0.1)"/>
+            </pattern>
           </defs>
           
           {/* Body */}
-          <ellipse cx="45" cy="75" rx="28" ry="30" fill="url(#bodyGrad)" stroke="#00FFFF" strokeWidth="1.5"/>
+          <ellipse cx="50" cy="90" rx="32" ry="35" fill="url(#bodyGradient)" stroke="#00FFFF" strokeWidth="1.5" strokeOpacity="0.6"/>
+          <ellipse cx="50" cy="90" rx="32" ry="35" fill="url(#subtlePattern)"/>
+          
+          {/* Body trim - bottom */}
+          <path d="M18 105 Q50 118 82 105" fill="none" stroke="url(#trimGradient)" strokeWidth="8" strokeLinecap="round"/>
           
           {/* Belt */}
-          <rect x="17" y="70" width="56" height="10" rx="2" fill="#1e2f3c" stroke="#00FFFF" strokeWidth="1"/>
-          <rect x="38" y="68" width="14" height="14" rx="3" fill="#00FFFF"/>
-          <rect x="42" y="72" width="6" height="6" rx="1" fill="#1e2f3c"/>
+          <rect x="18" y="82" width="64" height="14" rx="3" fill="url(#beltGradient)" stroke="#00FFFF" strokeWidth="1" strokeOpacity="0.5"/>
           
-          {/* Head */}
-          <circle cx="45" cy="32" r="20" fill="#F8F9FA" stroke="#1e2f3c" strokeWidth="1.5"/>
+          {/* Belt buckle */}
+          <rect x="40" y="79" width="20" height="20" rx="4" fill="url(#cyanGlow)" filter="url(#softGlow)"/>
+          <rect x="45" y="84" width="10" height="10" rx="2" fill="#1e2f3c"/>
           
-          {/* Hat */}
-          <path d="M25 32 Q45 2 65 32" fill="url(#bodyGrad)" stroke="#00FFFF" strokeWidth="1.5"/>
-          <ellipse cx="45" cy="32" rx="22" ry="6" fill="#F8F9FA"/>
-          <circle cx="65" cy="10" r="7" fill="#F8F9FA" filter="url(#santaGlow)"/>
+          {/* Body buttons */}
+          <circle cx="50" cy="65" r="4" fill="#00FFFF" opacity="0.7" filter="url(#softGlow)"/>
+          <circle cx="50" cy="100" r="4" fill="#00FFFF" opacity="0.7" filter="url(#softGlow)"/>
           
-          {/* Face */}
-          <ellipse className="santa-eye" cx="38" cy="30" rx="2.5" ry="3" fill="#1e2f3c" style={{ transformOrigin: '38px 30px' }}/>
-          <ellipse className="santa-eye" cx="52" cy="30" rx="2.5" ry="3" fill="#1e2f3c" style={{ transformOrigin: '52px 30px' }}/>
-          
-          {/* Cheeks */}
-          <circle cx="32" cy="36" r="4" fill="#00FFFF" opacity="0.2"/>
-          <circle cx="58" cy="36" r="4" fill="#00FFFF" opacity="0.2"/>
-          
-          {/* Nose */}
-          <ellipse cx="45" cy="38" rx="4" ry="3" fill="#00FFFF" opacity="0.4"/>
-          
-          {/* Smile */}
-          <path d="M38 44 Q45 50 52 44" stroke="#1e2f3c" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-          
-          {/* Beard */}
-          <path d="M28 40 Q45 65 62 40" fill="#F8F9FA" stroke="#1e2f3c" strokeWidth="0.5"/>
-          <path d="M32 45 Q45 58 58 45" fill="#F8F9FA" opacity="0.8"/>
-          
-          {/* Hand */}
-          <g className="santa-hand" style={{ transformOrigin: '72px 60px' }}>
-            <ellipse cx="75" cy="58" rx="10" ry="7" fill="#F8F9FA" stroke="#1e2f3c" strokeWidth="1"/>
-            {/* Fingers hint */}
-            <path d="M80 55 Q85 52 82 58" stroke="#1e2f3c" strokeWidth="0.5" fill="none"/>
+          {/* Head group for tilt animation */}
+          <g className="santa-head-group" style={{ transformOrigin: '50px 45px' }}>
+            {/* Face */}
+            <circle cx="50" cy="38" r="24" fill="#F8E6D9" stroke="#1e2f3c" strokeWidth="1"/>
+            
+            {/* Cheeks - subtle glow */}
+            <ellipse cx="35" cy="42" r="5" ry="4" fill="#00FFFF" opacity="0.15"/>
+            <ellipse cx="65" cy="42" r="5" ry="4" fill="#00FFFF" opacity="0.15"/>
+            
+            {/* Eyes */}
+            <ellipse className="santa-eye" cx="40" cy="35" rx="3" ry="3.5" fill="#1e2f3c" style={{ transformOrigin: '40px 35px' }}/>
+            <ellipse className="santa-eye" cx="60" cy="35" rx="3" ry="3.5" fill="#1e2f3c" style={{ transformOrigin: '60px 35px' }}/>
+            
+            {/* Eye highlights */}
+            <circle cx="41" cy="34" r="1" fill="#FFFFFF"/>
+            <circle cx="61" cy="34" r="1" fill="#FFFFFF"/>
+            
+            {/* Nose */}
+            <ellipse cx="50" cy="43" r="5" ry="4" fill="#E8B89D"/>
+            <ellipse cx="50" cy="42" r="2" ry="1.5" fill="#00FFFF" opacity="0.2"/>
+            
+            {/* Smile */}
+            <path d="M42 50 Q50 57 58 50" stroke="#1e2f3c" strokeWidth="2" fill="none" strokeLinecap="round"/>
+            
+            {/* Beard */}
+            <path d="M26 45 Q30 48 35 50 Q50 72 65 50 Q70 48 74 45" fill="#FFFFFF" stroke="#E8E8E8" strokeWidth="0.5"/>
+            <path d="M32 52 Q50 68 68 52" fill="#F8F8F8" opacity="0.8"/>
+            <path d="M38 56 Q50 65 62 56" fill="#FFFFFF" opacity="0.6"/>
+            
+            {/* Mustache */}
+            <path d="M35 48 Q42 52 50 48 Q58 52 65 48" fill="#FFFFFF" stroke="#E8E8E8" strokeWidth="0.3"/>
+            
+            {/* Hat */}
+            <path d="M26 35 Q30 28 35 22 Q50 5 65 22 Q70 28 74 35" fill="url(#bodyGradient)" stroke="#00FFFF" strokeWidth="1.5" strokeOpacity="0.6"/>
+            <ellipse cx="50" cy="35" rx="26" ry="7" fill="url(#trimGradient)"/>
+            
+            {/* Hat pom-pom */}
+            <circle cx="72" cy="12" r="9" fill="#FFFFFF" filter="url(#santaGlow)"/>
+            <circle cx="72" cy="12" r="6" fill="#F8F8F8"/>
           </g>
           
-          {/* Arm */}
-          <path d="M60 55 Q68 52 75 58" stroke="#1e2f3c" strokeWidth="3" fill="none"/>
+          {/* Waving hand */}
+          <g className="santa-wave-hand" style={{ transformOrigin: '82px 72px' }}>
+            <ellipse cx="85" cy="68" rx="12" ry="9" fill="#F8E6D9" stroke="#1e2f3c" strokeWidth="0.8"/>
+            {/* Mitten cuff */}
+            <ellipse cx="77" cy="72" rx="8" ry="6" fill="url(#trimGradient)"/>
+            {/* Thumb hint */}
+            <ellipse cx="92" cy="65" rx="4" ry="3" fill="#F8E6D9"/>
+          </g>
           
-          {/* Buttons */}
-          <circle cx="45" cy="85" r="3" fill="#00FFFF" opacity="0.6"/>
-          <circle cx="45" cy="95" r="3" fill="#00FFFF" opacity="0.6"/>
+          {/* Arm connector */}
+          <path d="M68 62 Q76 58 82 68" stroke="url(#bodyGradient)" strokeWidth="12" fill="none" strokeLinecap="round"/>
+          <path d="M68 62 Q76 58 82 68" stroke="#00FFFF" strokeWidth="1" fill="none" strokeLinecap="round" strokeOpacity="0.3"/>
+          
+          {/* Subtle sparkles */}
+          <circle cx="25" cy="25" r="1.5" fill="#00FFFF" opacity="0.6">
+            <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="80" cy="30" r="1" fill="#00FFFF" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0.1;0.5" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="15" cy="70" r="1.2" fill="#00FFFF" opacity="0.4">
+            <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" repeatCount="indefinite"/>
+          </circle>
         </svg>
       </div>
 
       <style>{`
-        @keyframes fadeInUp {
+        @keyframes tooltipFadeIn {
           from {
             opacity: 0;
             transform: translateY(10px);
@@ -388,6 +523,21 @@ const SeasonalSanta = () => {
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+        
+        .santa-container:hover .santa-character {
+          filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.5));
+        }
+        
+        @media (max-width: 640px) {
+          .santa-container {
+            bottom: 16px !important;
+            right: 16px !important;
+          }
+          .santa-character {
+            width: 80px !important;
+            height: 104px !important;
           }
         }
         
