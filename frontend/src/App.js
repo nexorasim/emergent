@@ -49,6 +49,9 @@ const DataProtectionPolicy = lazy(() => import('./pages/legal/DataProtectionPoli
 // Sitemap Page
 const HTMLSitemap = lazy(() => import('./pages/HTMLSitemap'));
 
+// 404 Page
+const NotFound = lazy(() => import('./pages/NotFound'));
+
 // Loading component for Suspense
 const PageLoader = () => (
   <div 
@@ -119,6 +122,9 @@ function App() {
                   {/* Enterprise Pages */}
                   <Route path="/audit-dashboard" element={<EnterpriseAuditDashboard />} />
                   <Route path="/iot-dashboard" element={<IoTDashboard />} />
+                  
+                  {/* 404 Catch-all */}
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
             </main>
