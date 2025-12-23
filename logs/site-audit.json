@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-12-23T19:58:00Z",
+  "audit_type": "Site Health Check",
+  "domains": {
+    "esim.com.mm": {
+      "status": 200,
+      "load_time_ms": 21738,
+      "content_length": 7331,
+      "ssl": "valid",
+      "platform": "Vercel"
+    },
+    "www.esim.com.mm": {
+      "status": 200,
+      "load_time_ms": 339,
+      "content_length": 7331,
+      "ssl": "valid",
+      "platform": "Vercel"
+    },
+    "esim-myanmar.pages.dev": {
+      "status": 200,
+      "load_time_ms": 1024,
+      "content_length": 7331,
+      "ssl": "valid",
+      "platform": "Cloudflare Pages"
+    },
+    "esimmyanmar-09289140-4db73.web.app": {
+      "status": 200,
+      "load_time_ms": 1331,
+      "content_length": 7331,
+      "ssl": "valid",
+      "platform": "Firebase Hosting"
+    }
+  },
+  "summary": {
+    "all_sites_online": true,
+    "fastest_domain": "www.esim.com.mm",
+    "slowest_domain": "esim.com.mm",
+    "content_consistent": true
+  }
+}
