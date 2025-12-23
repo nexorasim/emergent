@@ -1,0 +1,789 @@
+{
+  "info": {
+    "_postman_id": "esim-myanmar-api-v1",
+    "name": "eSIM Myanmar API",
+    "description": "Complete API collection for eSIM Myanmar Platform - GSMA SGP.22 Compliant",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.esim.com.mm",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@esim.com.mm\",\n  \"password\": \"SecurePass123!\",\n  \"full_name\": \"Test User\",\n  \"phone_number\": \"+959123456789\",\n  \"country\": \"Myanmar\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has token', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('token');",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    if (jsonData.refresh_token) {",
+                  "        pm.collectionVariables.set('refreshToken', jsonData.refresh_token);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@esim.com.mm\",\n  \"password\": \"SecurePass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has token', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('token');",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    if (jsonData.refresh_token) {",
+                  "        pm.collectionVariables.set('refreshToken', jsonData.refresh_token);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has user_id', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('user_id');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "refresh"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has new token', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('token');",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "logout"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Setup 2FA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"SecurePass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/2fa/setup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "2fa", "setup"]
+            }
+          }
+        },
+        {
+          "name": "Verify 2FA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"123456\",\n  \"secret\": \"{{2faSecret}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/2fa/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "2fa", "verify"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "eSIM Profiles",
+      "item": [
+        {
+          "name": "Create Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plan_id\": \"plan_premium_5g\",\n  \"device_type\": \"ios\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/esim/profiles",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "esim", "profiles"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has profile', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('profile');",
+                  "    if (jsonData.profile && jsonData.profile.profile_id) {",
+                  "        pm.collectionVariables.set('profileId', jsonData.profile.profile_id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get All Profiles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/esim/profiles",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "esim", "profiles"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has profiles array', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('profiles');",
+                  "    pm.expect(jsonData.profiles).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Profile by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/esim/profiles/{{profileId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "esim", "profiles", "{{profileId}}"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has profile', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('profile');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Activate Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_type\": \"ios\",\n  \"device_model\": \"iPhone 15 Pro\",\n  \"device_imei\": \"123456789012345\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/esim/profiles/{{profileId}}/activate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "esim", "profiles", "{{profileId}}", "activate"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Profile activated', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('activated');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Transfer Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target_device_type\": \"android\",\n  \"target_device_model\": \"Samsung Galaxy S24\",\n  \"transfer_reason\": \"Device upgrade\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/esim/profiles/{{profileId}}/transfer",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "esim", "profiles", "{{profileId}}", "transfer"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Profile Usage",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/esim/profiles/{{profileId}}/usage",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "esim", "profiles", "{{profileId}}", "usage"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has usage data', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('usage');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Regenerate QR Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/esim/profiles/{{profileId}}/qr/regenerate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "esim", "profiles", "{{profileId}}", "qr", "regenerate"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Plans",
+      "item": [
+        {
+          "name": "Get All Plans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/plans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "plans"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has plans array', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('plans');",
+                  "    pm.expect(jsonData.plans).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Plan by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/plans/plan_premium_5g",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "plans", "plan_premium_5g"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has plan', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('plan');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Compare Plans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/plans/compare/plan_basic_5g,plan_premium_5g",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "plans", "compare", "plan_basic_5g,plan_premium_5g"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has plans for comparison', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('plans');",
+                  "    pm.expect(jsonData.plans.length).to.be.at.least(2);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Plan (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Year Special\",\n  \"data_gb\": 30.0,\n  \"validity_days\": 30,\n  \"price\": 15000,\n  \"currency\": \"MMK\",\n  \"features\": [\"5G Network\", \"VoLTE\", \"Roaming\", \"New Year Bonus\"],\n  \"plan_type\": \"prepaid\",\n  \"is_popular\": true,\n  \"discount_percent\": 20\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/plans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "plans"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 or 403', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 403]);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Support",
+      "item": [
+        {
+          "name": "Get FAQ",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/support/faq",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "support", "faq"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Support Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"eSIM Activation Issue\",\n  \"description\": \"Unable to activate eSIM on iPhone 15\",\n  \"category\": \"activation\",\n  \"priority\": \"high\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/support/tickets",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "support", "tickets"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get My Tickets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/support/tickets",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "support", "tickets"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Get Payment Methods",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/methods",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "methods"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plan_id\": \"plan_premium_5g\",\n  \"payment_method\": \"kbz_pay\",\n  \"amount\": 20000,\n  \"currency\": \"MMK\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Payment History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "history"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "API Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response time is acceptable', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
