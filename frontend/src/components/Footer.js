@@ -37,7 +37,9 @@ const Footer = () => {
       { label: 'Privacy Policy', path: '/privacy-policy' },
       { label: 'Terms of Service', path: '/terms' },
       { label: 'Refund Policy', path: '/refund-policy' },
-      { label: 'Cookie Policy', path: '/cookie-policy' }
+      { label: 'Cookie Policy', path: '/cookie-policy' },
+      { label: 'Acceptable Use', path: '/acceptable-use-policy' },
+      { label: 'Data Protection', path: '/data-protection-policy' }
     ],
     enterprise: [
       { label: 'Audit Dashboard', path: '/audit-dashboard' },

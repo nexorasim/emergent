@@ -42,6 +42,11 @@ const PrivacyPolicy = lazy(() => import('./pages/legal/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/legal/Terms'));
 const RefundPolicy = lazy(() => import('./pages/legal/RefundPolicy'));
 const CookiePolicy = lazy(() => import('./pages/legal/CookiePolicy'));
+const AcceptableUsePolicy = lazy(() => import('./pages/legal/AcceptableUsePolicy'));
+const DataProtectionPolicy = lazy(() => import('./pages/legal/DataProtectionPolicy'));
+
+// Sitemap Page
+const HTMLSitemap = lazy(() => import('./pages/HTMLSitemap'));
 
 // Loading component for Suspense
 const PageLoader = () => (
@@ -104,6 +109,11 @@ function App() {
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/refund-policy" element={<RefundPolicy />} />
                   <Route path="/cookie-policy" element={<CookiePolicy />} />
+                  <Route path="/acceptable-use-policy" element={<AcceptableUsePolicy />} />
+                  <Route path="/data-protection-policy" element={<DataProtectionPolicy />} />
+                  
+                  {/* Sitemap */}
+                  <Route path="/sitemap" element={<HTMLSitemap />} />
                   
                   {/* Enterprise Pages */}
                   <Route path="/audit-dashboard" element={<EnterpriseAuditDashboard />} />
