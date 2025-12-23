@@ -1,7 +1,7 @@
 /**
- * ChristmasMusic.js - Premium Holiday Music Player
+ * ChristmasMusic.js - eSIM Myanmar Holiday Music Player
  * ESIM MYANMAR COMPANY LIMITED
- * Merry Christmas Live Flow UI/UX Design
+ * Brand-aligned UI with Cyan/Dark Blue theme
  * Active: December 15, 2025 - January 31, 2026
  */
 
@@ -20,13 +20,13 @@ const isSeasonalActive = () => {
   return now >= SEASONAL_CONFIG.startDate && now < SEASONAL_CONFIG.endDate;
 };
 
-// Premium royalty-free Christmas music (Public Domain / CC0)
+// Premium royalty-free music tracks
 const PREMIUM_TRACKS = [
-  { id: 1, name: 'Christmas Spirit', artist: 'Holiday Vibes', url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Shipping_Lanes.mp3', duration: '3:45' },
-  { id: 2, name: 'Winter Magic', artist: 'Festive Dreams', url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Lobo_Loco/Salsa_Andina/Lobo_Loco_-_01_-_Salsita_Andina_ID_1277.mp3', duration: '4:12' },
-  { id: 3, name: 'Snow Falls', artist: 'Peaceful Nights', url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Chad_Crouch/Arps/Chad_Crouch_-_Algorithms.mp3', duration: '3:30' },
-  { id: 4, name: 'Holiday Joy', artist: 'Christmas Band', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', duration: '6:12' },
-  { id: 5, name: 'Jingle Dreams', artist: 'Winter Orchestra', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', duration: '5:45' }
+  { id: 1, name: 'Holiday Vibes', artist: 'eSIM Myanmar', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', duration: '6:12' },
+  { id: 2, name: 'Winter Dreams', artist: 'Festive Mix', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', duration: '5:45' },
+  { id: 3, name: 'Snow Melody', artist: 'Chill Beats', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', duration: '5:30' },
+  { id: 4, name: 'Peaceful Night', artist: 'Ambient', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', duration: '4:58' },
+  { id: 5, name: 'New Year 2026', artist: 'Celebration', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', duration: '5:15' }
 ];
 
 // Synthesized Jingle Bells fallback
@@ -37,26 +37,6 @@ const JINGLE_BELLS = [
   { note: 'E4', dur: 0.25 }, { note: 'G4', dur: 0.25 }, { note: 'C4', dur: 0.35 },
   { note: 'D4', dur: 0.15 }, { note: 'E4', dur: 0.8 }
 ];
-
-// Snowflake component
-const Snowflake = ({ delay, duration, left }) => (
-  <motion.div
-    initial={{ y: -20, opacity: 0, rotate: 0 }}
-    animate={{ y: 400, opacity: [0, 1, 1, 0], rotate: 360 }}
-    transition={{ duration, delay, repeat: Infinity, ease: 'linear' }}
-    style={{
-      position: 'absolute',
-      left: `${left}%`,
-      top: 0,
-      color: 'rgba(255, 255, 255, 0.8)',
-      fontSize: '12px',
-      pointerEvents: 'none',
-      textShadow: '0 0 5px rgba(255, 255, 255, 0.5)'
-    }}
-  >
-    *
-  </motion.div>
-);
 
 const ChristmasMusic = () => {
   const audioRef = useRef(null);
@@ -77,7 +57,7 @@ const ChristmasMusic = () => {
   const [trackProgress, setTrackProgress] = useState(0);
   const [trackDuration, setTrackDuration] = useState(0);
   const [shuffle, setShuffle] = useState(false);
-  const [visualizer, setVisualizer] = useState([0, 0, 0, 0, 0]);
+  const [visualizer, setVisualizer] = useState([0, 0, 0, 0, 0, 0, 0]);
 
   const nextTrackRef = useRef(null);
 
@@ -85,8 +65,8 @@ const ChristmasMusic = () => {
   useEffect(() => {
     if (!playing) return;
     const interval = setInterval(() => {
-      setVisualizer(prev => prev.map(() => Math.random() * 100));
-    }, 150);
+      setVisualizer(prev => prev.map(() => 20 + Math.random() * 80));
+    }, 120);
     return () => clearInterval(interval);
   }, [playing]);
 
@@ -119,13 +99,13 @@ const ChristmasMusic = () => {
     setLoading(true);
     setProgress(0);
     const stages = [
-      { progress: 25, text: 'Loading holiday music...' },
-      { progress: 50, text: 'Preparing festive vibes...' },
-      { progress: 75, text: 'Almost ready...' },
-      { progress: 100, text: 'Merry Christmas!' }
+      { progress: 30, text: 'Connecting...' },
+      { progress: 60, text: 'Loading track...' },
+      { progress: 90, text: 'Buffering...' },
+      { progress: 100, text: 'Ready!' }
     ];
     for (const stage of stages) {
-      await new Promise(r => setTimeout(r, 300));
+      await new Promise(r => setTimeout(r, 250));
       setProgress(stage.progress);
       setLoadingText(stage.text);
     }
@@ -144,7 +124,7 @@ const ChristmasMusic = () => {
     }
     audioRef.current.src = PREMIUM_TRACKS[currentTrack].url;
     audioRef.current.volume = volume;
-    setTimeout(() => setLoading(false), 400);
+    setTimeout(() => setLoading(false), 300);
     return true;
   }, [currentTrack, volume]);
 
@@ -265,199 +245,195 @@ const ChristmasMusic = () => {
   if (!isSeasonalActive()) return null;
 
   const track = PREMIUM_TRACKS[currentTrack];
-  const snowflakes = Array.from({ length: 15 }, (_, i) => ({
-    id: i,
-    delay: Math.random() * 5,
-    duration: 5 + Math.random() * 5,
-    left: Math.random() * 100
-  }));
 
   return (
-    <div style={{ position: 'fixed', bottom: '100px', left: '20px', zIndex: 998, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
+    <div style={{ position: 'fixed', bottom: '100px', left: '20px', zIndex: 998, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
       <AnimatePresence>
         {showPanel && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            transition={{ type: 'spring', damping: 20 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             style={{
-              background: 'linear-gradient(180deg, rgba(139, 0, 0, 0.95) 0%, rgba(20, 60, 20, 0.95) 100%)',
+              background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.98) 0%, rgba(15, 25, 35, 0.98) 100%)',
               backdropFilter: 'blur(20px)',
-              border: '2px solid rgba(255, 215, 0, 0.5)',
-              borderRadius: '20px',
-              padding: '20px',
-              minWidth: '280px',
-              boxShadow: '0 10px 50px rgba(0, 0, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(0, 255, 255, 0.3)',
+              borderRadius: '16px',
+              padding: '16px',
+              width: '280px',
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 255, 255, 0.1)',
               position: 'relative',
               overflow: 'hidden'
             }}
           >
-            {/* Snowflakes */}
-            {snowflakes.map(s => <Snowflake key={s.id} {...s} />)}
-            
-            {/* Merry Christmas Header */}
-            <motion.div
-              animate={{ scale: [1, 1.02, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              style={{ textAlign: 'center', marginBottom: '16px', position: 'relative', zIndex: 1 }}
-            >
-              <div style={{ fontSize: '22px', fontWeight: '800', background: 'linear-gradient(135deg, #FFD700, #FFA500, #FFD700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: '0 2px 10px rgba(255, 215, 0, 0.3)', letterSpacing: '1px' }}>
-                Merry Christmas
-              </div>
-              <div style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.7)', marginTop: '4px' }}>eSIM Myanmar 2025-2026</div>
-            </motion.div>
+            {/* Glow effect */}
+            <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: 'radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.08) 0%, transparent 50%)', pointerEvents: 'none' }} />
 
-            {/* Album Art & Track Info */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px', position: 'relative', zIndex: 1 }}>
-              <motion.div
-                animate={playing ? { rotate: 360 } : { rotate: 0 }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                style={{
-                  width: '60px', height: '60px', borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #8B0000 0%, #006400 50%, #8B0000 100%)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.2)',
-                  border: '3px solid rgba(255, 215, 0, 0.5)'
-                }}
-              >
-                <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#1a1a1a', border: '2px solid rgba(255, 215, 0, 0.3)' }} />
-              </motion.div>
-              <div style={{ flex: 1 }}>
-                <div style={{ color: '#FFD700', fontWeight: '700', fontSize: '15px' }}>{usePremium ? track.name : 'Jingle Bells'}</div>
-                <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px' }}>{usePremium ? track.artist : 'Classic'}</div>
-                <div style={{ color: playing ? '#90EE90' : 'rgba(255, 255, 255, 0.5)', fontSize: '10px', fontWeight: '600', marginTop: '2px' }}>
-                  {loading ? loadingText : playing ? 'Now Playing' : 'Paused'}
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', position: 'relative', zIndex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'linear-gradient(135deg, #00FFFF, #0099CC)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1e2f3c" strokeWidth="2.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                </div>
+                <div>
+                  <div style={{ color: '#F8F9FA', fontWeight: '700', fontSize: '13px' }}>eSIM Myanmar</div>
+                  <div style={{ color: '#00FFFF', fontSize: '10px', fontWeight: '500' }}>Holiday Music</div>
+                </div>
+              </div>
+              <button onClick={() => setShowPanel(false)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '6px', width: '28px', height: '28px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B9CAF" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+
+            {/* Track Info */}
+            <div style={{ background: 'rgba(0, 255, 255, 0.05)', borderRadius: '12px', padding: '12px', marginBottom: '12px', position: 'relative', zIndex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <motion.div
+                  animate={playing ? { rotate: 360 } : {}}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                  style={{
+                    width: '50px', height: '50px', borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #1e2f3c 0%, #0a1520 100%)',
+                    border: '2px solid rgba(0, 255, 255, 0.3)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: playing ? '0 0 20px rgba(0, 255, 255, 0.3)' : 'none'
+                  }}
+                >
+                  <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: '#00FFFF', opacity: 0.8 }} />
+                </motion.div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ color: '#F8F9FA', fontWeight: '600', fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{usePremium ? track.name : 'Jingle Bells'}</div>
+                  <div style={{ color: '#8B9CAF', fontSize: '11px' }}>{usePremium ? track.artist : 'Classic'}</div>
+                  <div style={{ color: playing ? '#00FFFF' : '#6B7280', fontSize: '10px', fontWeight: '500', marginTop: '2px' }}>
+                    {loading ? loadingText : playing ? 'Now Playing' : 'Paused'}
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Audio Visualizer */}
+            {/* Visualizer */}
             {playing && (
-              <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '4px', height: '30px', marginBottom: '12px', position: 'relative', zIndex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '3px', height: '24px', marginBottom: '12px', position: 'relative', zIndex: 1 }}>
                 {visualizer.map((h, i) => (
                   <motion.div
                     key={i}
-                    animate={{ height: `${20 + h * 0.3}px` }}
-                    transition={{ duration: 0.15 }}
-                    style={{ width: '8px', background: 'linear-gradient(180deg, #FFD700, #FF6B6B)', borderRadius: '4px' }}
+                    animate={{ height: `${h * 0.24}px` }}
+                    transition={{ duration: 0.1 }}
+                    style={{ width: '4px', background: 'linear-gradient(180deg, #00FFFF, #0066AA)', borderRadius: '2px', minHeight: '4px' }}
                   />
                 ))}
               </div>
             )}
 
-            {/* Loading Progress */}
+            {/* Loading */}
             {loading && (
-              <div style={{ marginBottom: '14px', position: 'relative', zIndex: 1 }}>
-                <div style={{ height: '6px', background: 'rgba(0, 0, 0, 0.3)', borderRadius: '3px', overflow: 'hidden' }}>
-                  <motion.div initial={{ width: 0 }} animate={{ width: `${progress}%` }} style={{ height: '100%', background: 'linear-gradient(90deg, #FFD700, #FF6B6B)', borderRadius: '3px' }} />
+              <div style={{ marginBottom: '12px', position: 'relative', zIndex: 1 }}>
+                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+                  <motion.div initial={{ width: 0 }} animate={{ width: `${progress}%` }} style={{ height: '100%', background: 'linear-gradient(90deg, #00FFFF, #00D4AA)', borderRadius: '2px' }} />
                 </div>
               </div>
             )}
 
-            {/* Track Progress */}
+            {/* Progress */}
             {!loading && usePremium && (
-              <div style={{ marginBottom: '14px', position: 'relative', zIndex: 1 }}>
-                <div style={{ height: '4px', background: 'rgba(0, 0, 0, 0.3)', borderRadius: '2px', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: `${trackDuration ? (trackProgress / trackDuration) * 100 : 0}%`, background: 'linear-gradient(90deg, #FFD700, #90EE90)', borderRadius: '2px', transition: 'width 0.5s linear' }} />
+              <div style={{ marginBottom: '12px', position: 'relative', zIndex: 1 }}>
+                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+                  <div style={{ height: '100%', width: `${trackDuration ? (trackProgress / trackDuration) * 100 : 0}%`, background: 'linear-gradient(90deg, #00FFFF, #00D4AA)', borderRadius: '2px', transition: 'width 0.3s linear' }} />
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
-                  <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '10px' }}>{formatTime(trackProgress)}</span>
-                  <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '10px' }}>{formatTime(trackDuration)}</span>
+                  <span style={{ color: '#8B9CAF', fontSize: '10px' }}>{formatTime(trackProgress)}</span>
+                  <span style={{ color: '#8B9CAF', fontSize: '10px' }}>{formatTime(trackDuration)}</span>
                 </div>
               </div>
             )}
 
-            {/* Playback Controls */}
+            {/* Controls */}
             {!loading && (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '14px', position: 'relative', zIndex: 1 }}>
-                <button onClick={() => setShuffle(!shuffle)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', opacity: shuffle ? 1 : 0.5 }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={shuffle ? '#FFD700' : '#fff'} strokeWidth="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '12px', position: 'relative', zIndex: 1 }}>
+                <button onClick={() => setShuffle(!shuffle)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', opacity: shuffle ? 1 : 0.4 }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={shuffle ? '#00FFFF' : '#8B9CAF'} strokeWidth="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
                 </button>
-                <button onClick={prevTrack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5" stroke="#fff" strokeWidth="2"/></svg>
+                <button onClick={prevTrack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#F8F9FA"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5" stroke="#F8F9FA" strokeWidth="2"/></svg>
                 </button>
                 <motion.button
                   onClick={toggle}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   style={{
-                    width: '56px', height: '56px', borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+                    width: '48px', height: '48px', borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #00FFFF 0%, #0099CC 100%)',
                     border: 'none', cursor: 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    boxShadow: '0 4px 20px rgba(255, 215, 0, 0.5)'
+                    boxShadow: '0 4px 20px rgba(0, 255, 255, 0.4)'
                   }}
                 >
                   {playing ? (
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#8B0000"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#1e2f3c"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                   ) : (
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#8B0000"><polygon points="5 3 19 12 5 21"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#1e2f3c"><polygon points="5 3 19 12 5 21"/></svg>
                   )}
                 </motion.button>
-                <button onClick={handleNextTrack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19" stroke="#fff" strokeWidth="2"/></svg>
+                <button onClick={handleNextTrack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#F8F9FA"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19" stroke="#F8F9FA" strokeWidth="2"/></svg>
                 </button>
-                <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', opacity: 0.5 }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', opacity: 0.4 }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B9CAF" strokeWidth="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
                 </button>
               </div>
             )}
 
             {/* Volume */}
             {!loading && (
-              <div style={{ marginBottom: '12px', position: 'relative', zIndex: 1 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                  <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '11px' }}>Volume</span>
-                  <span style={{ color: '#FFD700', fontSize: '11px', fontWeight: '700' }}>{Math.round(volume * 100)}%</span>
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B9CAF" strokeWidth="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                  <input type="range" min="0" max="1" step="0.05" value={volume} onChange={handleVolume} style={{ flex: 1, height: '4px', borderRadius: '2px', background: `linear-gradient(to right, #00FFFF 0%, #0099CC ${volume * 100}%, rgba(255,255,255,0.1) ${volume * 100}%)`, appearance: 'none', cursor: 'pointer' }} />
+                  <span style={{ color: '#00FFFF', fontSize: '10px', fontWeight: '600', minWidth: '28px' }}>{Math.round(volume * 100)}%</span>
                 </div>
-                <input type="range" min="0" max="1" step="0.05" value={volume} onChange={handleVolume} style={{ width: '100%', height: '6px', borderRadius: '3px', background: `linear-gradient(to right, #FFD700 0%, #90EE90 ${volume * 100}%, rgba(0,0,0,0.3) ${volume * 100}%)`, appearance: 'none', cursor: 'pointer' }} />
               </div>
             )}
 
             {/* Footer */}
-            <div style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
-              <span style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '9px' }}>Auto-disable: Feb 1, 2026</span>
+            <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px solid rgba(0, 255, 255, 0.1)', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+              <span style={{ color: '#6B7280', fontSize: '9px' }}>Season: Dec 15, 2025 - Jan 31, 2026</span>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Toggle Button - Christmas Tree Style */}
+      {/* Toggle Button */}
       <motion.button
         onClick={() => setShowPanel(!showPanel)}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         style={{
-          width: '56px', height: '56px', borderRadius: '50%',
-          background: playing ? 'linear-gradient(135deg, #8B0000 0%, #006400 100%)' : 'linear-gradient(135deg, rgba(139, 0, 0, 0.9) 0%, rgba(0, 100, 0, 0.9) 100%)',
+          width: '48px', height: '48px', borderRadius: '12px',
+          background: 'linear-gradient(135deg, rgba(30, 47, 60, 0.95) 0%, rgba(15, 25, 35, 0.95) 100%)',
           backdropFilter: 'blur(20px)',
-          border: playing ? '3px solid #FFD700' : '2px solid rgba(255, 215, 0, 0.5)',
+          border: playing ? '2px solid #00FFFF' : '1px solid rgba(0, 255, 255, 0.3)',
           cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: playing ? '0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 0, 0, 0.3)' : '0 4px 20px rgba(0, 0, 0, 0.4)',
+          boxShadow: playing ? '0 0 25px rgba(0, 255, 255, 0.4)' : '0 4px 20px rgba(0, 0, 0, 0.3)',
           position: 'relative'
         }}
       >
         {playing && (
           <motion.div
-            animate={{ scale: [1, 1.3, 1], opacity: [0.8, 0, 0.8] }}
+            animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px solid #FFD700' }}
+            style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '12px', border: '2px solid #00FFFF' }}
           />
         )}
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={playing ? '#FFD700' : '#fff'} strokeWidth="2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={playing ? '#00FFFF' : '#F8F9FA'} strokeWidth="2">
           <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
         </svg>
       </motion.button>
 
-      <motion.div
-        animate={playing ? { scale: [1, 1.05, 1] } : {}}
-        transition={{ duration: 1, repeat: Infinity }}
-        style={{ color: playing ? '#FFD700' : 'rgba(255, 255, 255, 0.7)', fontSize: '10px', fontWeight: '700', textAlign: 'center', width: '56px', textShadow: playing ? '0 0 10px rgba(255, 215, 0, 0.5)' : 'none' }}
-      >
+      <div style={{ color: playing ? '#00FFFF' : '#8B9CAF', fontSize: '9px', fontWeight: '600', textAlign: 'center', width: '48px' }}>
         {playing ? 'Playing' : 'Music'}
-      </motion.div>
+      </div>
     </div>
   );
 };
