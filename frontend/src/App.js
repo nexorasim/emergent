@@ -46,6 +46,9 @@ const CookiePolicy = lazy(() => import('./pages/legal/CookiePolicy'));
 const AcceptableUsePolicy = lazy(() => import('./pages/legal/AcceptableUsePolicy'));
 const DataProtectionPolicy = lazy(() => import('./pages/legal/DataProtectionPolicy'));
 
+// Microsoft Entra ID Auth - Lazy loaded
+const EntraAuth = lazy(() => import('./pages/auth/EntraAuth'));
+
 // Sitemap Page
 const HTMLSitemap = lazy(() => import('./pages/HTMLSitemap'));
 
@@ -95,6 +98,7 @@ function App() {
                   {/* Auth Pages */}
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/auth" element={<EntraAuth />} />
                   
                   {/* Dashboard Pages */}
                   <Route path="/dashboard" element={<DashboardPage />} />
