@@ -21,11 +21,19 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8001
     
-    # Database
-    MONGO_URL: str = "mongodb://localhost:27017/esim_myanmar"
+    # Database - MongoDB Atlas
+    MONGO_URL: str = "mongodb+srv://Vercel-Admin-esimmyanmar:NpZtcT6vgURsJmv9@esimmyanmar.adullha.mongodb.net/?retryWrites=true&w=majority"
     MONGO_DB_NAME: str = "esim_myanmar"
     MONGO_MAX_POOL_SIZE: int = 100
     MONGO_MIN_POOL_SIZE: int = 10
+    
+    # PostgreSQL - Neon (Pooled)
+    DATABASE_URL: str = "postgresql://neondb_owner:npg_VAK0OQFDW8nG@ep-dry-cake-adwfkrqz-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
+    
+    # Supabase
+    SUPABASE_URL: str = "https://ksctoosqlpemoptcaxdr.supabase.co"
+    SUPABASE_ANON_KEY: Optional[str] = None
+    SUPABASE_SERVICE_ROLE_KEY: Optional[str] = None
     
     # Security
     SECRET_KEY: str

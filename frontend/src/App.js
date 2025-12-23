@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import Navigation from './components/Navigation';
@@ -127,6 +128,7 @@ function App() {
           <ChristmasMusic />
           <NexoraAIChat />
         </Router>
+        <Analytics />
       </AuthProvider>
     </LanguageProvider>
   );
