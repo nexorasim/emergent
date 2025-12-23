@@ -797,6 +797,45 @@ select.input {
 }
 
 /* ============================================
+   13. MOBILE TOUCH TARGET COMPLIANCE
+   Minimum 44x44px for WCAG 2.2 AA
+   ============================================ */
+
+@media (max-width: 640px) {
+  .btn-sm,
+  .btn-md {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .nav-link {
+    min-height: 44px;
+    padding: 0 var(--space-4);
+  }
+  
+  .input,
+  .input-sm {
+    min-height: 44px;
+  }
+  
+  /* Ensure clickable elements meet touch targets */
+  a,
+  button,
+  [role="button"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Badge touch target */
+  .badge {
+    min-height: 32px;
+    padding: 0 var(--space-3);
+  }
+}
+
+/* ============================================
    12. PRINT STYLES
    ============================================ */
 
