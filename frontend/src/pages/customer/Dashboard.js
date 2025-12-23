@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { QRCodeSVG } from 'qrcode.react';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
 
@@ -105,9 +106,18 @@ const CustomerDashboard = () => {
                   </span>
                 </div>
 
-                {profile.qr_code && (
+                {profile.qr_code ? (
                   <div className="bg-white p-4 rounded-lg mb-4 inline-block">
                     <img src={profile.qr_code} alt="QR Code" className="w-48 h-48" />
+                  </div>
+                ) : profile.lpa_string && (
+                  <div className="bg-white p-4 rounded-lg mb-4 inline-block">
+                    <QRCodeSVG 
+                      value={profile.lpa_string}
+                      size={192}
+                      level="H"
+                      includeMargin={true}
+                    />
                   </div>
                 )}
 

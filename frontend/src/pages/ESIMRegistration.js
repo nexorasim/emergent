@@ -5,6 +5,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { QRCodeSVG } from 'qrcode.react';
 import api from '../utils/api';
 
 // Provider data - 4 separate providers
@@ -658,12 +659,14 @@ const ESIMIssuance = ({ esimQR, orderId, provider }) => (
     {esimQR && (
       <div className="mb-6 sm:mb-8">
         <div className="bg-white p-4 sm:p-6 rounded-xl inline-block mb-4">
-          {/* QR Code placeholder - in production use a QR library */}
-          <div className="w-36 h-36 sm:w-48 sm:h-48 bg-gray-100 flex items-center justify-center">
-            <p className="text-gray-600 text-xs text-center font-mono break-all p-2">
-              {esimQR.esim_qr}
-            </p>
-          </div>
+          <QRCodeSVG 
+            value={esimQR.esim_qr || `LPA:1$esim.com.mm$${orderId}`}
+            size={192}
+            level="H"
+            includeMargin={true}
+            bgColor="#FFFFFF"
+            fgColor="#000000"
+          />
         </div>
         
         <p className="text-xs sm:text-sm text-gray-400 mb-4">
