@@ -1,6 +1,6 @@
 /**
- * EntraAuth.js - Microsoft Entra ID (Azure AD) Authentication
- * Enterprise SSO for eSIM Myanmar Management Portal
+ * EntraAuth.js - Microsoft Entra ID Authentication
+ * eSIM Enterprise Management Portal
  * 
  * Tenant ID: 370dd52c-929e-4fcd-aee3-fb5181eff2b7
  * Client ID: 00f56c44-2d00-4378-bb52-1417c208fcfd
@@ -10,20 +10,19 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useAuth } from '../../context/AuthContext';
 
 // Microsoft Entra ID Configuration
-const MSAL_CONFIG = {
-  clientId: '00f56c44-2d00-4378-bb52-1417c208fcfd',
+const ENTRA_CONFIG = {
   tenantId: '370dd52c-929e-4fcd-aee3-fb5181eff2b7',
+  clientId: '00f56c44-2d00-4378-bb52-1417c208fcfd',
   redirectUri: 'https://www.esim.com.mm/auth',
-  authority: 'https://login.microsoftonline.com/370dd52c-929e-4fcd-aee3-fb5181eff2b7',
   scopes: ['openid', 'profile', 'email', 'User.Read'],
-  endpoints: {
-    authorize: 'https://login.microsoftonline.com/370dd52c-929e-4fcd-aee3-fb5181eff2b7/oauth2/v2.0/authorize',
-    token: 'https://login.microsoftonline.com/370dd52c-929e-4fcd-aee3-fb5181eff2b7/oauth2/v2.0/token',
-    logout: 'https://login.microsoftonline.com/370dd52c-929e-4fcd-aee3-fb5181eff2b7/oauth2/v2.0/logout'
-  }
+  
+  // Endpoints
+  authorizeEndpoint: 'https://login.microsoftonline.com/370dd52c-929e-4fcd-aee3-fb5181eff2b7/oauth2/v2.0/authorize',
+  tokenEndpoint: 'https://login.microsoftonline.com/370dd52c-929e-4fcd-aee3-fb5181eff2b7/oauth2/v2.0/token',
+  graphEndpoint: 'https://graph.microsoft.com/v1.0/me',
+  openIdConfig: 'https://login.microsoftonline.com/370dd52c-929e-4fcd-aee3-fb5181eff2b7/v2.0/.well-known/openid-configuration'
 };
 
 // Generate random state for CSRF protection
@@ -49,11 +48,9 @@ const generatePKCE = async () => {
 const EntraAuth = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { login } = useAuth();
-  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
+  const [user, setUser] = useState(null);
 
   // Handle OAuth callback
   const handleCallback = useCallback(async () => {
@@ -69,9 +66,9 @@ const EntraAuth = () => {
 
     if (code) {
       setLoading(true);
-      const savedState = sessionStorage.getItem('msal_state');
-      const codeVerifier = sessionStorage.getItem('msal_code_verifier');
-
+      
+      // Verify state
+      const savedState = sessionStorage.getItem('entra_state');
       if (state !== savedState) {
         setError('State mismatch - possible CSRF attack');
         setLoading(false);
@@ -79,19 +76,21 @@ const EntraAuth = () => {
       }
 
       try {
-        // Exchange code for tokens
-        const tokenResponse = await fetch(MSAL_CONFIG.endpoints.token, {
+        // Get code verifier for PKCE
+        const codeVerifier = sessionStorage.getItem('entra_code_verifier');
+        
+        // Exchange code for token
+        const tokenResponse = await fetch(ENTRA_CONFIG.tokenEndpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
           body: new URLSearchParams({
-            client_id: MSAL_CONFIG.clientId,
+            client_id: ENTRA_CONFIG.clientId,
             grant_type: 'authorization_code',
             code: code,
-            redirect_uri: MSAL_CONFIG.redirectUri,
-            code_verifier: codeVerifier,
-            scope: MSAL_CONFIG.scopes.join(' ')
+            redirect_uri: ENTRA_CONFIG.redirectUri,
+            code_verifier: codeVerifier
           })
         });
 
@@ -101,72 +100,70 @@ const EntraAuth = () => {
 
         const tokens = await tokenResponse.json();
         
-        // Get user info from Microsoft Graph
-        const graphResponse = await fetch('https://graph.microsoft.com/v1.0/me', {
+        // Store tokens
+        localStorage.setItem('entra_access_token', tokens.access_token);
+        if (tokens.refresh_token) {
+          localStorage.setItem('entra_refresh_token', tokens.refresh_token);
+        }
+        localStorage.setItem('entra_id_token', tokens.id_token);
+
+        // Fetch user profile from Microsoft Graph
+        const userResponse = await fetch(ENTRA_CONFIG.graphEndpoint, {
           headers: {
             'Authorization': `Bearer ${tokens.access_token}`
           }
         });
 
-        if (graphResponse.ok) {
-          const user = await graphResponse.json();
-          setUserInfo(user);
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          setUser(userData);
+          localStorage.setItem('entra_user', JSON.stringify(userData));
           
-          // Store tokens and login
-          localStorage.setItem('entra_access_token', tokens.access_token);
-          localStorage.setItem('entra_id_token', tokens.id_token);
-          if (tokens.refresh_token) {
-            localStorage.setItem('entra_refresh_token', tokens.refresh_token);
-          }
-
-          // Login to app with Entra user
-          await login({
-            email: user.mail || user.userPrincipalName,
-            full_name: user.displayName,
-            provider: 'microsoft',
-            entra_id: user.id
-          });
-
-          // Redirect to dashboard
+          // Clear session storage
+          sessionStorage.removeItem('entra_state');
+          sessionStorage.removeItem('entra_code_verifier');
+          
+          // Redirect to dashboard after 2 seconds
           setTimeout(() => navigate('/dashboard'), 2000);
         }
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
-        sessionStorage.removeItem('msal_state');
-        sessionStorage.removeItem('msal_code_verifier');
       }
     }
-  }, [searchParams, login, navigate]);
+  }, [searchParams, navigate]);
 
   useEffect(() => {
     handleCallback();
   }, [handleCallback]);
 
-  // Initiate Microsoft login
-  const handleMicrosoftLogin = async () => {
+  // Initiate login
+  const handleLogin = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const state = generateState();
+      // Generate PKCE
       const { verifier, challenge } = await generatePKCE();
+      const state = generateState();
 
-      sessionStorage.setItem('msal_state', state);
-      sessionStorage.setItem('msal_code_verifier', verifier);
+      // Store for callback verification
+      sessionStorage.setItem('entra_state', state);
+      sessionStorage.setItem('entra_code_verifier', verifier);
 
-      const authUrl = new URL(MSAL_CONFIG.endpoints.authorize);
-      authUrl.searchParams.set('client_id', MSAL_CONFIG.clientId);
+      // Build authorization URL
+      const authUrl = new URL(ENTRA_CONFIG.authorizeEndpoint);
+      authUrl.searchParams.set('client_id', ENTRA_CONFIG.clientId);
       authUrl.searchParams.set('response_type', 'code');
-      authUrl.searchParams.set('redirect_uri', MSAL_CONFIG.redirectUri);
-      authUrl.searchParams.set('scope', MSAL_CONFIG.scopes.join(' '));
+      authUrl.searchParams.set('redirect_uri', ENTRA_CONFIG.redirectUri);
+      authUrl.searchParams.set('scope', ENTRA_CONFIG.scopes.join(' '));
       authUrl.searchParams.set('state', state);
       authUrl.searchParams.set('code_challenge', challenge);
       authUrl.searchParams.set('code_challenge_method', 'S256');
       authUrl.searchParams.set('response_mode', 'query');
-      authUrl.searchParams.set('prompt', 'select_account');
 
+      // Redirect to Microsoft login
       window.location.href = authUrl.toString();
     } catch (err) {
       setError(err.message);
@@ -174,102 +171,115 @@ const EntraAuth = () => {
     }
   };
 
-  // Handle logout
+  // Logout
   const handleLogout = () => {
     localStorage.removeItem('entra_access_token');
-    localStorage.removeItem('entra_id_token');
     localStorage.removeItem('entra_refresh_token');
+    localStorage.removeItem('entra_id_token');
+    localStorage.removeItem('entra_user');
+    setUser(null);
     
-    const logoutUrl = new URL(MSAL_CONFIG.endpoints.logout);
-    logoutUrl.searchParams.set('post_logout_redirect_uri', 'https://www.esim.com.mm');
-    
-    window.location.href = logoutUrl.toString();
+    // Redirect to Microsoft logout
+    const logoutUrl = `https://login.microsoftonline.com/${ENTRA_CONFIG.tenantId}/oauth2/v2.0/logout?post_logout_redirect_uri=${encodeURIComponent(ENTRA_CONFIG.redirectUri)}`;
+    window.location.href = logoutUrl;
   };
 
+  // Check for existing session
+  useEffect(() => {
+    const savedUser = localStorage.getItem('entra_user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full"
-      >
-        <div className="glass-card p-8">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary to-blue-500 rounded-xl flex items-center justify-center">
-              <svg className="w-8 h-8 text-background" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M11.5 2.5H2.5V11.5H11.5V2.5Z" />
-                <path d="M21.5 2.5H12.5V11.5H21.5V2.5Z" />
-                <path d="M11.5 12.5H2.5V21.5H11.5V12.5Z" />
-                <path d="M21.5 12.5H12.5V21.5H21.5V12.5Z" />
+    <div className="min-h-screen py-20 flex items-center justify-center">
+      <div className="max-w-md w-full mx-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass-card text-center"
+        >
+          {/* Logo */}
+          <div className="mb-8">
+            <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center">
+              <svg className="w-10 h-10 text-background" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
               </svg>
             </div>
             <h1 className="text-2xl font-bold text-white mb-2">
               eSIM Enterprise Portal
             </h1>
             <p className="text-gray-400 text-sm">
-              Sign in with your Microsoft account
+              Microsoft Entra ID Authentication
             </p>
           </div>
 
-          {/* Success State */}
-          {userInfo && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center mb-6"
-            >
-              <div className="w-20 h-20 mx-auto mb-4 bg-green-500/20 rounded-full flex items-center justify-center">
-                <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h2 className="text-xl font-bold text-white mb-2">Welcome, {userInfo.displayName}</h2>
-              <p className="text-gray-400 text-sm mb-4">{userInfo.mail || userInfo.userPrincipalName}</p>
-              <p className="text-primary text-sm">Redirecting to dashboard...</p>
-            </motion.div>
-          )}
-
-          {/* Error State */}
+          {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+            <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
               <p className="text-red-400 text-sm">{error}</p>
             </div>
           )}
 
-          {/* Loading State */}
-          {loading && !userInfo && (
-            <div className="text-center mb-6">
-              <div className="w-12 h-12 mx-auto mb-4 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-              <p className="text-gray-400">Authenticating...</p>
-            </div>
-          )}
-
-          {/* Login Button */}
-          {!loading && !userInfo && (
-            <div className="space-y-4">
-              <button
-                onClick={handleMicrosoftLogin}
-                className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-all"
-              >
-                <svg className="w-5 h-5" viewBox="0 0 21 21">
-                  <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
-                  <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
-                  <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
-                  <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
-                </svg>
-                Sign in with Microsoft
-              </button>
-
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-600" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-background text-gray-400">or</span>
-                </div>
+          {/* User Profile (if logged in) */}
+          {user ? (
+            <div className="space-y-6">
+              <div className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                <p className="text-green-400 text-sm mb-2">Authenticated Successfully</p>
+                <p className="text-white font-semibold">{user.displayName}</p>
+                <p className="text-gray-400 text-sm">{user.mail || user.userPrincipalName}</p>
               </div>
 
+              <div className="text-left space-y-2 p-4 bg-white/5 rounded-lg">
+                <p className="text-xs text-gray-500">User ID</p>
+                <p className="text-sm text-gray-300 font-mono break-all">{user.id}</p>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="flex-1 btn-primary"
+                >
+                  Go to Dashboard
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex-1 btn-secondary"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {/* Login Button */}
+              <button
+                onClick={handleLogin}
+                disabled={loading}
+                className="w-full btn-primary flex items-center justify-center gap-3"
+              >
+                {loading ? (
+                  <div className="w-5 h-5 border-2 border-background border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <svg className="w-5 h-5" viewBox="0 0 21 21" fill="currentColor">
+                    <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+                    <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+                    <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+                    <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+                  </svg>
+                )}
+                {loading ? 'Signing in...' : 'Sign in with Microsoft'}
+              </button>
+
+              {/* Divider */}
+              <div className="flex items-center gap-4">
+                <div className="flex-1 h-px bg-white/10"></div>
+                <span className="text-gray-500 text-sm">or</span>
+                <div className="flex-1 h-px bg-white/10"></div>
+              </div>
+
+              {/* Alternative Login */}
               <button
                 onClick={() => navigate('/login')}
                 className="w-full btn-secondary"
@@ -279,27 +289,17 @@ const EntraAuth = () => {
             </div>
           )}
 
-          {/* Logout Button (when logged in) */}
-          {userInfo && (
-            <button
-              onClick={handleLogout}
-              className="w-full btn-secondary mt-4"
-            >
-              Sign out
-            </button>
-          )}
-
-          {/* Footer */}
-          <div className="mt-8 text-center">
-            <p className="text-xs text-gray-500">
-              Protected by Microsoft Entra ID
+          {/* Footer Info */}
+          <div className="mt-8 pt-6 border-t border-white/10">
+            <p className="text-xs text-gray-500 mb-2">
+              Enterprise Single Sign-On
             </p>
-            <p className="text-xs text-gray-600 mt-1">
-              Tenant: igsim.onmicrosoft.com
+            <p className="text-xs text-gray-600">
+              Tenant: {ENTRA_CONFIG.tenantId.substring(0, 8)}...
             </p>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };
