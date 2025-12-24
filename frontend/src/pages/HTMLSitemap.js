@@ -60,7 +60,8 @@ const HTMLSitemap = () => {
       category: 'Enterprise',
       links: [
         { path: '/audit-dashboard', label: 'Audit Dashboard', description: 'Enterprise analytics' },
-        { path: '/iot-dashboard', label: 'IoT Dashboard', description: 'IoT metrics and monitoring' }
+        { path: '/iot-dashboard', label: 'IoT Dashboard', description: 'IoT metrics and monitoring' },
+        { path: '/downloads', label: 'Downloads', description: 'Downloadable resources and assets' }
       ]
     }
   ];
