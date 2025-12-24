@@ -18,8 +18,8 @@ const MYANMAR_PREFIXES = {
 export const validateMyanmarPhone = (phone) => {
   if (!phone) return { valid: false, error: 'Phone number is required' };
   
-  // Clean the phone number
-  let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
+  // Clean the phone number - remove spaces, dashes, parentheses, dots
+  let cleaned = phone.replace(/[\s\-().]/g, '');
   
   // Handle various formats
   if (cleaned.startsWith('+95')) {
@@ -88,9 +88,11 @@ export const detectProvider = (phone) => {
   return 'Unknown';
 };
 
-export default {
+const phoneValidation = {
   validateMyanmarPhone,
   formatMyanmarPhone,
   detectProvider,
   MYANMAR_PREFIXES
 };
+
+export default phoneValidation;

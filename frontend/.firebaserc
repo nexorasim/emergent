@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "esimmyanmar-09289140-4db73"
+    "default": "esim-myanmar-ia6gw"
   },
   "targets": {
     "esimmyanmar-09289140-4db73": {
@@ -10,5 +10,6 @@
         ]
       }
     }
-  }
+  },
+  "etags": {}
 }

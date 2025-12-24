@@ -52,6 +52,9 @@ const EntraAuth = lazy(() => import('./pages/auth/EntraAuth'));
 // Sitemap Page
 const HTMLSitemap = lazy(() => import('./pages/HTMLSitemap'));
 
+// Downloads Page
+const Downloads = lazy(() => import('./pages/Downloads'));
+
 // 404 Page
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -122,6 +125,9 @@ function App() {
                   
                   {/* Sitemap */}
                   <Route path="/sitemap" element={<HTMLSitemap />} />
+                  
+                  {/* Downloads */}
+                  <Route path="/downloads" element={<Downloads />} />
                   
                   {/* Enterprise Pages */}
                   <Route path="/audit-dashboard" element={<EnterpriseAuditDashboard />} />
