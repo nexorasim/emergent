@@ -1,6 +1,7 @@
 name: Deploy eSIM Myanmar
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
