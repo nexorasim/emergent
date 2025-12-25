@@ -55,8 +55,8 @@ const HTMLSitemap = lazy(() => import('./pages/HTMLSitemap'));
 // Help Desk Page
 const HelpDesk = lazy(() => import('./pages/HelpDesk'));
 
-// Help Desk
-const HelpDesk = lazy(() => import('./pages/HelpDesk'));
+// Downloads Page
+const Downloads = lazy(() => import('./pages/Downloads'));
 
 // 404 Page
 const NotFound = lazy(() => import('./pages/NotFound'));
@@ -132,8 +132,8 @@ function App() {
                   {/* Help Desk */}
                   <Route path="/helpdesk" element={<HelpDesk />} />
                   
-                  {/* Help Desk */}
-                  <Route path="/helpdesk" element={<HelpDesk />} />
+                  {/* Downloads */}
+                  <Route path="/downloads" element={<Downloads />} />
                   
                   {/* Enterprise Pages */}
                   <Route path="/audit-dashboard" element={<EnterpriseAuditDashboard />} />
