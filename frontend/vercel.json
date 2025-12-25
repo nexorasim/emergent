@@ -1,7 +1,12 @@
 {
-  "buildCommand": "DISABLE_ESLINT_PLUGIN=true CI=false yarn build",
+  "buildCommand": "yarn build",
   "outputDirectory": "build",
   "framework": "create-react-app",
+  "env": {
+    "CI": "false",
+    "DISABLE_ESLINT_PLUGIN": "true",
+    "REACT_APP_BACKEND_URL": "https://emerhent-production.up.railway.app"
+  },
   "rewrites": [
     { "source": "/((?!static|api|_next).*)", "destination": "/index.html" }
   ],
