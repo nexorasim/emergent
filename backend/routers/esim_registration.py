@@ -10,8 +10,8 @@ from datetime import datetime
 import base64
 import re
 
-from ..services.mmqr_service import mmqr_service, phone_validator, PaymentStatus
-from ..services.nexora_ai_service import nexora_ai, VerificationStatus
+from services.mmqr_service import mmqr_service, phone_validator, PaymentStatus
+from services.nexora_ai_service import nexora_ai, VerificationStatus
 
 
 router = APIRouter(prefix="/api/esim-registration", tags=["eSIM Registration"])

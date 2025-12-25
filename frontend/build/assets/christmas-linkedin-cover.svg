@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1584" height="396" viewBox="0 0 1584 396" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e2f3c"/>
+      <stop offset="100%" style="stop-color:#0f1a24"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1584" height="396" fill="url(#bg)"/>
+  <g opacity="0.5" fill="#F8F9FA">
+    <circle cx="100" cy="50" r="3"/><circle cx="300" cy="80" r="4"/><circle cx="500" cy="40" r="3"/>
+    <circle cx="800" cy="70" r="4"/><circle cx="1100" cy="45" r="3"/><circle cx="1400" cy="75" r="4"/>
+  </g>
+  <circle cx="200" cy="198" r="60" fill="#1e2f3c" stroke="#00FFFF" stroke-width="4" filter="url(#glow)"/>
+  <text x="200" y="208" font-family="Inter,Arial" font-size="24" font-weight="700" fill="#00FFFF" text-anchor="middle">eSIM</text>
+  <text x="200" y="235" font-family="Inter,Arial" font-size="11" fill="#F8F9FA" text-anchor="middle">MYANMAR</text>
+  <text x="850" y="160" font-family="Inter,Arial" font-size="48" font-weight="800" fill="#F8F9FA" text-anchor="middle">Merry Christmas 2025</text>
+  <text x="850" y="210" font-family="Inter,Arial" font-size="22" fill="#00FFFF" text-anchor="middle" filter="url(#glow)">Enterprise eSIM Management Platform</text>
+  <text x="850" y="250" font-family="Inter,Arial" font-size="16" fill="#9CA3AF" text-anchor="middle">Serving 50M+ Users Across ASEAN | 5G | VoLTE | International Roaming</text>
+  <rect x="700" y="280" width="300" height="50" rx="25" fill="#00FFFF" filter="url(#glow)"/>
+  <text x="850" y="313" font-family="Inter,Arial" font-size="18" font-weight="700" fill="#1e2f3c" text-anchor="middle">Get Started Today</text>
+  <text x="850" y="375" font-family="Inter,Arial" font-size="12" fill="#6B7280" text-anchor="middle">ESIM MYANMAR COMPANY LIMITED - esim.com.mm</text>
+</svg>

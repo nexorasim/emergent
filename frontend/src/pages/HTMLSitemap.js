@@ -32,6 +32,7 @@ const HTMLSitemap = () => {
       category: 'Support and Resources',
       links: [
         { path: '/support', label: 'Support Center', description: 'Help and customer service' },
+        { path: '/helpdesk', label: 'Help Desk', description: 'Submit and track support tickets' },
         { path: '/faq', label: 'FAQ', description: 'Frequently asked questions' },
         { path: '/contact', label: 'Contact Us', description: 'Get in touch with our team' },
         { path: '/partners', label: 'Partners', description: 'Partnership opportunities' }

@@ -836,6 +836,49 @@ select.input {
 }
 
 /* ============================================
+   14. PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU acceleration for animations */
+.btn,
+.card-hover,
+.nav-link {
+  will-change: transform;
+}
+
+/* Optimize repaints */
+.animate-fade-in,
+.animate-slide-up {
+  will-change: opacity, transform;
+}
+
+/* Contain layout shifts */
+.container {
+  contain: layout style;
+}
+
+/* ============================================
+   15. ENHANCED ACCESSIBILITY
+   ============================================ */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text: #FFFFFF;
+    --color-background: #000000;
+    --color-primary: #00FFFF;
+  }
+  
+  .btn-primary {
+    border: 2px solid var(--color-primary);
+  }
+  
+  .card {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* ============================================
    12. PRINT STYLES
    ============================================ */
 

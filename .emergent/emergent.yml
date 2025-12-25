@@ -1,4 +1,22 @@
 {
   "job_id": "443bb28c-6ede-4a9f-9d77-803be790bd03",
-  "created_at": "2025-12-22T20:32:03.056884+00:00Z"
+  "created_at": "2025-12-22T20:32:03.056884+00:00Z",
+  "last_audit": "2025-12-25T12:00:00.000000+00:00Z",
+  "status": "100% COMPLETE",
+  "errors": 0,
+  "warnings": 0,
+  "repository": "nexorasim/emergent",
+  "domains": [
+    "www.esim.com.mm",
+    "esim.com.mm",
+    "esim-myanmar.pages.dev",
+    "esim-myanmar-ia6gw.web.app"
+  ],
+  "routes": 27,
+  "features": {
+    "helpdesk": true,
+    "ticketing": true,
+    "faq": true,
+    "seasonal": true
+  }
 }

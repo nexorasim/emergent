@@ -6,7 +6,7 @@ uvicorn[standard]==0.34.0
 python-multipart==0.0.19
 
 # Database
-pymongo==4.10.1
+pymongo==4.9.0
 motor==3.6.0
 
 # Authentication & Security
