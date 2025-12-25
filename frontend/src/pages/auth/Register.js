@@ -71,7 +71,10 @@ const RegisterPage = () => {
       });
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Registration failed. Please try again.');
+      const errorMessage = err.response?.data?.detail || 
+        err.code === 'ERR_NETWORK' ? 'Unable to connect to server. Please try again later.' :
+        'Registration failed. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

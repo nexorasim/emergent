@@ -27,7 +27,10 @@ const LoginPage = () => {
       await login(email, password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Invalid email or password. Please try again.');
+      const errorMessage = err.response?.data?.detail || 
+        err.code === 'ERR_NETWORK' ? 'Unable to connect to server. Please try again later.' :
+        'Invalid email or password. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
