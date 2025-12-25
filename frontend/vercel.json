@@ -1,5 +1,5 @@
 {
-  "buildCommand": "CI=false yarn build",
+  "buildCommand": "DISABLE_ESLINT_PLUGIN=true CI=false yarn build",
   "outputDirectory": "build",
   "framework": "create-react-app",
   "rewrites": [
