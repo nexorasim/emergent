@@ -52,8 +52,8 @@ const EntraAuth = lazy(() => import('./pages/auth/EntraAuth'));
 // Sitemap Page
 const HTMLSitemap = lazy(() => import('./pages/HTMLSitemap'));
 
-// Downloads Page
-const Downloads = lazy(() => import('./pages/Downloads'));
+// Help Desk Page
+const HelpDesk = lazy(() => import('./pages/HelpDesk'));
 
 // Help Desk
 const HelpDesk = lazy(() => import('./pages/HelpDesk'));
@@ -129,8 +129,8 @@ function App() {
                   {/* Sitemap */}
                   <Route path="/sitemap" element={<HTMLSitemap />} />
                   
-                  {/* Downloads */}
-                  <Route path="/downloads" element={<Downloads />} />
+                  {/* Help Desk */}
+                  <Route path="/helpdesk" element={<HelpDesk />} />
                   
                   {/* Help Desk */}
                   <Route path="/helpdesk" element={<HelpDesk />} />
