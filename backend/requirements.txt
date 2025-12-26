@@ -41,7 +41,6 @@ python-dateutil==2.9.0.post0
 pytest==8.3.4
 pytest-asyncio==0.25.2
 faker==33.3.1
-httpx==0.28.1
 
 # Monitoring (Optional)
 prometheus-client==0.21.1
