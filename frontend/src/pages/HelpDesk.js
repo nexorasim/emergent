@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const HelpDesk = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [tickets, setTickets] = useState([]);
   const [newTicket, setNewTicket] = useState({
     subject: '',

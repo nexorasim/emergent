@@ -387,7 +387,7 @@ const Downloads = () => {
             Open any SVG file in Adobe Photoshop to edit as vector smart objects and save as PSD.
           </p>
           <p className="text-xs text-gray-500">
-            File &gt; Open &gt; Select SVG &gt; Edit &gt; Save As PSD
+            {"File > Open > Select SVG > Edit > Save As PSD"}
           </p>
         </motion.div>
 

@@ -159,7 +159,7 @@ export const getThemeWithOverride = () => {
   return getActiveTheme();
 };
 
-export default {
+const themeSwitcher = {
   THEMES,
   THEME_CONFIG,
   getActiveTheme,
@@ -169,3 +169,5 @@ export default {
   clearThemeOverride,
   getThemeWithOverride
 };
+
+export default themeSwitcher;

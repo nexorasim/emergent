@@ -151,7 +151,7 @@ export const detectBot = () => {
   return isBot;
 };
 
-export default {
+const securityUtils = {
   sanitizeHTML,
   getCSRFToken,
   checkRateLimit,
@@ -161,3 +161,5 @@ export default {
   checkSecurityHeaders,
   detectBot
 };
+
+export default securityUtils;
