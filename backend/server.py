@@ -16,7 +16,14 @@ import base64
 
 load_dotenv()
 
-app = FastAPI(title="eSIM Myanmar Entertainment Server API", version="1.0.0")
+app = FastAPI(
+    title="eSIM Myanmar Entertainment Server API - NexoraAI Enhanced",
+    version="2.0.0",
+    description="Enterprise eSIM Platform with NexoraAI Orchestration"
+)
+
+# Import NexoraAI Router
+from routers import nexora
 
 # CORS Configuration
 app.add_middleware(
