@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=ksctoosqlpemoptcaxdr"
+    },
+    "postman": {
+      "url": "https://mcp.postman.com/minimal",
+      "headers": {
+        "Authorization": "Bearer ${POSTMAN_API_KEY}"
+      },
+      "disabled": false
+    },
+    "figma": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/figma-mcp-server"],
+      "env": {
+        "FIGMA_API_TOKEN": "${FIGMA_API_TOKEN}"
+      },
+      "disabled": true
+    }
+  }
+}

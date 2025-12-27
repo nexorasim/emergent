@@ -11,10 +11,10 @@ git add . && git commit -m "Deploy: Production ready" && git push origin main
 ```
 
 ### Live Domains Status
-- **Firebase**: esimmyanmar-09289140-4db73.web.app ✅
-- **Primary**: esim.com.mm ✅  
-- **Mirror**: www.esim.com.mm ✅
-- **Cloudflare**: esim-myanmar.pages.dev ✅
+- **Firebase**: esimmyanmar-09289140-4db73.web.app - LIVE
+- **Primary**: esim.com.mm - LIVE
+- **Mirror**: www.esim.com.mm - LIVE
+- **Cloudflare**: esim-myanmar.pages.dev - LIVE
 
 ---
 

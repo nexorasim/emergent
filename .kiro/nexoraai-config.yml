@@ -1,0 +1,436 @@
+# NexoraAI - Principal Systems Architect Agent
+# eSIM Myanmar Enterprise Platform Orchestrator
+# Copyright 2025-2026 ESIM MYANMAR COMPANY LIMITED
+
+version: "2.0"
+agent_name: "NexoraAI"
+role: "Principal Systems Architect & Platform Engineering Lead"
+scope: "eSIM Myanmar Ecosystem"
+
+# =============================================================================
+# CORE CONFIGURATION
+# =============================================================================
+
+domains:
+  primary: "esim.com.mm"
+  mirror: "www.esim.com.mm"
+  cloudflare: "esim-myanmar.pages.dev"
+  firebase_primary: "esim-myanmar-ia6gw.web.app"
+  firebase_secondary: "esimmyanmar-09289140-4db73.web.app"
+  backend_api: "emerhent-production.up.railway.app"
+  email_server: "smtp.hostinger.com"
+  contact_email: "info@esim.com.mm"
+
+repositories:
+  main: "nexorasim/emergent"
+  backup: "nexorasim/esim-myanmar-backup"
+
+# =============================================================================
+# KIRO POWERS INTEGRATION
+# =============================================================================
+
+kiro_powers:
+  design:
+    - figma_power: "auto_convert_designs_to_code"
+    - ux_validation: "wcag_compliance_check"
+  
+  backend:
+    - supabase_power: "realtime_database_auth"
+    - firebase_power: "hosting_functions_auth"
+    - dotnet_power: "enterprise_api_development"
+  
+  infrastructure:
+    - terraform_power: "infrastructure_as_code"
+    - aws_cdk_power: "cloud_development_kit"
+    - cloudformation_power: "aws_resource_management"
+    - gcp_power: "google_cloud_services"
+  
+  deployment:
+    - vercel_power: "edge_deployment"
+    - netlify_power: "jamstack_deployment"
+    - cloudflare_workers: "edge_computing"
+    - github_pages: "static_hosting"
+  
+  database:
+    - aurora_postgresql: "managed_relational_db"
+    - neon_database: "serverless_postgresql"
+  
+  observability:
+    - datadog_power: "monitoring_alerting"
+    - dynatrace_power: "apm_observability"
+  
+  testing:
+    - postman_power: "api_testing_automation"
+  
+  ai_agents:
+    - bedrock_agentcore: "aws_ai_orchestration"
+    - strands_framework: "agent_development"
+  
+  mobile:
+    - dotnet_maui: "cross_platform_mobile"
+
+# =============================================================================
+# CONTINUOUS AUDIT LIFECYCLE (1% - 100%)
+# =============================================================================
+
+audit_phases:
+  phase_1_infrastructure: # 1-20%
+    - cloud_resource_audit
+    - security_posture_assessment
+    - cost_optimization_analysis
+    - compliance_validation
+  
+  phase_2_application: # 21-40%
+    - code_quality_analysis
+    - security_vulnerability_scan
+    - performance_benchmarking
+    - accessibility_compliance
+  
+  phase_3_integration: # 41-60%
+    - api_endpoint_testing
+    - database_performance_tuning
+    - cdn_optimization
+    - auth_flow_validation
+  
+  phase_4_deployment: # 61-80%
+    - multi_platform_deployment
+    - load_testing
+    - disaster_recovery_testing
+    - backup_validation
+  
+  phase_5_optimization: # 81-100%
+    - ai_agent_integration
+    - seo_optimization
+    - legal_compliance_final
+    - production_readiness_sign_off
+
+# =============================================================================
+# SECURITY FRAMEWORK
+# =============================================================================
+
+security_layers:
+  owasp_top_10:
+    - injection_prevention
+    - broken_authentication_fix
+    - sensitive_data_exposure_protection
+    - xml_external_entities_prevention
+    - broken_access_control_fix
+    - security_misconfiguration_remediation
+    - cross_site_scripting_prevention
+    - insecure_deserialization_protection
+    - vulnerable_components_update
+    - insufficient_logging_monitoring_fix
+  
+  authentication:
+    - firebase_auth_integration
+    - supabase_auth_integration
+    - jwt_token_management
+    - session_security
+    - mfa_implementation
+  
+  api_security:
+    - rate_limiting
+    - api_gateway_protection
+    - cors_configuration
+    - input_validation
+    - output_encoding
+  
+  infrastructure_security:
+    - iam_least_privilege
+    - secrets_management
+    - network_security_groups
+    - ssl_tls_configuration
+    - supply_chain_security
+
+# =============================================================================
+# DEPLOYMENT MATRIX
+# =============================================================================
+
+deployment_targets:
+  web_platforms:
+    firebase:
+      project: "esim-myanmar-ia6gw"
+      hosting: true
+      functions: true
+      auth: true
+    vercel:
+      project: "esim-myanmar"
+      edge_functions: true
+      analytics: true
+    netlify:
+      site: "esim-myanmar"
+      functions: true
+      forms: true
+    cloudflare:
+      zone: "esim.com.mm"
+      workers: true
+      pages: true
+    github_pages:
+      repo: "nexorasim/emergent"
+      custom_domain: true
+  
+  mobile_platforms:
+    android:
+      framework: "dotnet_maui"
+      store: "google_play"
+    ios:
+      framework: "dotnet_maui"
+      store: "app_store"
+  
+  backend_services:
+    railway:
+      service: "emerhent-production"
+      database: "postgresql"
+    supabase:
+      project: "esim-myanmar"
+      realtime: true
+    firebase:
+      project: "esim-myanmar-ia6gw"
+      firestore: true
+
+# =============================================================================
+# AI AGENT ORCHESTRATION
+# =============================================================================
+
+ai_agents:
+  bedrock_agents:
+    - name: "SecurityAuditor"
+      function: "continuous_security_scanning"
+      triggers: ["code_commit", "deployment", "schedule"]
+    
+    - name: "PerformanceOptimizer"
+      function: "core_web_vitals_optimization"
+      triggers: ["performance_degradation", "schedule"]
+    
+    - name: "ComplianceValidator"
+      function: "legal_telecom_compliance"
+      triggers: ["policy_update", "schedule"]
+  
+  strands_agents:
+    - name: "DeploymentOrchestrator"
+      function: "multi_platform_deployment"
+      triggers: ["build_success", "manual"]
+    
+    - name: "IncidentResponder"
+      function: "automated_incident_response"
+      triggers: ["alert", "threshold_breach"]
+
+# =============================================================================
+# MONITORING & OBSERVABILITY
+# =============================================================================
+
+observability_stack:
+  datadog:
+    - application_performance_monitoring
+    - infrastructure_monitoring
+    - log_management
+    - synthetic_monitoring
+  
+  dynatrace:
+    - full_stack_monitoring
+    - ai_powered_analytics
+    - user_experience_monitoring
+    - cloud_automation
+  
+  metrics:
+    - core_web_vitals
+    - api_response_times
+    - error_rates
+    - user_engagement
+    - security_events
+  
+  alerts:
+    - performance_degradation
+    - security_incidents
+    - deployment_failures
+    - compliance_violations
+
+# =============================================================================
+# TESTING FRAMEWORK
+# =============================================================================
+
+testing_strategy:
+  postman_collections:
+    - authentication_flows
+    - esim_registration_apis
+    - payment_processing
+    - support_ticketing
+    - admin_operations
+  
+  automated_tests:
+    - unit_tests: 90%
+    - integration_tests: 85%
+    - e2e_tests: 80%
+    - security_tests: 95%
+    - performance_tests: 85%
+  
+  manual_testing:
+    - ux_validation
+    - accessibility_testing
+    - cross_browser_testing
+    - mobile_responsiveness
+    - compliance_verification
+
+# =============================================================================
+# COMPLIANCE & LEGAL
+# =============================================================================
+
+compliance_framework:
+  telecom_regulations:
+    - gsma_esim_standards
+    - data_protection_requirements
+    - consumer_protection_laws
+    - telecommunications_licensing
+  
+  data_privacy:
+    - privacy_policy_compliance
+    - terms_of_service_validation
+    - consent_management
+    - data_retention_policies
+    - cross_border_data_transfer
+  
+  security_standards:
+    - iso_27001_alignment
+    - pci_dss_compliance
+    - gdpr_compliance
+    - ccpa_compliance
+
+# =============================================================================
+# DISASTER RECOVERY & BACKUP
+# =============================================================================
+
+disaster_recovery:
+  backup_strategy:
+    - database_backups: "daily"
+    - code_repository_backups: "real_time"
+    - configuration_backups: "weekly"
+    - user_data_backups: "daily"
+  
+  recovery_procedures:
+    - rto: "15_minutes"
+    - rpo: "5_minutes"
+    - failover_automation: true
+    - rollback_procedures: true
+  
+  incident_response:
+    - automated_alerting
+    - escalation_procedures
+    - communication_protocols
+    - post_incident_reviews
+
+# =============================================================================
+# PERFORMANCE OPTIMIZATION
+# =============================================================================
+
+performance_targets:
+  core_web_vitals:
+    - lcp: "<2.5s"
+    - fid: "<100ms"
+    - cls: "<0.1"
+  
+  api_performance:
+    - response_time: "<200ms"
+    - throughput: ">1000_rps"
+    - availability: "99.9%"
+  
+  mobile_performance:
+    - app_startup: "<3s"
+    - api_calls: "<500ms"
+    - offline_capability: true
+
+# =============================================================================
+# EXECUTION WORKFLOW
+# =============================================================================
+
+execution_phases:
+  continuous_monitoring:
+    interval: "5_minutes"
+    actions:
+      - health_check_all_services
+      - performance_metrics_collection
+      - security_event_monitoring
+      - compliance_status_validation
+  
+  daily_operations:
+    time: "02:00_UTC"
+    actions:
+      - full_security_scan
+      - performance_optimization
+      - backup_verification
+      - compliance_report_generation
+  
+  weekly_operations:
+    day: "sunday"
+    actions:
+      - infrastructure_audit
+      - cost_optimization_analysis
+      - disaster_recovery_testing
+      - ai_agent_performance_review
+  
+  monthly_operations:
+    actions:
+      - comprehensive_security_audit
+      - legal_compliance_review
+      - architecture_optimization
+      - stakeholder_reporting
+
+# =============================================================================
+# OUTPUT SPECIFICATIONS
+# =============================================================================
+
+reporting:
+  real_time_dashboard:
+    - system_health_status
+    - performance_metrics
+    - security_alerts
+    - deployment_status
+  
+  detailed_reports:
+    - architecture_diagrams
+    - security_scorecards
+    - performance_benchmarks
+    - compliance_status
+    - cost_analysis
+    - optimization_recommendations
+  
+  automated_notifications:
+    - slack_integration
+    - email_alerts
+    - sms_critical_alerts
+    - dashboard_updates
+
+# =============================================================================
+# SUCCESS CRITERIA
+# =============================================================================
+
+success_metrics:
+  security: "100%_owasp_compliance"
+  performance: "95%_core_web_vitals_pass"
+  availability: "99.9%_uptime"
+  compliance: "100%_legal_requirements"
+  automation: "90%_manual_task_reduction"
+  cost_optimization: "30%_infrastructure_cost_reduction"
+  deployment_speed: "80%_faster_releases"
+  incident_response: "90%_automated_resolution"
+
+# =============================================================================
+# AGENT ACTIVATION
+# =============================================================================
+
+activation:
+  status: "ACTIVE"
+  mode: "CONTINUOUS_OPERATION"
+  priority: "CRITICAL"
+  escalation: "IMMEDIATE"
+  
+initialization_sequence:
+  1. "VALIDATE_ALL_KIRO_POWERS"
+  2. "ESTABLISH_MONITORING_BASELINE"
+  3. "INITIATE_SECURITY_SCAN"
+  4. "BEGIN_CONTINUOUS_AUDIT_CYCLE"
+  5. "ACTIVATE_AI_AGENT_ORCHESTRATION"
+  6. "START_REAL_TIME_REPORTING"
+
+# Agent Status: INITIALIZED AND ACTIVE
+# Next Action: BEGIN_PHASE_1_INFRASTRUCTURE_AUDIT
+# Target: 100% ENTERPRISE_GRADE_PRODUCTION_READINESS

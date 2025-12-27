@@ -1,0 +1,313 @@
+{
+  "project": "eSIM Myanmar Platform",
+  "version": "1.0.0",
+  "description": "API testing configuration for eSIM Myanmar Entertainment Server",
+  "workspace": {
+    "name": "eSIM Myanmar API",
+    "type": "personal",
+    "id": null
+  },
+  "collections": {
+    "auth": {
+      "name": "Authentication API",
+      "id": null,
+      "endpoints": [
+        {
+          "name": "Register User",
+          "method": "POST",
+          "path": "/api/auth/register",
+          "body": {
+            "email": "{{test_email}}",
+            "password": "{{test_password}}",
+            "full_name": "Test User",
+            "phone_number": "+959123456789"
+          },
+          "tests": [
+            "pm.test('Status code is 201', function() { pm.response.to.have.status(201); });",
+            "pm.test('Response has user data', function() { pm.expect(pm.response.json()).to.have.property('user'); });"
+          ]
+        },
+        {
+          "name": "Login User",
+          "method": "POST",
+          "path": "/api/auth/login",
+          "body": {
+            "email": "{{test_email}}",
+            "password": "{{test_password}}"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Response has access token', function() { pm.expect(pm.response.json()).to.have.property('access_token'); });",
+            "var jsonData = pm.response.json(); pm.environment.set('access_token', jsonData.access_token);"
+          ]
+        },
+        {
+          "name": "Get Current User",
+          "method": "GET",
+          "path": "/api/auth/me",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Response has user email', function() { pm.expect(pm.response.json()).to.have.property('email'); });"
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "method": "POST",
+          "path": "/api/auth/refresh",
+          "body": {
+            "refresh_token": "{{refresh_token}}"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Response has new access token', function() { pm.expect(pm.response.json()).to.have.property('access_token'); });"
+          ]
+        }
+      ]
+    },
+    "esim": {
+      "name": "eSIM Management API",
+      "id": null,
+      "endpoints": [
+        {
+          "name": "List eSIM Profiles",
+          "method": "GET",
+          "path": "/api/esim/profiles",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Response is array', function() { pm.expect(pm.response.json()).to.be.an('array'); });"
+          ]
+        },
+        {
+          "name": "Get eSIM Profile",
+          "method": "GET",
+          "path": "/api/esim/profiles/{{profile_id}}",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Response has profile data', function() { pm.expect(pm.response.json()).to.have.property('id'); });"
+          ]
+        },
+        {
+          "name": "Activate eSIM Profile",
+          "method": "POST",
+          "path": "/api/esim/profiles/{{profile_id}}/activate",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Profile is activated', function() { pm.expect(pm.response.json().status).to.equal('active'); });"
+          ]
+        },
+        {
+          "name": "Transfer eSIM Profile",
+          "method": "POST",
+          "path": "/api/esim/profiles/{{profile_id}}/transfer",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "body": {
+            "to_user_email": "{{transfer_email}}",
+            "transfer_type": "device_upgrade"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Transfer initiated', function() { pm.expect(pm.response.json()).to.have.property('transfer_id'); });"
+          ]
+        }
+      ]
+    },
+    "plans": {
+      "name": "Plans API",
+      "id": null,
+      "endpoints": [
+        {
+          "name": "List Plans",
+          "method": "GET",
+          "path": "/api/plans",
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Response is array', function() { pm.expect(pm.response.json()).to.be.an('array'); });",
+            "pm.test('Plans have required fields', function() { var plans = pm.response.json(); if(plans.length > 0) { pm.expect(plans[0]).to.have.property('name'); pm.expect(plans[0]).to.have.property('price_mmk'); } });"
+          ]
+        },
+        {
+          "name": "Get Plan Details",
+          "method": "GET",
+          "path": "/api/plans/{{plan_id}}",
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Plan has details', function() { pm.expect(pm.response.json()).to.have.property('data_gb'); });"
+          ]
+        }
+      ]
+    },
+    "payments": {
+      "name": "Payments API",
+      "id": null,
+      "endpoints": [
+        {
+          "name": "Create Payment",
+          "method": "POST",
+          "path": "/api/payments",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "body": {
+            "plan_id": "{{plan_id}}",
+            "payment_gateway": "kbz_pay",
+            "promo_code": "{{promo_code}}"
+          },
+          "tests": [
+            "pm.test('Status code is 201', function() { pm.response.to.have.status(201); });",
+            "pm.test('Payment created', function() { pm.expect(pm.response.json()).to.have.property('transaction_id'); });"
+          ]
+        },
+        {
+          "name": "Get Payment Status",
+          "method": "GET",
+          "path": "/api/payments/{{transaction_id}}",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Has payment status', function() { pm.expect(pm.response.json()).to.have.property('status'); });"
+          ]
+        }
+      ]
+    },
+    "support": {
+      "name": "Support API",
+      "id": null,
+      "endpoints": [
+        {
+          "name": "Create Support Ticket",
+          "method": "POST",
+          "path": "/api/support/tickets",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "body": {
+            "subject": "Test Ticket",
+            "description": "This is a test support ticket",
+            "category": "technical",
+            "priority": "medium"
+          },
+          "tests": [
+            "pm.test('Status code is 201', function() { pm.response.to.have.status(201); });",
+            "pm.test('Ticket created', function() { pm.expect(pm.response.json()).to.have.property('ticket_number'); });",
+            "var jsonData = pm.response.json(); pm.environment.set('ticket_id', jsonData.id);"
+          ]
+        },
+        {
+          "name": "List Support Tickets",
+          "method": "GET",
+          "path": "/api/support/tickets",
+          "headers": {
+            "Authorization": "Bearer {{access_token}}"
+          },
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('Response is array', function() { pm.expect(pm.response.json()).to.be.an('array'); });"
+          ]
+        },
+        {
+          "name": "Get FAQ",
+          "method": "GET",
+          "path": "/api/support/faq",
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('FAQ items returned', function() { pm.expect(pm.response.json()).to.be.an('array'); });"
+          ]
+        }
+      ]
+    },
+    "health": {
+      "name": "Health Check API",
+      "id": null,
+      "endpoints": [
+        {
+          "name": "API Health",
+          "method": "GET",
+          "path": "/api/health",
+          "tests": [
+            "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+            "pm.test('API is healthy', function() { pm.expect(pm.response.json().status).to.equal('healthy'); });"
+          ]
+        }
+      ]
+    }
+  },
+  "environments": {
+    "local": {
+      "name": "Local Development",
+      "id": null,
+      "values": {
+        "base_url": "http://localhost:8001",
+        "test_email": "test@example.com",
+        "test_password": "TestPassword123!",
+        "access_token": "",
+        "refresh_token": "",
+        "profile_id": "",
+        "plan_id": "",
+        "transaction_id": "",
+        "ticket_id": "",
+        "promo_code": "NEWYEAR2026",
+        "transfer_email": "transfer@example.com"
+      }
+    },
+    "staging": {
+      "name": "Staging",
+      "id": null,
+      "values": {
+        "base_url": "https://api-staging.esim.com.mm",
+        "test_email": "staging-test@example.com",
+        "test_password": "StagingPassword123!",
+        "access_token": "",
+        "refresh_token": "",
+        "profile_id": "",
+        "plan_id": "",
+        "transaction_id": "",
+        "ticket_id": "",
+        "promo_code": "",
+        "transfer_email": ""
+      }
+    },
+    "production": {
+      "name": "Production",
+      "id": null,
+      "values": {
+        "base_url": "https://api.esim.com.mm",
+        "test_email": "",
+        "test_password": "",
+        "access_token": "",
+        "refresh_token": "",
+        "profile_id": "",
+        "plan_id": "",
+        "transaction_id": "",
+        "ticket_id": "",
+        "promo_code": "",
+        "transfer_email": ""
+      }
+    }
+  },
+  "testOrder": [
+    "health",
+    "auth",
+    "plans",
+    "esim",
+    "payments",
+    "support"
+  ],
+  "lastRun": null,
+  "lastRunResults": null
+}
