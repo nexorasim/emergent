@@ -41,6 +41,15 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24 hours (reduced from 7 days)
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if not self.SECRET_KEY or self.SECRET_KEY == "dev_secret_key_change_in_production":
+            if self.ENVIRONMENT == "production":
+                raise ValueError("SECRET_KEY must be set in production environment")
+            import secrets
+            self.SECRET_KEY = secrets.token_urlsafe(32)
+            print("WARNING: Using generated SECRET_KEY for development. Set SECRET_KEY environment variable.")
+    
     # CORS
     CORS_ORIGINS: List[str] = [
         "https://esim.com.mm",

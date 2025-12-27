@@ -3,10 +3,10 @@
     "default": "esim-myanmar-ia6gw"
   },
   "targets": {
-    "esimmyanmar-09289140-4db73": {
+    "esim-myanmar-ia6gw": {
       "hosting": {
         "esim-myanmar": [
-          "esimmyanmar-09289140-4db73"
+          "esim-myanmar-ia6gw"
         ]
       }
     }

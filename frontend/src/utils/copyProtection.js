@@ -68,7 +68,6 @@ export const disableKeyboardShortcuts = () => {
       { ctrl: true, shift: true, key: 'c' }, // Inspect
       { key: 'F12' },             // DevTools
       { ctrl: true, key: 'F12' }, // DevTools
-      { key: 'PrintScreen' },     // Screenshot
     ];
     
     const isBlocked = blockedKeys.some(combo => {
@@ -129,8 +128,14 @@ export const detectDevTools = () => {
     }
   };
   
-  setInterval(checkDevTools, 500);
+  const intervalId = setInterval(checkDevTools, 500);
   window.addEventListener('resize', checkDevTools);
+  
+  // Return cleanup function
+  return () => {
+    clearInterval(intervalId);
+    window.removeEventListener('resize', checkDevTools);
+  };
 };
 
 // Disable printing completely
