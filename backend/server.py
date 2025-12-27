@@ -248,8 +248,9 @@ async def get_plans():
     
     return {"plans": plans}
 
-# Include NexoraAI Router
+# Include Routers
 app.include_router(nexora.router)
+app.include_router(payment.router)
 
 if __name__ == "__main__":
     import uvicorn
