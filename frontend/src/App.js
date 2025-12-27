@@ -30,6 +30,7 @@ import Partners from './pages/Partners';
 // Enterprise Dashboard - Lazy loaded
 const EnterpriseAuditDashboard = lazy(() => import('./components/EnterpriseAuditDashboard'));
 const IoTDashboard = lazy(() => import('./components/IoTDashboard'));
+const NexoraAuditDashboard = lazy(() => import('./pages/NexoraAuditDashboard'));
 
 // New Pages - Lazy loaded for performance
 const About = lazy(() => import('./pages/About'));
