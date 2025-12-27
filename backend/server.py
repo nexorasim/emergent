@@ -22,8 +22,8 @@ app = FastAPI(
     description="Enterprise eSIM Platform with NexoraAI Orchestration"
 )
 
-# Import NexoraAI Router
-from routers import nexora
+# Import Routers
+from routers import nexora, payment
 
 # CORS Configuration
 app.add_middleware(
