@@ -137,6 +137,7 @@ function App() {
                   {/* Enterprise Pages */}
                   <Route path="/audit-dashboard" element={<EnterpriseAuditDashboard />} />
                   <Route path="/iot-dashboard" element={<IoTDashboard />} />
+                  <Route path="/nexora-audit" element={<NexoraAuditDashboard />} />
                   
                   {/* 404 Catch-all */}
                   <Route path="*" element={<NotFound />} />
