@@ -18,19 +18,23 @@ jobs:
         cache-dependency-path: frontend/package-lock.json
     
     - name: Install dependencies
-      working-directory: ./frontend
-      run: npm ci
+      run: |
+        cd frontend
+        npm ci --only=production
+      continue-on-error: false
     
-    - name: Build application
-      working-directory: ./frontend
-      run: npm run build
+    - name: Build
+      run: |
+        cd frontend
+        npm run build
+      continue-on-error: false
     
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./frontend/build
-        custom_domain: www.esim.com.mm
+        custom_domain: esim.com.mm
       continue-on-error: true
     
     - name: Deploy to Firebase

@@ -21,9 +21,19 @@ eSIM Myanmar Entertainment Server is an enterprise eSIM management platform serv
 - Tourist and traveler plans
 
 ## Key Integrations
-- Payment: KBZ Pay, Wave Money, AYA Pay
+- Payment: Transactease Gateway (MMQR, Visa/Master), KBZ Pay, Wave Money, AYA Pay
 - Network: SM-DP+ GSMA compliant
 - Auth: JWT, Refresh tokens, 2FA/TOTP support
+
+## Transactease Payment Gateway
+- MerchantUserID: PGW20250128668036906
+- Channel: eSIM Myanmar
+- UAT: https://uatpgw.transactease.com.mm
+- Production: https://pgw.transactease.com.mm
+- Methods: MMQR, Visa/Master
+- Backend: backend/services/transactease_service.py
+- Frontend: frontend/src/utils/transactease.js
+- Routes: /api/payments/transactease/*
 
 ## eSIM Core Flows
 - Phone number registration with KYC

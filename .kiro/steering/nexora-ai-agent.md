@@ -154,11 +154,12 @@ NexoraAI is the principal AI agent for eSIM Myanmar, orchestrating all platform 
 - FIGMA_API_TOKEN - Figma API token for design sync
 
 ## Audit Status (December 28, 2025)
-- Security Advisors: 0 critical issues
-- Performance Advisors: INFO level only (unused indexes expected on new DB)
-- RLS Policies: Optimized with (select auth.uid()) pattern
+- Security Advisors: 0 issues
+- Performance Advisors: 0 WARN, 24 INFO (unused indexes expected on new DB)
+- RLS Policies: 22 policies optimized with (select auth.uid()) pattern
 - API Health: 200 OK on all health endpoints
-- Migrations: 10 applied successfully
+- Migrations: 11 applied successfully
+- Latest Migration: optimize_rls_policies_auth_uid (2025-12-27)
 - Code Diagnostics: All files clean, no errors
 
 ## Quick Start
