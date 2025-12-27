@@ -7,8 +7,8 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import asyncio
 
-from ..services.nexora_orchestrator import nexora_orchestrator
-from ..services.firebase_audit_service import firebase_audit_service
+from services.nexora_orchestrator import nexora_orchestrator
+from services.firebase_audit_service import firebase_audit_service
 
 router = APIRouter(prefix="/api/nexora", tags=["NexoraAI"])
 
