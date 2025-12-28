@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       // Warn user 5 minutes before expiry
       setSessionExpiring(true);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, logout]);
 
   // Verify token on mount and periodically
   const verifyToken = useCallback(async () => {
