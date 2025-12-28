@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 
@@ -8,8 +8,6 @@ function NexoraAuditDashboard() {
   const [auditData, setAuditData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
-  const [auditIds, setAuditIds] = useState([]);
-  const [selectedAuditId, setSelectedAuditId] = useState(null);
 
   const startComprehensiveAudit = async () => {
     setLoading(true);
