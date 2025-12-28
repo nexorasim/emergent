@@ -169,6 +169,18 @@ async def login(credentials: UserLogin):
         }
     }
 
+@app.post("/api/auth/forgot-password")
+async def forgot_password(email: EmailStr):
+    user = await users_collection.find_one({"email": email})
+    if not user:
+        return {"message": "If the email exists, a reset link has been sent"}
+    
+    # TODO: Implement actual email sending logic
+    # For now, just return success message
+    # In production, generate a reset token and send via email
+    
+    return {"message": "If the email exists, a reset link has been sent"}
+
 @app.get("/api/auth/me")
 async def get_current_user_info(current_user: dict = Depends(get_current_user)):
     return {
