@@ -29,11 +29,6 @@ import PartnerDashboard from './pages/partner/Dashboard';
 import ESIMRegistration from './pages/ESIMRegistration';
 import Partners from './pages/Partners';
 
-// Payment Pages
-import PaymentPage from './pages/payment/PaymentPage';
-import PaymentSuccess from './pages/payment/PaymentSuccess';
-import PaymentCancel from './pages/payment/PaymentCancel';
-
 // Enterprise Dashboard - Lazy loaded
 const EnterpriseAuditDashboard = lazy(() => import('./components/EnterpriseAuditDashboard'));
 const IoTDashboard = lazy(() => import('./components/IoTDashboard'));
@@ -114,11 +109,6 @@ function App() {
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/auth" element={<EntraAuth />} />
-                  
-                  {/* Payment Pages */}
-                  <Route path="/payment" element={<PaymentPage />} />
-                  <Route path="/payment/success" element={<PaymentSuccess />} />
-                  <Route path="/payment/cancel" element={<PaymentCancel />} />
                   
                   {/* Dashboard Pages */}
                   <Route path="/dashboard" element={<DashboardPage />} />
