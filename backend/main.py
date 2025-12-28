@@ -15,6 +15,10 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+# Centralized settings
+from backend.config import get_settings
+settings = get_settings()
+
 # Import routers
 from routers import auth_router, esim_router, plans_router, payments_router, support_router
 from routers.esim_registration import router as esim_registration_router
@@ -34,21 +38,17 @@ from middleware.security import (
 
 # Configure logging
 logging.basicConfig(
-    level=os.getenv("LOG_LEVEL", "INFO"),
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=settings.LOG_LEVEL,
+    format=settings.LOG_FORMAT
 )
 logger = logging.getLogger(__name__)
 
-# Configuration
-MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017/esim_myanmar")
-SECRET_KEY = os.getenv("SECRET_KEY")
-if not SECRET_KEY:
-    logger.warning("SECRET_KEY not set! Using default for development only.")
-    SECRET_KEY = "dev_secret_key_change_in_production"
-
-ALGORITHM = os.getenv("ALGORITHM", "HS256")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 1440))
-ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+# Configuration from settings
+MONGO_URL = settings.MONGO_URL or "mongodb://localhost:27017/esim_myanmar"
+SECRET_KEY = settings.SECRET_KEY or "dev_secret_key_change_in_production"
+ALGORITHM = settings.ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+ENVIRONMENT = settings.ENVIRONMENT
 
 
 @asynccontextmanager
@@ -74,7 +74,11 @@ async def lifespan(app: FastAPI):
         db=db,
         secret_key=SECRET_KEY,
         algorithm=ALGORITHM,
-        access_token_expire_minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        access_token_expire_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
+        refresh_token_expire_days=settings.REFRESH_TOKEN_EXPIRE_DAYS,
+        min_password_length=settings.MIN_PASSWORD_LENGTH,
+        max_failed_attempts=settings.MAX_LOGIN_ATTEMPTS,
+        lockout_duration_minutes=settings.LOCKOUT_DURATION_MINUTES,
     )
     
     esim_service = ESIMService(db=db)
@@ -162,6 +166,11 @@ async def create_indexes(db):
         await db.refresh_tokens.create_index("token_id", unique=True)
         await db.refresh_tokens.create_index("user_id")
         await db.refresh_tokens.create_index("expires_at", expireAfterSeconds=0)
+
+        # Password reset tokens collection
+        await db.password_reset_tokens.create_index("token_id", unique=True)
+        await db.password_reset_tokens.create_index("user_id")
+        await db.password_reset_tokens.create_index("expires_at", expireAfterSeconds=0)
         
         logger.info("Database indexes created")
     except Exception as e:
@@ -174,8 +183,8 @@ app = FastAPI(
     description="Enterprise eSIM Management Platform for Myanmar and ASEAN",
     version="1.0.0",
     lifespan=lifespan,
-    docs_url="/api/docs" if ENVIRONMENT != "production" else None,
-    redoc_url="/api/redoc" if ENVIRONMENT != "production" else None
+    docs_url="/api/docs" if ENVIRONMENT != "production" and settings.ENABLE_DOCS else None,
+    redoc_url="/api/redoc" if ENVIRONMENT != "production" and settings.ENABLE_DOCS else None
 )
 
 # Add middleware (order matters - last added is first executed)
@@ -183,8 +192,8 @@ app.add_middleware(RequestLoggingMiddleware)
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(
     RateLimitMiddleware,
-    requests_per_minute=int(os.getenv("RATE_LIMIT_PER_MINUTE", 60)),
-    burst_limit=int(os.getenv("RATE_LIMIT_BURST", 10))
+    requests_per_minute=settings.RATE_LIMIT_PER_MINUTE,
+    burst_limit=settings.RATE_LIMIT_BURST,
 )
 
 # CORS configuration

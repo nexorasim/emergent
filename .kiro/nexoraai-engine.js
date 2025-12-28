@@ -221,18 +221,18 @@ module.exports = { NexoraAI, nexoraAI };
 // Auto-start if running directly
 if (require.main === module) {
   (async () => {
-    console.log('🚀 NexoraAI - Principal Systems Architect Agent');
-    console.log('📊 Initializing eSIM Myanmar Enterprise Platform...');
+    console.log('NexoraAI - Principal Systems Architect Agent');
+    console.log('Initializing eSIM Myanmar Enterprise Platform...');
     
     await nexoraAI.initializeKiroPowers();
-    console.log('✅ All Kiro Powers Activated');
+    console.log('All Kiro Powers Activated');
     
     await nexoraAI.executeAuditCycle();
-    console.log('✅ Audit Cycle Complete - 100%');
+    console.log('Audit Cycle Complete - 100%');
     
     const report = nexoraAI.generateReport();
-    console.log('📋 Final Report:', JSON.stringify(report, null, 2));
+    console.log('Final Report:', JSON.stringify(report, null, 2));
     
-    console.log('🎯 eSIM Myanmar Platform: 100% Enterprise-Grade Production Ready');
+    console.log('eSIM Myanmar Platform: 100% Enterprise-Grade Production Ready');
   })();
 }

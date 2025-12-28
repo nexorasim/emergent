@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
+import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import Navigation from './components/Navigation';
@@ -83,9 +84,10 @@ function App() {
   }, []);
 
   return (
-    <LanguageProvider>
-      <AuthProvider>
-        <Router>
+    <HelmetProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <Router>
           <SeasonalBanner />
           <div className="App min-h-screen bg-gradient-to-br from-background via-background-light to-background-dark text-white">
             <Navigation />
@@ -153,6 +155,7 @@ function App() {
         <Analytics />
       </AuthProvider>
     </LanguageProvider>
+  </HelmetProvider>
   );
 }
 

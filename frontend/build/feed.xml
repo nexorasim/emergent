@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>eSIM Myanmar Entertainment Server</title>
+    <link>https://esim.com.mm</link>
+    <description>ESIM MYANMAR COMPANY LIMITED - Enterprise eSIM Management Platform - MPT, ATOM, U9, MYTEL eSIM activation and management</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Dec 2025 00:00:00 GMT</lastBuildDate>
+    <copyright>ESIM MYANMAR COMPANY LIMITED 2024-2026</copyright>
+    <managingEditor>info@esim.com.mm (ESIM MYANMAR COMPANY LIMITED)</managingEditor>
+    <webMaster>info@esim.com.mm (ESIM MYANMAR COMPANY LIMITED)</webMaster>
+    <image>
+      <url>https://i.ibb.co/qL00rsqJ/Colored.png</url>
+      <title>eSIM Myanmar Entertainment Server</title>
+      <link>https://esim.com.mm</link>
+    </image>
+    <atom:link href="https://esim.com.mm/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>eSIM Registration Now Available - MPT, ATOM, U9, MYTEL</title>
+      <link>https://esim.com.mm/esim-register</link>
+      <description>Register your eSIM with any of our 4 providers: MPT, ATOM, U9, or MYTEL. 120,000 MMK activation fee with instant QR code delivery.</description>
+      <pubDate>Mon, 23 Dec 2025 00:00:00 GMT</pubDate>
+      <guid>https://esim.com.mm/esim-register</guid>
+    </item>
+    <item>
+      <title>5G and VoLTE Support Across All Providers</title>
+      <link>https://esim.com.mm/features</link>
+      <description>All eSIM plans now include 5G and VoLTE support for crystal-clear calls and ultra-fast data speeds.</description>
+      <pubDate>Mon, 23 Dec 2025 00:00:00 GMT</pubDate>
+      <guid>https://esim.com.mm/features-5g</guid>
+    </item>
+    <item>
+      <title>Nexora AI Assistant - Ask AI for eSIM Support</title>
+      <link>https://esim.com.mm/</link>
+      <description>Get instant answers about eSIM activation, pricing, device compatibility, and more with our AI-powered assistant.</description>
+      <pubDate>Mon, 23 Dec 2025 00:00:00 GMT</pubDate>
+      <guid>https://esim.com.mm/nexora-ai</guid>
+    </item>
+    <item>
+      <title>Holiday Season 2025-2026 Special Theme</title>
+      <link>https://esim.com.mm/</link>
+      <description>Celebrate the holidays with our festive theme featuring animated Santa guide and countdown to 2026.</description>
+      <pubDate>Sun, 15 Dec 2025 00:00:00 GMT</pubDate>
+      <guid>https://esim.com.mm/seasonal-2026</guid>
+    </item>
+  </channel>
+</rss>

@@ -40,11 +40,19 @@ class Enable2FARequest(BaseModel):
 
 class Verify2FARequest(BaseModel):
     code: str
-    secret: str
 
 
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str
 
 
 # Dependency to get current user
@@ -135,15 +143,15 @@ async def register(request: Request, data: RegisterRequest):
 async def login(request: Request, data: LoginRequest):
     """User login"""
     auth_service = request.app.state.auth_service
-    
+
     user = await auth_service.authenticate_user(data.email, data.password)
-    
+
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
         )
-    
+
     # Check 2FA if enabled
     if user.get("two_factor_enabled"):
         if not data.totp_code:
@@ -151,24 +159,24 @@ async def login(request: Request, data: LoginRequest):
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="2FA code required"
             )
-        
+
         if not auth_service.verify_2fa_code(user["two_factor_secret"], data.totp_code):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid 2FA code"
             )
-    
+
     # Generate tokens
     access_token = auth_service.create_access_token({"sub": user["email"]})
     refresh_token, expires = auth_service.create_refresh_token(user["user_id"])
-    
+
     # Store refresh token
     await auth_service.store_refresh_token(
         user["user_id"],
         auth_service.decode_token(refresh_token)["token_id"],
-        expires
+        expires,
     )
-    
+
     return {
         "message": "Login successful",
         "token": access_token,
@@ -177,50 +185,55 @@ async def login(request: Request, data: LoginRequest):
             "user_id": user["user_id"],
             "email": user["email"],
             "full_name": user["full_name"],
-            "role": user.get("role", "customer")
-        }
+            "role": user.get("role", "customer"),
+        },
     }
 
 
 @router.post("/refresh")
 async def refresh_token(request: Request, data: RefreshTokenRequest):
-    """Refresh access token"""
+    """Refresh access token with rotation and validation"""
     auth_service = request.app.state.auth_service
-    
+
     payload = auth_service.decode_token(data.refresh_token)
     if not payload or payload.get("type") != "refresh":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid refresh token"
+            detail="Invalid refresh token",
         )
-    
-    # Check if token is revoked
-    token_record = await auth_service.refresh_tokens.find_one({
-        "token_id": payload["token_id"],
-        "revoked": False
-    })
-    
+
+    # Check if token is revoked and not expired
+    token_record = await auth_service.refresh_tokens.find_one(
+        {"token_id": payload["token_id"], "revoked": False}
+    )
     if not token_record:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token has been revoked"
+            detail="Token has been revoked",
         )
-    
-    # Get user
-    user = await auth_service.users.find_one({"user_id": payload["sub"]})
-    if not user:
+    if token_record.get("expires_at") and token_record["expires_at"] < datetime.utcnow():
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found"
+            detail="Token expired",
         )
-    
+
+    # Get user and verify status
+    user = await auth_service.users.find_one({"user_id": payload["sub"]})
+    if not user or user.get("status") != "active":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found or inactive",
+        )
+
+    # Rotate refresh token
+    new_refresh_token, _ = await auth_service.rotate_refresh_token(
+        user_id=user["user_id"], old_token_id=payload["token_id"]
+    )
+
     # Generate new access token
     access_token = auth_service.create_access_token({"sub": user["email"]})
-    
-    return {
-        "token": access_token,
-        "token_type": "bearer"
-    }
+
+    return {"token": access_token, "refresh_token": new_refresh_token, "token_type": "bearer"}
 
 
 @router.post("/logout")
@@ -259,22 +272,22 @@ async def setup_2fa(
 ):
     """Setup 2FA for account"""
     auth_service = request.app.state.auth_service
-    
+
     # Verify password
     if not auth_service.verify_password(data.password, current_user["password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid password"
+            detail="Invalid password",
         )
-    
-    # Generate secret
+
+    # Generate secret (server-side) and store as pending
     secret = auth_service.generate_2fa_secret()
+    await auth_service.set_pending_2fa_secret(current_user["user_id"], secret)
     uri = auth_service.get_2fa_uri(secret, current_user["email"])
-    
+
     return {
-        "secret": secret,
         "uri": uri,
-        "message": "Scan QR code with authenticator app, then verify with /2fa/verify"
+        "message": "Scan QR code with authenticator app, then verify with /2fa/verify",
     }
 
 
@@ -284,17 +297,21 @@ async def verify_2fa(
     data: Verify2FARequest,
     current_user: dict = Depends(get_current_user)
 ):
-    """Verify and enable 2FA"""
+    """Verify and enable 2FA using server-stored pending secret"""
     auth_service = request.app.state.auth_service
-    
-    if not auth_service.verify_2fa_code(data.secret, data.code):
+
+    pending_secret = await auth_service.get_pending_2fa_secret(current_user["user_id"])
+    if not pending_secret:
+        raise HTTPException(status_code=400, detail="No pending 2FA setup found")
+
+    if not auth_service.verify_2fa_code(pending_secret, data.code):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid verification code"
+            detail="Invalid verification code",
         )
-    
-    await auth_service.enable_2fa(current_user["user_id"], data.secret)
-    
+
+    await auth_service.enable_2fa(current_user["user_id"], pending_secret)
+
     return {"message": "2FA enabled successfully"}
 
 
@@ -306,14 +323,46 @@ async def disable_2fa(
 ):
     """Disable 2FA"""
     auth_service = request.app.state.auth_service
-    
+
     # Verify password
     if not auth_service.verify_password(data.password, current_user["password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid password"
+            detail="Invalid password",
         )
-    
+
     await auth_service.disable_2fa(current_user["user_id"])
-    
+
     return {"message": "2FA disabled successfully"}
+
+
+@router.post("/forgot")
+async def forgot_password(request: Request, data: ForgotPasswordRequest):
+    """Initiate password reset flow. Always respond success to avoid user enumeration."""
+    auth_service = request.app.state.auth_service
+
+    # Normalize email and lookup user
+    user = await auth_service.users.find_one({"email": data.email.lower()})
+
+    if user:
+        try:
+            token, expires = await auth_service.create_password_reset_token(user["user_id"])
+            # TODO: Send email via email service (not logging token). Placeholder only.
+            # await email_service.send_password_reset(email=data.email, token=token, expires=expires)
+        except Exception:
+            # Swallow errors to avoid user enumeration through timing/errors
+            pass
+
+    return {"message": "If an account exists for this email, you will receive a password reset link."}
+
+
+@router.post("/reset")
+async def reset_password(request: Request, data: ResetPasswordRequest):
+    """Complete password reset using token."""
+    auth_service = request.app.state.auth_service
+
+    user = await auth_service.verify_and_consume_password_reset(data.token, data.new_password)
+    if not user:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset token")
+
+    return {"message": "Password has been reset successfully"}
