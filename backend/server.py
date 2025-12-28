@@ -76,6 +76,28 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
+def normalize_myanmar_phone(phone: str) -> str:
+    """Normalize Myanmar phone number to 09xxxxxxxxx format"""
+    # Remove all non-digit characters
+    cleaned = ''.join(filter(str.isdigit, phone))
+    
+    # Convert 959xxxxxxxxx to 09xxxxxxxxx
+    if cleaned.startswith('959'):
+        cleaned = '0' + cleaned[3:]
+    
+    # Remove leading + if present after digit extraction
+    if cleaned.startswith('95'):
+        cleaned = '0' + cleaned[2:]
+    
+    return cleaned
+
+def validate_myanmar_phone(phone: str) -> bool:
+    """Validate Myanmar phone number format"""
+    normalized = normalize_myanmar_phone(phone)
+    # Myanmar phones: 09 followed by 7-9 digits (total 9-11 digits)
+    import re
+    return bool(re.match(r'^09\d{7,9}$', normalized))
+
 def create_access_token(data: dict):
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
