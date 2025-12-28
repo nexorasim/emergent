@@ -173,8 +173,8 @@ async def login(credentials: UserLogin):
     }
 
 @app.post("/api/auth/forgot-password")
-async def forgot_password(email: EmailStr):
-    user = await users_collection.find_one({"email": email})
+async def forgot_password(request: ForgotPasswordRequest):
+    user = await users_collection.find_one({"email": request.email})
     if not user:
         return {"message": "If the email exists, a reset link has been sent"}
     
