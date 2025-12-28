@@ -144,9 +144,19 @@ async def health_check():
 
 @app.post("/api/auth/register")
 async def register(user: UserRegister):
+    # Validate phone number
+    if not validate_myanmar_phone(user.phone_number):
+        raise HTTPException(
+            status_code=400, 
+            detail="Invalid Myanmar phone number. Please use format: 09xxxxxxxxx or 959xxxxxxxxx"
+        )
+    
     existing_user = await users_collection.find_one({"email": user.email})
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+    
+    # Normalize phone number before storing
+    normalized_phone = normalize_myanmar_phone(user.phone_number)
     
     hashed_password = get_password_hash(user.password)
     user_doc = {
@@ -154,7 +164,7 @@ async def register(user: UserRegister):
         "email": user.email,
         "password": hashed_password,
         "full_name": user.full_name,
-        "phone_number": user.phone_number,
+        "phone_number": normalized_phone,
         "country": user.country,
         "role": "customer",
         "status": "active",
