@@ -41,6 +41,11 @@ const SupportedDevices = lazy(() => import('./pages/SupportedDevices'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Contact = lazy(() => import('./pages/Contact'));
 
+// Payment Pages - Lazy loaded
+const PaymentPage = lazy(() => import('./pages/payment/PaymentPage'));
+const PaymentSuccess = lazy(() => import('./pages/payment/PaymentSuccess'));
+const PaymentCancel = lazy(() => import('./pages/payment/PaymentCancel'));
+
 // Legal Pages - Lazy loaded
 const PrivacyPolicy = lazy(() => import('./pages/legal/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/legal/Terms'));
@@ -109,6 +114,11 @@ function App() {
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/auth" element={<EntraAuth />} />
+                  
+                  {/* Payment Pages */}
+                  <Route path="/payment" element={<PaymentPage />} />
+                  <Route path="/payment/success" element={<PaymentSuccess />} />
+                  <Route path="/payment/cancel" element={<PaymentCancel />} />
                   
                   {/* Dashboard Pages */}
                   <Route path="/dashboard" element={<DashboardPage />} />
