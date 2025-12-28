@@ -417,39 +417,74 @@ const ProviderSelection = ({ onSelect }) => (
 );
 
 // Step 2: Phone Input Component
-const PhoneInput = ({ value, provider, onChange, onSubmit, loading }) => (
-  <div className="glass-card">
-    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4 sm:mb-6">Enter Your Phone Number</h2>
-    <p className="text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6">
-      Enter your {provider} phone number to register for eSIM
-    </p>
-    <div className="max-w-md mx-auto">
-      <div className="mb-4 sm:mb-6">
-        <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
-          Myanmar Phone Number
-        </label>
-        <input
-          type="tel"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder="09xxxxxxxxx"
-          className="input-field"
-          aria-describedby="phone-format"
-        />
-        <p id="phone-format" className="text-xs text-gray-500 mt-2">
-          Format: 09xxxxxxxxx or +959xxxxxxxxx
-        </p>
+const PhoneInput = ({ value, provider, onChange, onSubmit, loading }) => {
+  const [error, setError] = React.useState('');
+
+  const validatePhone = (phone) => {
+    // Myanmar phone validation: accepts 09xxxxxxxx (8-10 digits) or 959xxxxxxxx
+    const cleaned = phone.replace(/\D/g, '');
+    const phoneRegex = /^(09|959)\d{7,9}$/;
+    return phoneRegex.test(cleaned);
+  };
+
+  const handleSubmit = () => {
+    setError('');
+    const cleaned = value.replace(/\D/g, '');
+    
+    if (!validatePhone(cleaned)) {
+      setError('Please enter a valid Myanmar phone number (09xxxxxxxxx or 959xxxxxxxxx)');
+      return;
+    }
+    
+    onSubmit();
+  };
+
+  const handleChange = (inputValue) => {
+    // Only allow digits
+    const cleaned = inputValue.replace(/\D/g, '');
+    onChange(cleaned);
+    setError('');
+  };
+
+  return (
+    <div className="glass-card">
+      <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4 sm:mb-6">Enter Your Phone Number</h2>
+      <p className="text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6">
+        Enter your {provider} phone number to register for eSIM
+      </p>
+      <div className="max-w-md mx-auto">
+        <div className="mb-4 sm:mb-6">
+          <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
+            Myanmar Phone Number
+          </label>
+          <input
+            type="tel"
+            value={value}
+            onChange={(e) => handleChange(e.target.value)}
+            placeholder="09xxxxxxxxx or 959xxxxxxxxx"
+            className="input-field"
+            aria-describedby="phone-format"
+          />
+          <p id="phone-format" className="text-xs text-gray-500 mt-2">
+            Format: 09xxxxxxxxx (8-10 digits) or 959xxxxxxxxx
+          </p>
+          {error && (
+            <p className="text-xs text-red-400 mt-2" role="alert">
+              {error}
+            </p>
+          )}
+        </div>
+        <button
+          onClick={handleSubmit}
+          disabled={loading || !value}
+          className="btn-primary w-full"
+        >
+          {loading ? 'Validating...' : 'Validate Phone Number'}
+        </button>
       </div>
-      <button
-        onClick={onSubmit}
-        disabled={loading || !value}
-        className="btn-primary w-full"
-      >
-        {loading ? 'Validating...' : 'Validate Phone Number'}
-      </button>
     </div>
-  </div>
-);
+  );
+};
 
 // Step 3: Device Input Component
 const DeviceInput = ({ formData, onChange, onSubmit, loading }) => (
