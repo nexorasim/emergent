@@ -1,34 +1,24 @@
-/**
- * Payment Cancel Page
- */
-
-import React from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const PaymentCancel = () => {
-  const navigate = useNavigate();
+function PaymentCancel() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const requestId = searchParams.get('request_id');
 
   return (
-    <div className="min-h-screen bg-[#1e2f3c] flex items-center justify-center px-4">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="max-w-md w-full"
-      >
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 text-center">
-          {/* Cancel Icon */}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="w-20 h-20 mx-auto mb-6 bg-yellow-500/20 rounded-full flex items-center justify-center"
-          >
+    <div className="min-h-screen bg-gradient-to-br from-[#1e2f3c] via-[#162838] to-[#0d1821] text-white py-20 px-4">
+      <div className="max-w-2xl mx-auto text-center">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', duration: 0.6 }}
+          className="mb-8"
+        >
+          <div className="inline-block p-6 bg-orange-500/20 rounded-full border-4 border-orange-500">
             <svg
-              className="w-10 h-10 text-yellow-400"
+              className="w-24 h-24 text-orange-500"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -37,56 +27,100 @@ const PaymentCancel = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                d="M6 18L18 6M6 6l12 12"
               />
             </svg>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          <h1 className="text-2xl font-bold text-white mb-2">
-            Payment Cancelled
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <h1 className="text-4xl font-bold mb-4">
+            Payment <span className="text-orange-500">Cancelled</span>
           </h1>
-          
-          <p className="text-white/60 mb-6">
-            Your payment was cancelled. No charges were made.
+          <p className="text-xl text-gray-300 mb-8">
+            Your payment was cancelled or expired
           </p>
+        </motion.div>
 
-          {/* Request ID */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="bg-[#1e2f3c]/50 backdrop-blur-sm border border-orange-500/30 rounded-lg p-8 mb-8"
+          data-testid="cancel-details"
+        >
+          <h2 className="text-xl font-bold mb-4 text-orange-500">Transaction Details</h2>
+          
           {requestId && (
-            <div className="bg-white/5 rounded-xl p-4 mb-6">
-              <div className="flex justify-between text-sm">
-                <span className="text-white/60">Request ID</span>
-                <span className="text-white font-mono">{requestId}</span>
-              </div>
+            <div className="flex justify-between mb-4">
+              <span className="text-gray-400">Request ID</span>
+              <span className="font-mono text-sm">{requestId}</span>
             </div>
           )}
+          
+          <div className="flex justify-between">
+            <span className="text-gray-400">Status</span>
+            <span className="text-orange-500 font-semibold">CANCELLED</span>
+          </div>
+        </motion.div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-3">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="space-y-6"
+        >
+          <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-6">
+            <h3 className="font-semibold mb-2 text-orange-500">Why was my payment cancelled?</h3>
+            <ul className="text-sm text-gray-300 space-y-2 text-left">
+              <li>- You clicked the cancel button during payment</li>
+              <li>- Payment session expired (5 minutes)</li>
+              <li>- Browser or network issues interrupted the process</li>
+              <li>- Insufficient funds or payment declined</li>
+            </ul>
+          </div>
+
+          <div className="bg-[#00FFFF]/10 border border-[#00FFFF]/30 rounded-lg p-6">
+            <h3 className="font-semibold mb-2 text-[#00FFFF]">What should I do next?</h3>
+            <ul className="text-sm text-gray-300 space-y-2 text-left">
+              <li>- Try again with the same or different payment method</li>
+              <li>- Check your bank account or card limits</li>
+              <li>- Contact support if you continue to face issues</li>
+              <li>- Browse other plans that might suit your needs</li>
+            </ul>
+          </div>
+
+          <div className="flex gap-4 justify-center">
             <button
-              onClick={() => navigate(-2)}
-              className="flex-1 py-3 rounded-xl bg-[#00FFFF] text-[#1e2f3c] font-semibold hover:bg-[#00CCCC] transition-colors"
+              onClick={() => navigate('/plans')}
+              className="bg-gradient-to-r from-[#00FFFF] to-[#00CCCC] text-[#1e2f3c] px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
+              data-testid="try-again-button"
             >
               Try Again
             </button>
+            
             <button
-              onClick={() => navigate('/plans')}
-              className="flex-1 py-3 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors"
+              onClick={() => navigate('/support')}
+              className="bg-[#1e2f3c] border border-[#00FFFF] text-[#00FFFF] px-8 py-3 rounded-lg font-semibold hover:bg-[#00FFFF] hover:text-[#1e2f3c] transition-all"
             >
-              View Plans
+              Contact Support
             </button>
           </div>
 
-          {/* Help Link */}
           <button
-            onClick={() => navigate('/support')}
-            className="mt-4 text-white/40 text-sm hover:text-white/60 transition-colors"
+            onClick={() => navigate('/')}
+            className="text-gray-400 hover:text-white transition-colors"
           >
-            Need help? Contact Support
+            Back to Home
           </button>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
-};
+}
 
 export default PaymentCancel;
