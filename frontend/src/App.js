@@ -22,6 +22,7 @@ import CoveragePage from './pages/Coverage';
 import SupportPage from './pages/Support';
 import LoginPage from './pages/auth/Login';
 import RegisterPage from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
 import DashboardPage from './pages/customer/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
 import PartnerDashboard from './pages/partner/Dashboard';
