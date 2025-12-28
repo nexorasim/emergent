@@ -72,6 +72,111 @@ export const AuthProvider = ({ children }) => {
     }
   }, [isAuthenticated, logout]);
 
+  // Verify token on mount and periodically
+  const verifyToken = useCallback(async () => {
+    const token = TokenManager.getToken();
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await api.get('/auth/me');
+      setUser(response.data.user || response.data);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error('Token verification failed:', error);
+      TokenManager.clearTokens();
+      setUser(null);
+      setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Initialize auth state
+  useEffect(() => {
+    verifyToken();
+  }, [verifyToken]);
+
+  // Set up activity listeners
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const events = ['mousedown', 'keydown', 'scroll', 'touchstart'];
+    events.forEach(event => {
+      window.addEventListener(event, updateActivity, { passive: true });
+    });
+
+    // Session check interval
+    sessionTimeoutRef.current = setInterval(checkSession, 60000);
+
+    // Token validity check
+    tokenCheckRef.current = setInterval(verifyToken, TOKEN_CHECK_INTERVAL);
+
+    return () => {
+      events.forEach(event => {
+        window.removeEventListener(event, updateActivity);
+      });
+      if (sessionTimeoutRef.current) clearInterval(sessionTimeoutRef.current);
+      if (tokenCheckRef.current) clearInterval(tokenCheckRef.current);
+    };
+  }, [isAuthenticated, updateActivity, checkSession, verifyToken]);
+
+  // Login function
+  const login = async (email, password, totpCode = null) => {
+    try {
+      const payload = { email, password };
+      if (totpCode) {
+        payload.totp_code = totpCode;
+      }
+
+      const response = await api.post('/auth/login', payload);
+      const { token, refresh_token, user: userData, requires_2fa, expires_in } = response.data;
+
+      if (requires_2fa) {
+        setRequires2FA(true);
+        return { requires2FA: true };
+      }
+
+      // Store tokens
+      TokenManager.setTokens(token, refresh_token);
+      if (expires_in) {
+        TokenManager.setTokenExpiry(expires_in);
+      }
+
+      setUser(userData);
+      setIsAuthenticated(true);
+      setRequires2FA(false);
+      updateActivity();
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // Register function
+  const register = async (userData) => {
+    try {
+      const response = await api.post('/auth/register', userData);
+      const { token, refresh_token, user: newUser, expires_in } = response.data;
+
+      TokenManager.setTokens(token, refresh_token);
+      if (expires_in) {
+        TokenManager.setTokenExpiry(expires_in);
+      }
+
+      setUser(newUser);
+      setIsAuthenticated(true);
+      updateActivity();
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   // Extend session
   const extendSession = useCallback(() => {
     updateActivity();
