@@ -17,9 +17,6 @@ function NexoraAuditDashboard() {
       });
       
       if (response.data.audit_ids && response.data.audit_ids.length > 0) {
-        setAuditIds(response.data.audit_ids);
-        setSelectedAuditId(response.data.audit_ids[0]);
-        
         // Poll for audit completion
         pollAuditStatus(response.data.audit_ids[0]);
       }
