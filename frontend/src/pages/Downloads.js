@@ -255,7 +255,7 @@ const Downloads = () => {
         {categories.map((category, catIndex) => (
           <div key={category} className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span style={{ color: '#00FFFF' }}>//</span> {category}
+              <span style={{ color: '#00FFFF' }}>{'// '}</span> {category}
             </h2>
             <div className="grid gap-4">
               {assets.filter(a => a.category === category).map((asset, index) => (
