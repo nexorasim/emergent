@@ -85,7 +85,7 @@ NexoraAI is the principal AI agent for eSIM Myanmar, orchestrating all platform 
 ### Frontend Deployments
 - Firebase Hosting: firebase deploy
 - Cloudflare Pages: Auto-deploy from main branch
-- Vercel: vercel --prod
+- Vercel: https://vercel.com/nexorasims-projects/esimm (auto-deploy from main)
 
 ### Backend Deployments
 - Railway: Auto-deploy from main branch
