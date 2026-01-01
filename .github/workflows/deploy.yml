@@ -13,7 +13,7 @@ jobs:
       
     - name: "[5%] Log Environment Info"
       run: |
-        echo "🚀 eSIM Myanmar Deployment Started"
+        echo "eSIM Myanmar Deployment Started"
         echo "Repository: ${{ github.repository }}"
         echo "Branch: ${{ github.ref_name }}"
         echo "Commit: ${{ github.sha }}"
@@ -38,15 +38,15 @@ jobs:
     - name: "[25%] Install Dependencies"
       working-directory: ./frontend
       run: |
-        echo "📦 Installing dependencies..."
+        echo "Installing dependencies..."
         npm ci
-        echo "✅ Dependencies installed successfully"
+        echo "Dependencies installed successfully"
         npm list --depth=0
     
     - name: "[35%] Pre-build Validation"
       working-directory: ./frontend
       run: |
-        echo "🔍 Validating project structure..."
+        echo "Validating project structure..."
         ls -la
         echo "Package.json contents:"
         cat package.json | jq '.scripts'
@@ -56,9 +56,9 @@ jobs:
     - name: "[50%] Build Application"
       working-directory: ./frontend
       run: |
-        echo "🏗️ Building eSIM Myanmar application..."
+        echo "Building eSIM Myanmar application..."
         npm run build
-        echo "✅ Build completed successfully"
+        echo "Build completed successfully"
         echo "Build output:"
         ls -la build/
         du -sh build/
@@ -74,9 +74,9 @@ jobs:
     - name: "[65%] GitHub Pages Status"
       run: |
         if [ $? -eq 0 ]; then
-          echo "✅ GitHub Pages deployment successful"
+          echo "GitHub Pages deployment successful"
         else
-          echo "❌ GitHub Pages deployment failed"
+          echo "GitHub Pages deployment failed"
         fi
     
     - name: "[75%] Deploy to Firebase"
@@ -91,10 +91,10 @@ jobs:
     - name: "[80%] Firebase Status"
       run: |
         if [ $? -eq 0 ]; then
-          echo "✅ Firebase deployment successful"
-          echo "🌐 Live URL: https://esim-myanmar-ia6gw.web.app"
+          echo "Firebase deployment successful"
+          echo "Live URL: https://esim-myanmar-ia6gw.web.app"
         else
-          echo "❌ Firebase deployment failed"
+          echo "Firebase deployment failed"
         fi
     
     - name: "[90%] Deploy to Vercel"
@@ -110,25 +110,25 @@ jobs:
     - name: "[95%] Vercel Status"
       run: |
         if [ $? -eq 0 ]; then
-          echo "✅ Vercel deployment successful"
+          echo "Vercel deployment successful"
         else
-          echo "❌ Vercel deployment failed"
+          echo "Vercel deployment failed"
         fi
     
     - name: "[100%] Deployment Summary"
       run: |
-        echo "🎉 eSIM Myanmar Deployment Complete!"
-        echo "═══════════════════════════════════════"
-        echo "📊 Deployment Summary:"
-        echo "• Repository: ${{ github.repository }}"
-        echo "• Commit: ${{ github.sha }}"
-        echo "• Branch: ${{ github.ref_name }}"
-        echo "• Workflow Run: ${{ github.run_id }}"
-        echo "═══════════════════════════════════════"
-        echo "🌐 Live URLs:"
-        echo "• Primary: https://www.esim.com.mm"
-        echo "• Firebase: https://esim-myanmar-ia6gw.web.app"
-        echo "• GitHub Pages: https://${{ github.repository_owner }}.github.io/emergent-1"
-        echo "═══════════════════════════════════════"
-        echo "✅ All deployments completed successfully!"
-        echo "📱 eSIM Myanmar platform is now live across all platforms"
+        echo "eSIM Myanmar Deployment Complete!"
+        echo "=========================================="
+        echo "Deployment Summary:"
+        echo "- Repository: ${{ github.repository }}"
+        echo "- Commit: ${{ github.sha }}"
+        echo "- Branch: ${{ github.ref_name }}"
+        echo "- Workflow Run: ${{ github.run_id }}"
+        echo "=========================================="
+        echo "Live URLs:"
+        echo "- Primary: https://www.esim.com.mm"
+        echo "- Firebase: https://esim-myanmar-ia6gw.web.app"
+        echo "- GitHub Pages: https://${{ github.repository_owner }}.github.io/emergent-1"
+        echo "=========================================="
+        echo "All deployments completed successfully!"
+        echo "eSIM Myanmar platform is now live across all platforms"
