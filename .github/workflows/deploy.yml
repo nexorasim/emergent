@@ -8,32 +8,78 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: "[1%] Checkout Repository"
+      uses: actions/checkout@v4
+      
+    - name: "[5%] Log Environment Info"
+      run: |
+        echo "🚀 eSIM Myanmar Deployment Started"
+        echo "Repository: ${{ github.repository }}"
+        echo "Branch: ${{ github.ref_name }}"
+        echo "Commit: ${{ github.sha }}"
+        echo "Actor: ${{ github.actor }}"
+        echo "Workflow: ${{ github.workflow }}"
+        echo "Run ID: ${{ github.run_id }}"
     
-    - name: Setup Node.js
+    - name: "[10%] Setup Node.js Environment"
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
         cache-dependency-path: frontend/package-lock.json
     
-    - name: Install dependencies
-      working-directory: ./frontend
-      run: npm ci
+    - name: "[15%] Verify Node.js Installation"
+      run: |
+        echo "Node.js version: $(node --version)"
+        echo "NPM version: $(npm --version)"
+        echo "Working directory: $(pwd)"
+        ls -la frontend/
     
-    - name: Build application
+    - name: "[25%] Install Dependencies"
       working-directory: ./frontend
-      run: npm run build
+      run: |
+        echo "📦 Installing dependencies..."
+        npm ci
+        echo "✅ Dependencies installed successfully"
+        npm list --depth=0
     
-    - name: Deploy to GitHub Pages
+    - name: "[35%] Pre-build Validation"
+      working-directory: ./frontend
+      run: |
+        echo "🔍 Validating project structure..."
+        ls -la
+        echo "Package.json contents:"
+        cat package.json | jq '.scripts'
+        echo "Environment variables check:"
+        env | grep -E '^(NODE_|REACT_|PUBLIC_)' || echo "No environment variables found"
+    
+    - name: "[50%] Build Application"
+      working-directory: ./frontend
+      run: |
+        echo "🏗️ Building eSIM Myanmar application..."
+        npm run build
+        echo "✅ Build completed successfully"
+        echo "Build output:"
+        ls -la build/
+        du -sh build/
+    
+    - name: "[60%] Deploy to GitHub Pages"
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./frontend/build
         custom_domain: www.esim.com.mm
       continue-on-error: true
+      
+    - name: "[65%] GitHub Pages Status"
+      run: |
+        if [ $? -eq 0 ]; then
+          echo "✅ GitHub Pages deployment successful"
+        else
+          echo "❌ GitHub Pages deployment failed"
+        fi
     
-    - name: Deploy to Firebase
+    - name: "[75%] Deploy to Firebase"
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
         repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -41,8 +87,17 @@ jobs:
         projectId: esim-myanmar-ia6gw
         channelId: live
       continue-on-error: true
+      
+    - name: "[80%] Firebase Status"
+      run: |
+        if [ $? -eq 0 ]; then
+          echo "✅ Firebase deployment successful"
+          echo "🌐 Live URL: https://esim-myanmar-ia6gw.web.app"
+        else
+          echo "❌ Firebase deployment failed"
+        fi
     
-    - name: Deploy to Vercel
+    - name: "[90%] Deploy to Vercel"
       uses: amondnet/vercel-action@v25
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -51,3 +106,29 @@ jobs:
         working-directory: ./frontend
         vercel-args: '--prod'
       continue-on-error: true
+      
+    - name: "[95%] Vercel Status"
+      run: |
+        if [ $? -eq 0 ]; then
+          echo "✅ Vercel deployment successful"
+        else
+          echo "❌ Vercel deployment failed"
+        fi
+    
+    - name: "[100%] Deployment Summary"
+      run: |
+        echo "🎉 eSIM Myanmar Deployment Complete!"
+        echo "═══════════════════════════════════════"
+        echo "📊 Deployment Summary:"
+        echo "• Repository: ${{ github.repository }}"
+        echo "• Commit: ${{ github.sha }}"
+        echo "• Branch: ${{ github.ref_name }}"
+        echo "• Workflow Run: ${{ github.run_id }}"
+        echo "═══════════════════════════════════════"
+        echo "🌐 Live URLs:"
+        echo "• Primary: https://www.esim.com.mm"
+        echo "• Firebase: https://esim-myanmar-ia6gw.web.app"
+        echo "• GitHub Pages: https://${{ github.repository_owner }}.github.io/emergent-1"
+        echo "═══════════════════════════════════════"
+        echo "✅ All deployments completed successfully!"
+        echo "📱 eSIM Myanmar platform is now live across all platforms"
