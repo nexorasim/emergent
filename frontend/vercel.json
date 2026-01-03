@@ -1,31 +1,15 @@
 {
-  "buildCommand": "yarn build",
-  "outputDirectory": "build",
-  "framework": "create-react-app",
-  "env": {
-    "CI": "false",
-    "DISABLE_ESLINT_PLUGIN": "true",
-    "REACT_APP_BACKEND_URL": "https://emerhent-production.up.railway.app"
-  },
-  "rewrites": [
-    { "source": "/((?!static|api|_next).*)", "destination": "/index.html" }
-  ],
-  "headers": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/static/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-      ]
+      "src": "package.json",
+      "use": "@vercel/static-build"
     }
   ],
-  "trailingSlash": false
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }

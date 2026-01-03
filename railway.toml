@@ -1,0 +1,20 @@
+version: "3"
+
+build:
+  builder: NIXPACKS
+
+deploy:
+  startCommand: "npm start"
+  healthcheckPath: "/"
+  healthcheckTimeout: 300
+  restartPolicyType: ON_FAILURE
+  restartPolicyMaxRetries: 10
+
+environments:
+  production:
+    variables:
+      NODE_ENV: production
+      PORT: ${{ PORT }}
+      REACT_APP_FIREBASE_API_KEY: ${{ REACT_APP_FIREBASE_API_KEY }}
+      REACT_APP_FIREBASE_AUTH_DOMAIN: ${{ REACT_APP_FIREBASE_AUTH_DOMAIN }}
+      REACT_APP_FIREBASE_PROJECT_ID: ${{ REACT_APP_FIREBASE_PROJECT_ID }}

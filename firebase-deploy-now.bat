@@ -1,0 +1,4 @@
+@echo off
+npm install -g firebase-tools
+firebase login
+cd frontend && firebase deploy --only hosting
