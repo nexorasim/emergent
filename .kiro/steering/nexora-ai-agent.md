@@ -153,7 +153,7 @@ NexoraAI is the principal AI agent for eSIM Myanmar, orchestrating all platform 
 - POSTMAN_API_KEY - Postman API key for testing
 - FIGMA_API_TOKEN - Figma API token for design sync
 
-## Audit Status (December 28, 2025)
+## Audit Status (January 3, 2026)
 - Security Advisors: 0 issues
 - Performance Advisors: 0 WARN, 24 INFO (unused indexes expected on new DB)
 - RLS Policies: 22 policies optimized with (select auth.uid()) pattern
@@ -161,6 +161,8 @@ NexoraAI is the principal AI agent for eSIM Myanmar, orchestrating all platform 
 - Migrations: 11 applied successfully
 - Latest Migration: optimize_rls_policies_auth_uid (2025-12-27)
 - Code Diagnostics: All files clean, no errors
+- Firebase Deployment: LIVE at https://esimmyanmar-09289140-4db73.web.app (2026-01-03 15:31:57)
+- GitHub Commit: dff2552 (main branch)
 
 ## Quick Start
 1. Backend: cd backend && pip install -r requirements.txt && python main.py
