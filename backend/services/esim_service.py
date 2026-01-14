@@ -12,6 +12,7 @@ import base64
 import logging
 
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from utils.serialization import serialize_doc, serialize_list
 
 logger = logging.getLogger(__name__)
 
