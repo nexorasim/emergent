@@ -59,42 +59,42 @@ def test_auth_and_registration():
     # Test users with different roles
     test_users = {
         "customer": {
-            "email": f"{TEST_PREFIX}_customer@esim.test",
+            "email": f"{TEST_PREFIX}_customer@example.com",
             "password": "TestPass123!",
             "full_name": "Test Customer",
             "phone_number": "09123456789",
             "role": "customer"
         },
         "operator": {
-            "email": f"{TEST_PREFIX}_operator@esim.test",
+            "email": f"{TEST_PREFIX}_operator@example.com",
             "password": "TestPass123!",
             "full_name": "Test Operator",
             "phone_number": "09123456790",
             "role": "operator"
         },
         "enterprise_admin": {
-            "email": f"{TEST_PREFIX}_admin@esim.test",
+            "email": f"{TEST_PREFIX}_admin@example.com",
             "password": "TestPass123!",
             "full_name": "Test Enterprise Admin",
             "phone_number": "09123456791",
             "role": "enterprise_admin"
         },
         "provisioner": {
-            "email": f"{TEST_PREFIX}_provisioner@esim.test",
+            "email": f"{TEST_PREFIX}_provisioner@example.com",
             "password": "TestPass123!",
             "full_name": "Test Provisioner",
             "phone_number": "09123456792",
             "role": "provisioner"
         },
         "finance": {
-            "email": f"{TEST_PREFIX}_finance@esim.test",
+            "email": f"{TEST_PREFIX}_finance@example.com",
             "password": "TestPass123!",
             "full_name": "Test Finance",
             "phone_number": "09123456793",
             "role": "finance"
         },
         "audit": {
-            "email": f"{TEST_PREFIX}_audit@esim.test",
+            "email": f"{TEST_PREFIX}_audit@example.com",
             "password": "TestPass123!",
             "full_name": "Test Audit",
             "phone_number": "09123456794",
