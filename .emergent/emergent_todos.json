@@ -1,6 +1,10 @@
 [
   {
-    "content": "Phase 1: Run and fix test_core.py until all tests pass",
+    "content": "Phase 1: Create test_core.py covering Auth + RBAC + eSIM lifecycle + Plans",
+    "status": "completed"
+  },
+  {
+    "content": "Phase 1: Add missing backend endpoints for RBAC and lifecycle operations",
     "status": "in_progress"
   }
 ]
