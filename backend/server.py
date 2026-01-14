@@ -255,7 +255,7 @@ async def create_esim_profile(current_user: dict = Depends(get_current_user)):
 @app.get("/api/esim/profiles")
 async def get_user_esim_profiles(current_user: dict = Depends(get_current_user)):
     profiles = await esim_profiles_collection.find({"user_id": current_user["user_id"]}).to_list(100)
-    return {"profiles": profiles}
+    return {"profiles": serialize_list(profiles)}
 
 @app.get("/api/plans")
 async def get_plans():
