@@ -14,6 +14,9 @@ import qrcode
 import io
 import base64
 
+# Import serialization utilities
+from utils.serialization import serialize_doc, serialize_list
+
 load_dotenv()
 
 app = FastAPI(
