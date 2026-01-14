@@ -205,9 +205,8 @@ async def update_plan(
     
     # Get updated plan
     plan = await db.plans.find_one({"plan_id": plan_id})
-    plan.pop("_id", None)
     
-    return {"message": "Plan updated", "plan": plan}
+    return {"message": "Plan updated", "plan": serialize_doc(plan)}
 
 
 @router.delete("/{plan_id}")
