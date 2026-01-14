@@ -296,7 +296,7 @@ async def get_plans():
         await plans_collection.insert_many(default_plans)
         plans = default_plans
     
-    return {"plans": plans}
+    return {"plans": serialize_list(plans)}
 
 # Include Routers
 app.include_router(nexora.router)
