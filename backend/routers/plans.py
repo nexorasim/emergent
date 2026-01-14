@@ -171,9 +171,8 @@ async def create_plan(
     }
     
     await db.plans.insert_one(plan)
-    plan.pop("_id", None)
     
-    return {"message": "Plan created", "plan": plan}
+    return {"message": "Plan created", "plan": serialize_doc(plan)}
 
 
 @router.put("/{plan_id}")
