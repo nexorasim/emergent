@@ -150,8 +150,7 @@ async def get_plan(request: Request, plan_id: str):
             detail="Plan not found"
         )
     
-    plan.pop("_id", None)
-    return {"plan": plan}
+    return {"plan": serialize_doc(plan)}
 
 
 @router.post("")
