@@ -250,7 +250,7 @@ async def create_esim_profile(current_user: dict = Depends(get_current_user)):
     
     await esim_profiles_collection.insert_one(profile)
     
-    return {"message": "eSIM profile created", "profile": profile}
+    return {"message": "eSIM profile created", "profile": serialize_doc(profile)}
 
 @app.get("/api/esim/profiles")
 async def get_user_esim_profiles(current_user: dict = Depends(get_current_user)):
