@@ -1,10 +1,6 @@
 [
   {
-    "content": "Phase 1: Audit current backend and identify RBAC gaps",
-    "status": "completed"
-  },
-  {
-    "content": "Phase 1: Create test_core.py covering Auth + RBAC + eSIM lifecycle + Plans",
+    "content": "Phase 1: Run and fix test_core.py until all tests pass",
     "status": "in_progress"
   }
 ]
