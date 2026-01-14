@@ -238,6 +238,7 @@ async def create_esim_profile(current_user: dict = Depends(get_current_user)):
         "iccid": f"89959{uuid.uuid4().hex[:15]}",
         "status": "inactive",
         "qr_code": None,
+        "activation_code": None,
         "activation_date": None,
         "expiry_date": None,
         "data_used": 0.0,
@@ -245,7 +246,10 @@ async def create_esim_profile(current_user: dict = Depends(get_current_user)):
         "created_at": datetime.utcnow()
     }
     
-    qr_data = f"LPA:1$esim.com.mm${profile['iccid']}$"
+    # Generate activation code
+    activation_code = f"LPA:1$esim.com.mm${profile['iccid']}$"
+    profile["activation_code"] = activation_code
+    qr_data = activation_code
     profile["qr_code"] = generate_qr_code(qr_data)
     
     await esim_profiles_collection.insert_one(profile)
