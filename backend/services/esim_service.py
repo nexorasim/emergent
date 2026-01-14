@@ -99,11 +99,8 @@ class ESIMService:
         cursor = self.profiles.find({"user_id": user_id})
         profiles = await cursor.to_list(length=100)
         
-        # Remove MongoDB _id from response
-        for profile in profiles:
-            profile.pop("_id", None)
-        
-        return profiles
+        # Serialize profiles
+        return serialize_list(profiles)
     
     async def get_profile(self, profile_id: str, user_id: Optional[str] = None) -> Optional[dict]:
         """Get single profile by ID"""
