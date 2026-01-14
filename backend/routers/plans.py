@@ -253,7 +253,4 @@ async def compare_plans(request: Request, plan_ids: str):
     cursor = db.plans.find({"plan_id": {"$in": ids}})
     plans = await cursor.to_list(length=4)
     
-    for plan in plans:
-        plan.pop("_id", None)
-    
-    return {"plans": plans, "comparison_count": len(plans)}
+    return {"plans": serialize_list(plans), "comparison_count": len(plans)}
