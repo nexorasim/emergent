@@ -134,11 +134,7 @@ async def get_plans(
     cursor = db.plans.find(query)
     plans = await cursor.to_list(length=100)
     
-    # Remove MongoDB _id
-    for plan in plans:
-        plan.pop("_id", None)
-    
-    return {"plans": plans}
+    return {"plans": serialize_list(plans)}
 
 
 @router.get("/{plan_id}")
