@@ -261,6 +261,41 @@ async def get_user_esim_profiles(current_user: dict = Depends(get_current_user))
     profiles = await esim_profiles_collection.find({"user_id": current_user["user_id"]}).to_list(100)
     return {"profiles": serialize_list(profiles)}
 
+@app.post("/api/esim/profiles/{profile_id}/activate")
+async def activate_profile(profile_id: str, current_user: dict = Depends(get_current_user)):
+    """Activate eSIM profile"""
+    # Find profile
+    profile = await esim_profiles_collection.find_one({
+        "profile_id": profile_id,
+        "user_id": current_user["user_id"]
+    })
+    
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    if profile["status"] == "active":
+        raise HTTPException(status_code=400, detail="Profile is already active")
+    
+    # Update profile to active
+    expiry_date = datetime.utcnow() + timedelta(days=30)
+    await esim_profiles_collection.update_one(
+        {"profile_id": profile_id},
+        {
+            "$set": {
+                "status": "active",
+                "activation_date": datetime.utcnow(),
+                "expiry_date": expiry_date,
+                "data_limit": 10.0
+            }
+        }
+    )
+    
+    # Get updated profile
+    updated_profile = await esim_profiles_collection.find_one({"profile_id": profile_id})
+    
+    return {"message": "eSIM activated successfully", "profile": serialize_doc(updated_profile)}
+
+
 @app.get("/api/plans")
 async def get_plans():
     plans = await plans_collection.find({}).to_list(100)
