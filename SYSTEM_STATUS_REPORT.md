@@ -117,7 +117,7 @@ Database:         CONNECTED
 - Build: Success
 - Features: All operational
 
-**Backend API:** https://esim-nexus.preview.emergentagent.com
+**Backend API:** https://esim-ui-standards.preview.emergentagent.com
 - Status: OPERATIONAL
 - Endpoints: 18 total
 - Health: PASSING

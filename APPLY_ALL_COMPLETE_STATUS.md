@@ -72,7 +72,7 @@ wrangler pages publish build --project-name esim-myanmar
 NEXT_PUBLIC_SUPABASE_URL=https://ksctoosqlpemoptcaxdr.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=sb_publishable_waCWl25a8TytSq5rW0iO5A_TujzHyzl
 HOSTINGER_MCP_ENDPOINT=websites-agents.hostinger.com/esim.com.mm/mcp
-RAILWAY_PROJECT=7825338f-5e57-49aa-9f75-0a6575bee178
+RAILWAY_PROJECT=esim-ui-standards
 ```
 
 ---
