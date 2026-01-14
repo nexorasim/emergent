@@ -109,10 +109,7 @@ class ESIMService:
             query["user_id"] = user_id
         
         profile = await self.profiles.find_one(query)
-        if profile:
-            profile.pop("_id", None)
-        
-        return profile
+        return serialize_doc(profile)
     
     async def activate_profile(
         self,
