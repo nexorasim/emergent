@@ -92,7 +92,7 @@ class ESIMService:
         await self.profiles.insert_one(profile)
         logger.info(f"Created eSIM profile: {profile['profile_id']} for user: {user_id}")
         
-        return profile
+        return serialize_doc(profile)
     
     async def get_user_profiles(self, user_id: str) -> List[dict]:
         """Get all profiles for a user"""
