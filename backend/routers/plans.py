@@ -9,6 +9,7 @@ from datetime import datetime
 import uuid
 
 from .auth import get_current_user, get_admin_user
+from utils.serialization import serialize_doc, serialize_list
 
 router = APIRouter(prefix="/api/plans", tags=["Plans"])
 
