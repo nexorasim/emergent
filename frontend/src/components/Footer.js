@@ -129,7 +129,7 @@ const Footer = () => {
                 }}
               >
                 <p className="text-sm font-semibold" style={{ color: '#00FFFF' }}>
-                  {isNewYear ? 'Happy New Year 2026' : 'Season Greetings'}
+                  {isNewYear ? 'Celebrating 4th Anniversary' : 'Season Greetings'}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
                   {isNewYear ? 'Wishing you seamless connectivity' : 'From the eSIM Myanmar team'}

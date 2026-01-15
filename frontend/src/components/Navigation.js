@@ -39,8 +39,8 @@ const Navigation = () => {
   };
 
   const navLinks = [
-    { path: '/esim-register', label: 'Get eSIM', highlight: true },
-    { path: '/plans', label: t?.plans || 'Plans' },
+    { path: '/anniversary', label: '4th Anniversary', highlight: true, special: true },
+    { path: '/anniversary', label: t?.getFreeEsim || 'Get Free eSIM', highlight: true },
     { path: '/features', label: t?.features || 'Features' },
     { path: '/coverage', label: t?.coverage || 'Coverage' },
     { path: '/support', label: t?.support || 'Support' },
@@ -84,14 +84,18 @@ const Navigation = () => {
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive(link.path) 
                     ? 'text-cyan-400' 
-                    : link.highlight 
-                      ? 'text-cyan-400 font-semibold' 
-                      : 'text-gray-300 hover:text-white'
+                    : link.special
+                      ? 'text-purple-400 font-semibold'
+                      : link.highlight 
+                        ? 'text-cyan-400 font-semibold' 
+                        : 'text-gray-300 hover:text-white'
                 }`}
                 style={
                   isActive(link.path) 
                     ? { background: 'rgba(0, 255, 255, 0.1)' } 
-                    : {}
+                    : link.special
+                      ? { background: 'rgba(139, 92, 246, 0.1)' }
+                      : {}
                 }
               >
                 {link.label}
@@ -114,60 +118,27 @@ const Navigation = () => {
               </div>
             )}
             
-            {/* Auth Section */}
+            {/* CTA Section (No login/register) */}
             <div className="flex items-center gap-3 ml-4 pl-4 border-l border-white/10">
-              {isAuthenticated ? (
-                <>
-                  <Link 
-                    to="/dashboard" 
-                    className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors"
-                  >
-                    Dashboard
-                  </Link>
-                  <span className="text-xs text-gray-500 hidden xl:inline max-w-[100px] truncate">
-                    {user?.full_name}
-                  </span>
-                  <button 
-                    onClick={handleLogout} 
-                    className="px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
-                    style={{
-                      background: 'rgba(239, 68, 68, 0.15)',
-                      color: '#EF4444',
-                      border: '1px solid rgba(239, 68, 68, 0.3)'
-                    }}
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link 
-                    to="/login" 
-                    className="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                  >
-                    Login
-                  </Link>
-                  <Link 
-                    to="/register" 
-                    className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
-                    style={{
-                      background: 'linear-gradient(135deg, #00FFFF 0%, #00CCCC 100%)',
-                      color: '#1e2f3c',
-                      boxShadow: '0 4px 16px rgba(0, 255, 255, 0.25)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 255, 255, 0.4)';
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 255, 255, 0.25)';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                  >
-                    Get Started
-                  </Link>
-                </>
-              )}
+              <Link 
+                to="/anniversary" 
+                className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
+                style={{
+                  background: 'linear-gradient(135deg, #00FFFF 0%, #00CCCC 100%)',
+                  color: '#1e2f3c',
+                  boxShadow: '0 4px 16px rgba(0, 255, 255, 0.25)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 255, 255, 0.4)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 255, 255, 0.25)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                {t?.getFreeEsim || 'Get Free eSIM'}
+              </Link>
             </div>
           </div>
 
@@ -219,9 +190,11 @@ const Navigation = () => {
                   className={`block py-3 px-4 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.path)
                       ? 'text-cyan-400 bg-cyan-400/10'
-                      : link.highlight
-                        ? 'text-cyan-400'
-                        : 'text-white hover:text-cyan-400 hover:bg-white/5'
+                      : link.special
+                        ? 'text-purple-400 bg-purple-400/10'
+                        : link.highlight
+                          ? 'text-cyan-400'
+                          : 'text-white hover:text-cyan-400 hover:bg-white/5'
                   }`}
                   role="menuitem"
                   onClick={() => setMobileMenuOpen(false)}
@@ -232,44 +205,14 @@ const Navigation = () => {
             </div>
             
             <div className="border-t border-white/10 pt-4 mt-4 space-y-1">
-              {isAuthenticated ? (
-                <>
-                  <Link 
-                    to="/dashboard" 
-                    className="block py-3 px-4 rounded-lg text-sm text-white hover:text-cyan-400 hover:bg-white/5 transition-colors"
-                    role="menuitem"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Dashboard
-                  </Link>
-                  <button 
-                    onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
-                    className="w-full text-left py-3 px-4 rounded-lg text-sm text-red-400 hover:bg-red-400/10 transition-colors"
-                    role="menuitem"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link 
-                    to="/login" 
-                    className="block py-3 px-4 rounded-lg text-sm text-white hover:text-cyan-400 hover:bg-white/5 transition-colors"
-                    role="menuitem"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Login
-                  </Link>
-                  <Link 
-                    to="/register" 
-                    className="block py-3 px-4 rounded-lg text-sm font-semibold text-cyan-400 bg-cyan-400/10 hover:bg-cyan-400/20 transition-colors"
-                    role="menuitem"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Register
-                  </Link>
-                </>
-              )}
+              <Link 
+                to="/anniversary" 
+                className="block py-3 px-4 rounded-lg text-sm font-semibold text-cyan-400 bg-cyan-400/10 hover:bg-cyan-400/20 transition-colors"
+                role="menuitem"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {t?.getFreeEsim || 'Get Free eSIM'}
+              </Link>
             </div>
           </div>
         </div>

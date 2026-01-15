@@ -1,24 +1,20 @@
-# ESIM MYANMAR COMPANY LIMITED
-# Robots.txt for all domains
+# robots.txt for eSIM Myanmar
+# https://esim.com.mm
 
 User-agent: *
 Allow: /
+
+# Disallow admin and dashboard areas
 Disallow: /admin/
-Disallow: /partner/
 Disallow: /dashboard/
-Disallow: /customer/
 Disallow: /api/
 
-# Primary Domain
+# Disallow authentication pages from indexing
+Disallow: /forgot-password
+Disallow: /reset-password
+
+# Sitemap location
 Sitemap: https://esim.com.mm/sitemap.xml
-Sitemap: https://www.esim.com.mm/sitemap.xml
 
-# Secondary Domains
-Sitemap: https://esim-myanmar-ia6gw.web.app/sitemap.xml
-Sitemap: https://esim-myanmar.pages.dev/sitemap.xml
-
-# Crawl-delay for rate limiting
+# Crawl delay (optional, for polite crawling)
 Crawl-delay: 1
-
-# Host directive
-Host: https://esim.com.mm

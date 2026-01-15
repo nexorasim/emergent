@@ -6,86 +6,151 @@ const Downloads = () => {
   const canvasRef = useRef(null);
 
   const assets = [
+    // Christmas Assets
     {
-      id: 'hd-1080p',
-      title: 'HD Wallpaper 1080p',
-      description: 'Full HD desktop wallpaper/banner',
-      filename: 'christmas-profile-hd-1080p',
-      path: '/assets/christmas-profile-hd-1080p.svg',
-      dimensions: '1920 x 1080',
-      category: 'Desktop'
-    },
-    {
-      id: 'linkedin-cover',
-      title: 'LinkedIn Cover',
-      description: 'LinkedIn profile background',
-      filename: 'christmas-linkedin-cover',
-      path: '/assets/christmas-linkedin-cover.svg',
-      dimensions: '1584 x 396',
-      category: 'Social'
-    },
-    {
-      id: 'facebook-cover',
+      id: 'christmas-facebook-cover',
+      category: '4th Anniversary Christmas',
       title: 'Facebook Cover',
-      description: 'Facebook page cover photo',
-      filename: 'christmas-facebook-cover',
-      path: '/assets/christmas-facebook-cover.svg',
-      dimensions: '820 x 312',
-      category: 'Social'
-    },
-    {
-      id: 'twitter-header',
-      title: 'Twitter/X Header',
-      description: 'Twitter profile header',
-      filename: 'christmas-twitter-header',
-      path: '/assets/christmas-twitter-header.svg',
-      dimensions: '1500 x 500',
-      category: 'Social'
-    },
-    {
-      id: 'instagram-post',
-      title: 'Instagram Post',
-      description: 'Square post for Instagram feed',
-      filename: 'christmas-instagram-post',
-      path: '/assets/christmas-instagram-post.svg',
-      dimensions: '1080 x 1080',
-      category: 'Social'
-    },
-    {
-      id: 'instagram-story',
-      title: 'Instagram Story',
-      description: 'Vertical story format',
-      filename: 'christmas-instagram-story',
-      path: '/assets/christmas-instagram-story.svg',
-      dimensions: '1080 x 1920',
-      category: 'Social'
-    },
-    {
-      id: 'youtube-thumbnail',
-      title: 'YouTube Thumbnail',
-      description: 'Video thumbnail 16:9',
-      filename: 'christmas-youtube-thumbnail',
-      path: '/assets/christmas-youtube-thumbnail.svg',
-      dimensions: '1280 x 720',
-      category: 'Video'
-    },
-    {
-      id: 'profile-picture',
-      title: 'Profile Picture',
-      description: 'Square profile avatar',
-      filename: 'christmas-profile-picture',
-      path: '/assets/christmas-profile-picture.svg',
-      dimensions: '400 x 400',
-      category: 'Profile'
-    },
-    {
-      id: 'social-cover',
-      title: 'Social Media Cover',
-      description: 'Universal social cover (OG)',
-      filename: 'christmas-profile-esim-myanmar',
-      path: '/assets/christmas-profile-esim-myanmar.svg',
+      description: 'Festive Facebook cover for 4th anniversary celebration',
       dimensions: '1200 x 630',
-      category: 'Social'
+      path: '/assets/christmas-facebook-cover.svg',
+      filename: 'esim-myanmar-christmas-facebook-cover'
+    },
+    {
+      id: 'christmas-instagram-post',
+      category: '4th Anniversary Christmas',
+      title: 'Instagram Post',
+      description: 'Square Instagram post for anniversary celebration',
+      dimensions: '1080 x 1080',
+      path: '/assets/christmas-instagram-post.svg',
+      filename: 'esim-myanmar-christmas-instagram-post'
+    },
+    {
+      id: 'christmas-instagram-story',
+      category: '4th Anniversary Christmas',
+      title: 'Instagram Story',
+      description: 'Vertical Instagram story for anniversary celebration',
+      dimensions: '1080 x 1920',
+      path: '/assets/christmas-instagram-story.svg',
+      filename: 'esim-myanmar-christmas-instagram-story'
+    },
+    {
+      id: 'christmas-linkedin-cover',
+      category: '4th Anniversary Christmas',
+      title: 'LinkedIn Cover',
+      description: 'Professional LinkedIn cover for anniversary celebration',
+      dimensions: '1584 x 396',
+      path: '/assets/christmas-linkedin-cover.svg',
+      filename: 'esim-myanmar-christmas-linkedin-cover'
+    },
+    {
+      id: 'christmas-profile-picture',
+      category: '4th Anniversary Christmas',
+      title: 'Profile Picture',
+      description: 'Circular profile picture for anniversary celebration',
+      dimensions: '400 x 400',
+      path: '/assets/christmas-profile-picture.svg',
+      filename: 'esim-myanmar-christmas-profile-picture'
+    },
+    {
+      id: 'christmas-twitter-header',
+      category: '4th Anniversary Christmas',
+      title: 'Twitter Header',
+      description: 'Twitter/X header banner for anniversary celebration',
+      dimensions: '1500 x 500',
+      path: '/assets/christmas-twitter-header.svg',
+      filename: 'esim-myanmar-christmas-twitter-header'
+    },
+    {
+      id: 'christmas-youtube-thumbnail',
+      category: '4th Anniversary Christmas',
+      title: 'YouTube Thumbnail',
+      description: 'YouTube video thumbnail for anniversary celebration',
+      dimensions: '1280 x 720',
+      path: '/assets/christmas-youtube-thumbnail.svg',
+      filename: 'esim-myanmar-christmas-youtube-thumbnail'
+    },
+    {
+      id: 'christmas-profile-hd',
+      category: '4th Anniversary Christmas',
+      title: 'HD Profile Picture',
+      description: 'High definition profile picture for anniversary celebration',
+      dimensions: '1080 x 1080',
+      path: '/assets/christmas-profile-hd-1080p.svg',
+      filename: 'esim-myanmar-christmas-profile-hd-1080p'
+    },
+    {
+      id: 'christmas-profile-esim-myanmar',
+      category: '4th Anniversary Christmas',
+      title: 'eSIM Myanmar Profile',
+      description: 'Branded profile picture for eSIM Myanmar anniversary',
+      dimensions: '400 x 400',
+      path: '/assets/christmas-profile-esim-myanmar.svg',
+      filename: 'esim-myanmar-christmas-profile-esim-myanmar'
+    },
+    // Social Media Templates
+    {
+      id: 'social-facebook-cover',
+      category: 'Social Media Templates',
+      title: 'Facebook Cover',
+      description: 'Standard Facebook cover template',
+      dimensions: '1200 x 630',
+      path: '/assets/social/facebook-cover-1200x630.svg',
+      filename: 'esim-myanmar-facebook-cover'
+    },
+    {
+      id: 'social-instagram-post',
+      category: 'Social Media Templates',
+      title: 'Instagram Post',
+      description: 'Square Instagram post template',
+      dimensions: '1080 x 1080',
+      path: '/assets/social/instagram-post-1080x1080.svg',
+      filename: 'esim-myanmar-instagram-post'
+    },
+    {
+      id: 'social-instagram-story',
+      category: 'Social Media Templates',
+      title: 'Instagram Story',
+      description: 'Vertical Instagram story template',
+      dimensions: '1080 x 1920',
+      path: '/assets/social/instagram-story-1080x1920.svg',
+      filename: 'esim-myanmar-instagram-story'
+    },
+    {
+      id: 'social-linkedin-cover',
+      category: 'Social Media Templates',
+      title: 'LinkedIn Cover',
+      description: 'Professional LinkedIn cover template',
+      dimensions: '1584 x 396',
+      path: '/assets/social/linkedin-cover-1584x396.svg',
+      filename: 'esim-myanmar-linkedin-cover'
+    },
+    {
+      id: 'social-profile-picture',
+      category: 'Social Media Templates',
+      title: 'Profile Picture',
+      description: 'Circular profile picture template',
+      dimensions: '400 x 400',
+      path: '/assets/social/profile-picture-400x400.svg',
+      filename: 'esim-myanmar-profile-picture'
+    },
+    {
+      id: 'social-twitter-header',
+      category: 'Social Media Templates',
+      title: 'Twitter Header',
+      description: 'Twitter/X header banner template',
+      dimensions: '1500 x 500',
+      path: '/assets/social/twitter-header-1500x500.svg',
+      filename: 'esim-myanmar-twitter-header'
+    },
+    {
+      id: 'social-youtube-thumbnail',
+      category: 'Social Media Templates',
+      title: 'YouTube Thumbnail',
+      description: 'YouTube video thumbnail template',
+      dimensions: '1280 x 720',
+      path: '/assets/social/youtube-thumbnail-1280x720.svg',
+      filename: 'esim-myanmar-youtube-thumbnail'
     }
   ];
 
@@ -205,7 +270,7 @@ const Downloads = () => {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Christmas 2025 Assets
+            4th Anniversary Assets
           </h1>
           <p className="text-lg text-gray-400 mb-2">
             eSIM Myanmar branded social media profiles and covers
@@ -394,7 +459,7 @@ const Downloads = () => {
         {/* Footer */}
         <div className="mt-12 text-center text-sm text-gray-500">
           <p>ESIM MYANMAR COMPANY LIMITED - esim.com.mm</p>
-          <p className="mt-1">Christmas 2025 Brand Assets</p>
+          <p className="mt-1">4th Anniversary Brand Assets</p>
         </div>
       </div>
     </div>

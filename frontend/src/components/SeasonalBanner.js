@@ -8,9 +8,9 @@
 import React, { useState, useEffect } from 'react';
 
 const SEASONAL_CONFIG = {
-  startDate: new Date('2025-12-15T00:00:00'),
-  endDate: new Date('2026-02-01T00:00:00'),
-  newYearDate: new Date('2026-01-01T00:00:00'),
+  startDate: new Date('2024-01-01T00:00:00'),
+  endDate: new Date('2027-12-31T23:59:59'),
+  anniversaryDate: new Date('2026-01-15T00:00:00'),
   enabled: true
 };
 
@@ -21,18 +21,10 @@ const isSeasonalActive = () => {
 };
 
 const getSeasonalMessage = () => {
-  const now = new Date();
-  if (now >= SEASONAL_CONFIG.newYearDate) {
-    return {
-      title: 'Happy New Year 2026',
-      subtitle: 'Wishing you seamless connectivity throughout the year',
-      icon: 'star'
-    };
-  }
   return {
-    title: 'Season Greetings',
-    subtitle: 'Celebrating the holidays with enterprise connectivity',
-    icon: 'gift'
+    title: 'Celebrating 4th Anniversary',
+    subtitle: 'Get your free eSIM - iOS & Android supported',
+    icon: 'star'
   };
 };
 

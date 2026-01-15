@@ -79,9 +79,9 @@ export const SEASONAL_CONFIG = {
   
   features: {
     banner: true,
-    santa: true,
+    santa: false,
     countdown: true,
-    music: true,
+    music: false,
     snowEffect: false,
     themeOverride: true
   },
@@ -133,19 +133,10 @@ export const getCountdownToNewYear = () => {
 
 export const getSeasonalMessage = () => {
   if (!isSeasonalActive()) return null;
-  
-  if (isNewYearPeriod()) {
-    return {
-      greeting: 'Happy New Year 2026',
-      subtitle: 'Wishing you seamless connectivity',
-      cta: 'Start Fresh with eSIM'
-    };
-  }
-  
   return {
-    greeting: 'Merry Christmas',
-    subtitle: 'Season Greetings from eSIM Myanmar',
-    cta: 'Gift an eSIM'
+    greeting: 'Celebrating 4th Anniversary',
+    subtitle: 'Wishing you seamless connectivity',
+    cta: 'Start Fresh with eSIM'
   };
 };
 

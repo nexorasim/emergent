@@ -1,0 +1,95 @@
+# eSIM Myanmar - Deployment Commands Reference
+
+## 🚀 Cloudflare Pages (DEPLOYED ✅)
+
+### Quick Deploy
+```bash
+./deploy-cloudflare.sh
+```
+
+### Manual Deploy
+```bash
+export CLOUDFLARE_API_TOKEN="0R2Kw5TLj39aO6Z7JNc0O-wTVcWI4IJS8qELhfhL"
+cd frontend
+yarn build
+wrangler pages deploy build --project-name=esim-myanmar --branch=main
+```
+
+### Live URL
+```
+https://e277b1d7.esim-myanmar.pages.dev
+https://e277b1d7.esim-myanmar.pages.dev/anniversary
+```
+
+---
+
+## 🔥 Firebase Hosting
+
+### Deploy
+```bash
+cd frontend
+yarn build
+firebase deploy --only hosting --project esim-myanmar-ia6gw
+```
+
+### Live URL
+```
+https://esim-myanmar-ia6gw.web.app
+```
+
+---
+
+## ▲ Vercel
+
+### Deploy
+```bash
+cd frontend
+vercel --prod
+```
+
+---
+
+## 🧪 Test Locally
+
+### Development Server
+```bash
+cd frontend
+yarn start
+```
+
+### Production Build Test
+```bash
+cd frontend
+yarn build
+npx serve -s build
+```
+
+---
+
+## ✅ Verify Deployment
+
+### Cloudflare
+```bash
+curl -I https://e277b1d7.esim-myanmar.pages.dev/
+curl -I https://e277b1d7.esim-myanmar.pages.dev/anniversary
+```
+
+### Firebase
+```bash
+curl -I https://esim-myanmar-ia6gw.web.app/
+curl -I https://esim-myanmar-ia6gw.web.app/anniversary
+```
+
+---
+
+## 📊 Status
+
+- ✅ Cloudflare: DEPLOYED (https://e277b1d7.esim-myanmar.pages.dev)
+- ⏳ Firebase: Ready to deploy
+- ⏳ Vercel: Ready to deploy
+
+---
+
+**Current Active:** Cloudflare Pages  
+**Deployment Time:** 2.36 seconds  
+**Status:** LIVE ✅

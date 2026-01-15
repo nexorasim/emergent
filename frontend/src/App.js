@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
@@ -7,8 +7,8 @@ import { LanguageProvider } from './context/LanguageContext';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import SeasonalBanner from './components/SeasonalBanner';
-import SeasonalSanta from './components/SeasonalSanta';
-import ChristmasMusic from './components/ChristmasMusic';
+import SeasonalAnniversary from './components/SeasonalAnniversary';
+import AnniversaryMusic from './components/AnniversaryMusic';
 import NexoraAIChat from './components/NexoraAIChat';
 import initCopyProtection from './utils/copyProtection';
 import './styles/design-system.css';
@@ -28,6 +28,7 @@ import AdminDashboard from './pages/admin/Dashboard';
 import PartnerDashboard from './pages/partner/Dashboard';
 import ESIMRegistration from './pages/ESIMRegistration';
 import Partners from './pages/Partners';
+import Anniversary from './pages/Anniversary';
 
 // Enterprise Dashboard - Lazy loaded
 const EnterpriseAuditDashboard = lazy(() => import('./components/EnterpriseAuditDashboard'));
@@ -103,23 +104,27 @@ function App() {
                 <Routes>
                   {/* Core Pages */}
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/plans" element={<PlansPage />} />
+                  <Route path="/plans" element={<Navigate to="/anniversary" replace />} />
                   <Route path="/features" element={<FeaturesPage />} />
                   <Route path="/coverage" element={<CoveragePage />} />
                   <Route path="/support" element={<SupportPage />} />
-                  <Route path="/esim-register" element={<ESIMRegistration />} />
+                  <Route path="/esim-register" element={<Navigate to="/anniversary" replace />} />
                   <Route path="/partners" element={<Partners />} />
                   
+                  {/* Anniversary Campaign */}
+                  <Route path="/anniversary" element={<Anniversary />} />
+                  <Route path="/anniversary/*" element={<Anniversary />} />
+                  
                   {/* Auth Pages */}
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/register" element={<RegisterPage />} />
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/login" element={<Navigate to="/anniversary" replace />} />
+                  <Route path="/register" element={<Navigate to="/anniversary" replace />} />
+                  <Route path="/forgot-password" element={<Navigate to="/anniversary" replace />} />
                   <Route path="/auth" element={<EntraAuth />} />
                   
                   {/* Payment Pages */}
-                  <Route path="/payment" element={<PaymentPage />} />
-                  <Route path="/payment/success" element={<PaymentSuccess />} />
-                  <Route path="/payment/cancel" element={<PaymentCancel />} />
+                  <Route path="/payment" element={<Navigate to="/anniversary" replace />} />
+                  <Route path="/payment/success" element={<Navigate to="/anniversary" replace />} />
+                  <Route path="/payment/cancel" element={<Navigate to="/anniversary" replace />} />
                   
                   {/* Dashboard Pages */}
                   <Route path="/dashboard" element={<DashboardPage />} />
@@ -162,8 +167,8 @@ function App() {
             </main>
             <Footer />
           </div>
-          <SeasonalSanta />
-          <ChristmasMusic />
+          <SeasonalAnniversary />
+          <AnniversaryMusic />
           <NexoraAIChat />
         </Router>
         <Analytics />

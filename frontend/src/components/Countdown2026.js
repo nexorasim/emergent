@@ -97,7 +97,7 @@ const Countdown2026 = ({ compact = false, showLabel = true }) => {
               textShadow: '0 0 20px rgba(0, 255, 255, 0.4)'
             }}
           >
-            Countdown to 2026
+            4th Anniversary Celebration
           </h3>
         </div>
       )}

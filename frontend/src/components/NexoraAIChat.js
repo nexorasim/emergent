@@ -1,7 +1,7 @@
 /**
- * NexoraAIChat.js - Full Screen AI Assistant with Christmas Santa
+ * NexoraAIChat.js - Full Screen AI Assistant
  * ESIM MYANMAR COMPANY LIMITED
- * iOS/Safari Compatible - Fixed for iPhone
+ * iOS/Safari Compatible - 4th Anniversary Edition
  */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
@@ -10,13 +10,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 const LOGO_URL = 'https://i.ibb.co/qL00rsqJ/Colored.png';
 
 const isSeasonalActive = () => {
-  const now = new Date();
-  const start = new Date('2025-12-15T00:00:00');
-  const end = new Date('2026-02-01T00:00:00');
-  return now >= start && now < end;
+  return true; // Always active for 4th Anniversary
 };
 
-const MiniSanta = ({ size = 32 }) => (
+const MiniAnniversary = ({ size = 32 }) => (
   <motion.svg
     width={size}
     height={size}
@@ -27,35 +24,19 @@ const MiniSanta = ({ size = 32 }) => (
     style={{ display: 'block' }}
   >
     <defs>
-      <linearGradient id="asSantaBody" x1="50%" y1="0%" x2="50%" y2="100%">
-        <stop offset="0%" stopColor="#1a2632"/>
-        <stop offset="100%" stopColor="#2a3f52"/>
-      </linearGradient>
-      <linearGradient id="asSantaCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <linearGradient id="annivGrad" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#00FFFF"/>
         <stop offset="100%" stopColor="#6495ED"/>
       </linearGradient>
     </defs>
-    <ellipse cx="20" cy="28" rx="10" ry="10" fill="url(#asSantaBody)" stroke="#00FFFF" strokeWidth="0.5" strokeOpacity="0.5"/>
-    <rect x="10" y="26" width="20" height="4" rx="1" fill="#141f28"/>
-    <rect x="17" y="25" width="6" height="6" rx="1.5" fill="url(#asSantaCyan)"/>
-    <circle cx="20" cy="14" r="8" fill="#F8E6D9"/>
-    <path d="M12 13 Q16 8 18 5 Q20 0 22 5 Q24 8 28 13" fill="url(#asSantaBody)" stroke="#00FFFF" strokeWidth="0.5" strokeOpacity="0.5"/>
-    <ellipse cx="20" cy="13" rx="9" ry="2.5" fill="white"/>
-    <circle cx="27" cy="3" r="3" fill="white"/>
-    <circle cx="17" cy="13" r="1.2" fill="#1a2632"/>
-    <circle cx="23" cy="13" r="1.2" fill="#1a2632"/>
-    <ellipse cx="20" cy="16" rx="1.5" ry="1" fill="#E8B89D"/>
-    <path d="M17 18 Q20 21 23 18" stroke="#1a2632" strokeWidth="0.8" fill="none" strokeLinecap="round"/>
-    <path d="M12 16 Q16 18 20 22 Q24 18 28 16" fill="white"/>
-    <motion.g
-      animate={{ rotate: [0, 20, 0, -15, 0] }}
-      transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
-      style={{ transformOrigin: '30px 24px' }}
-    >
-      <ellipse cx="32" cy="22" rx="4" ry="3" fill="#F8E6D9"/>
-      <ellipse cx="30" cy="24" rx="3" ry="2" fill="white"/>
-    </motion.g>
+    <circle cx="20" cy="20" r="16" fill="url(#annivGrad)" opacity="0.2"/>
+    <text x="20" y="26" fontSize="20" fontWeight="bold" fill="#00FFFF" textAnchor="middle">4</text>
+    <motion.circle
+      cx="20" cy="20" r="18"
+      stroke="#00FFFF" strokeWidth="2" fill="none"
+      animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+      transition={{ duration: 2, repeat: Infinity }}
+    />
   </motion.svg>
 );
 
@@ -122,7 +103,7 @@ const LoadingScreen = ({ onComplete }) => {
             transition={{ delay: 0.3 }}
             style={{ position: 'absolute', top: '-20px', right: '-40px' }}
           >
-            <MiniSanta size={48} />
+            <MiniAnniversary size={48} />
           </motion.div>
         )}
         <div>
@@ -146,7 +127,7 @@ const LoadingScreen = ({ onComplete }) => {
 
       {seasonal && (
         <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} style={{ color: '#00FFFF', fontSize: '12px', marginTop: '24px', fontWeight: '600' }}>
-          Season Greetings from eSIM Myanmar
+          4th Anniversary - Free eSIM for iOS & Android
         </motion.p>
       )}
     </motion.div>
@@ -195,7 +176,7 @@ const generateAIResponse = (query) => {
 const NexoraAIChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [messages, setMessages] = useState([{ id: 1, type: 'ai', content: 'Hello! I am Nexora AI, your eSIM assistant.\n\nI can help with:\nMPT, ATOM, U9, MYTEL eSIM\nPricing and activation\nDevice compatibility\nPayment methods', timestamp: new Date() }]);
+  const [messages, setMessages] = useState([{ id: 1, type: 'ai', content: 'Hello! I am Nexora AI, your eSIM assistant.\n\nCelebrating 4th Anniversary - Get Free eSIM!\n\nI can help with:\nMPT, ATOM, U9, MYTEL eSIM\nPricing and activation\nDevice compatibility\nPayment methods', timestamp: new Date() }]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
@@ -296,7 +277,7 @@ const NexoraAIChat = () => {
           <img src={LOGO_URL} alt="eSIM" style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '8px' }} />
           {seasonal && (
             <div style={{ position: 'absolute', top: '-14px', right: '-18px' }}>
-              <MiniSanta size={28} />
+              <MiniAnniversary size={28} />
             </div>
           )}
         </div>
@@ -350,13 +331,13 @@ const NexoraAIChat = () => {
                   <img src={LOGO_URL} alt="eSIM Myanmar" style={{ width: '48px', height: '48px', objectFit: 'contain', borderRadius: '12px', boxShadow: '0 8px 32px rgba(0, 255, 255, 0.4)' }} />
                   {seasonal && (
                     <div style={{ position: 'absolute', top: '-12px', right: '-18px' }}>
-                      <MiniSanta size={32} />
+                      <MiniAnniversary size={32} />
                     </div>
                   )}
                 </div>
                 <div>
                   <h1 style={{ color: '#F8F9FA', fontSize: '20px', fontWeight: '800', margin: 0, letterSpacing: '-0.02em' }}>Nexora AI</h1>
-                  <p style={{ color: '#00FFFF', fontSize: '12px', margin: 0, fontWeight: '500' }}>eSIM Assistant</p>
+                  <p style={{ color: '#00FFFF', fontSize: '12px', margin: 0, fontWeight: '500' }}>4th Anniversary Edition</p>
                 </div>
               </div>
               <button onClick={() => setIsOpen(false)} style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(0, 255, 255, 0.2)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', WebkitTapHighlightColor: 'transparent' }}>

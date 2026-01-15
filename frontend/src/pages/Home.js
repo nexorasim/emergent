@@ -194,7 +194,7 @@ const HomePage = () => {
                   textShadow: '0 0 60px rgba(0, 255, 255, 0.3)'
                 }}
               >
-                Happy New Year 2026
+                Celebrating 4th Anniversary
               </h2>
               <p className="text-gray-300 text-base sm:text-lg">Wishing you seamless connectivity throughout the year</p>
             </motion.div>

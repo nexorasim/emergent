@@ -18,11 +18,11 @@ const translations = {
     dashboard: 'Dashboard',
     getStarted: 'Get Started',
     getESIM: 'Get eSIM',
-    
+
     // Hero Section
     heroTitle: 'eSIM Myanmar Entertainment Server',
     heroSubtitle: 'Enterprise eSIM Management Platform serving 50M+ users across ASEAN with 5G, VoLTE, and seamless device transfer capabilities.',
-    
+
     // Features
     esimTransfer: 'eSIM Transfer Android to Apple',
     esimTransferDesc: 'Seamlessly transfer your eSIM between Android and Apple devices with zero downtime.',
@@ -36,14 +36,14 @@ const translations = {
     multiDeviceDesc: 'Connect smartphones, tablets, smartwatches, and iPads simultaneously.',
     instantActivation: 'Instant Activation',
     instantActivationDesc: 'Activate your eSIM in seconds with QR code scanning.',
-    
+
     // Providers
     selectProvider: 'Select Your Provider',
     providerMPT: 'MPT',
     providerATOM: 'ATOM',
     providerU9: 'U9',
     providerMYTEL: 'MYTEL',
-    
+
     // Registration Flow
     phoneNumber: 'Phone Number',
     enterPhone: 'Enter your phone number',
@@ -59,7 +59,7 @@ const translations = {
     verification: 'Verification',
     esimReady: 'eSIM Ready',
     scanQR: 'Scan QR Code',
-    
+
     // Buttons
     submit: 'Submit',
     cancel: 'Cancel',
@@ -67,7 +67,7 @@ const translations = {
     back: 'Back',
     next: 'Next',
     confirm: 'Confirm',
-    
+
     // Status
     loading: 'Loading...',
     success: 'Success',
@@ -75,7 +75,7 @@ const translations = {
     pending: 'Pending',
     verified: 'Verified',
     failed: 'Failed',
-    
+
     // Footer
     aboutUs: 'About Us',
     contactUs: 'Contact Us',
@@ -83,24 +83,41 @@ const translations = {
     termsOfService: 'Terms of Service',
     refundPolicy: 'Refund Policy',
     cookiePolicy: 'Cookie Policy',
-    
+
     // Seasonal
     seasonGreetings: 'Season Greetings',
-    happyNewYear: 'Happy New Year 2026',
+    happyNewYear: 'Celebrating 4th Anniversary',
     countdownTo2026: 'Countdown to 2026',
-    
+
     // Support
     faq: 'FAQ',
     helpCenter: 'Help Center',
     liveChat: 'Live Chat',
     emailSupport: 'Email Support',
-    
+
     // Misc
     currency: 'MMK',
     esimPrice: '120,000 MMK',
-    allRightsReserved: 'All rights reserved'
+    allRightsReserved: 'All rights reserved',
+
+    // Campaign + CTAs
+    getFreeEsim: 'Get Free eSIM',
+    tapToInstall: 'Tap to Install',
+    noQrActivation: 'No QR Activation',
+    scanToActivate: 'Scan to Activate',
+    iosInstallEsim: 'iOS Install eSIM',
+    androidInstallEsim: 'Android Install eSIM',
+    installEsimNow: 'Install eSIM Now',
+    copyLpaString: 'Copy LPA String',
+    copySuccess: 'Copied to clipboard',
+    copyError: 'Copy failed',
+    recommendedForYourDevice: 'Recommended for your device',
+    campaignTitle: '4th Anniversary - Free eSIM | eSIM Myanmar',
+    campaignSubtitle: 'Get your free eSIM instantly with no registration, no login, and no plan selection required.',
+    backToOptions: 'Back to Options',
+    call: 'Call'
   },
-  
+
   mm: {
     // Navigation
     home: 'ပင်မစာမျက်နှာ',
@@ -115,14 +132,14 @@ const translations = {
     dashboard: 'ဒက်ရှ်ဘုတ်',
     getStarted: 'စတင်ရန်',
     getESIM: 'eSIM ရယူရန်',
-    
+
     // Hero Section
     heroTitle: 'eSIM မြန်မာ ဖျော်ဖြေရေး ဆာဗာ',
     heroSubtitle: 'ASEAN တစ်ဝှမ်းရှိ သုံးစွဲသူ သန်း ၅၀ ကျော်ကို 5G၊ VoLTE နှင့် စက်ပစ္စည်းများအကြား လွှဲပြောင်းမှုဖြင့် ဝန်ဆောင်မှုပေးနေသော လုပ်ငန်းအဆင့် eSIM စီမံခန့်ခွဲမှု ပလက်ဖောင်း။',
-    
+
     // Features
     esimTransfer: 'Android မှ Apple သို့ eSIM လွှဲပြောင်းခြင်း',
-    esimTransferDesc: 'သင့် eSIM ကို Android နှင့် Apple စက်ပစ္စည်းများအကြား ချောမွေ့စွာ လွှဲပြောင်းပါ။',
+    esimTransferDesc: 'သင့် eSIM ကို Android နှင့် Apple စက်ပ��္စည်းများအကြား ချောမွေ့စွာ လွှဲပြောင်းပါ။',
     network5G: '5G ကွန်ရက် ပံ့ပိုးမှု',
     network5GDesc: 'မြန်မာနှင့် ASEAN ဒေသတစ်ဝှမ်း လျင်မြန်သော 5G အမြန်နှုန်းကို ခံစားပါ။',
     volte: 'VoLTE ဖွင့်ထားသည်',
@@ -133,14 +150,14 @@ const translations = {
     multiDeviceDesc: 'စမတ်ဖုန်းများ၊ တက်ဘလက်များ၊ စမတ်နာရီများနှင့် iPad များကို တစ်ပြိုင်နက် ချိတ်ဆက်ပါ။',
     instantActivation: 'ချက်ချင်း အသက်သွင်းခြင်း',
     instantActivationDesc: 'QR ကုဒ် စကင်ဖတ်ခြင်းဖြင့် သင့် eSIM ကို စက္ကန့်ပိုင်းအတွင်း အသက်သွင်းပါ။',
-    
+
     // Providers
     selectProvider: 'သင့်ဝန်ဆောင်မှုပေးသူကို ရွေးချယ်ပါ',
     providerMPT: 'MPT',
     providerATOM: 'ATOM',
     providerU9: 'U9',
     providerMYTEL: 'MYTEL',
-    
+
     // Registration Flow
     phoneNumber: 'ဖုန်းနံပါတ်',
     enterPhone: 'သင့်ဖုန်းနံပါတ်ကို ထည့်ပါ',
@@ -151,12 +168,12 @@ const translations = {
     osVersion: 'OS ဗားရှင်း',
     checkCompatibility: 'လိုက်ဖက်မှု စစ်ဆေးရန်',
     payment: 'ငွေပေးချေမှု',
-    paymentAmount: 'ပေးဆောင်ရမည့် ပမာဏ',
+    paymentAmount: 'ပေးဆောင်���မည့် ပမာဏ',
     verifyPayment: 'ငွေပေးချေမှု အတည်ပြုရန်',
     verification: 'အတည်ပြုခြင်း',
     esimReady: 'eSIM အဆင်သင့်ဖြစ်ပါပြီ',
     scanQR: 'QR ကုဒ် စကင်ဖတ်ပါ',
-    
+
     // Buttons
     submit: 'တင်သွင်းရန်',
     cancel: 'ပယ်ဖျက်ရန်',
@@ -164,7 +181,7 @@ const translations = {
     back: 'နောက်သို့',
     next: 'ရှေ့သို့',
     confirm: 'အတည်ပြုရန်',
-    
+
     // Status
     loading: 'ဖွင့်နေသည်...',
     success: 'အောင်မြင်သည်',
@@ -172,30 +189,47 @@ const translations = {
     pending: 'စောင့်ဆိုင်းနေသည်',
     verified: 'အတည်ပြုပြီး',
     failed: 'မအောင်မြင်ပါ',
-    
+
     // Footer
     aboutUs: 'ကျွန်ုပ်တို့အကြောင်း',
     contactUs: 'ဆက်သွယ်ရန်',
     privacyPolicy: 'ကိုယ်ရေးအချက်အလက် မူဝါဒ',
     termsOfService: 'ဝန်ဆောင်မှု စည်းမျဉ်းများ',
     refundPolicy: 'ပြန်အမ်းငွေ မူဝါဒ',
-    cookiePolicy: 'ကွတ်ကီး မူဝါဒ',
-    
+    cookiePolicy: 'ကွတ်��ီး မူဝါဒ',
+
     // Seasonal
     seasonGreetings: 'ရာသီဥတု နှုတ်ခွန်းဆက်စကား',
-    happyNewYear: 'နှစ်သစ်မင်္ဂလာ ၂၀၂၆',
+    happyNewYear: '၄ နှစ်ပြည့် အထိမ်းအမှတ်',
     countdownTo2026: '၂၀၂၆ သို့ ရေတွက်ခြင်း',
-    
+
     // Support
     faq: 'မေးလေ့ရှိသော မေးခွန်းများ',
     helpCenter: 'အကူအညီ စင်တာ',
     liveChat: 'တိုက်ရိုက် ချက်တင်',
     emailSupport: 'အီးမေးလ် အကူအညီ',
-    
+
     // Misc
     currency: 'ကျပ်',
     esimPrice: '၁၂၀,၀၀၀ ကျပ်',
-    allRightsReserved: 'မူပိုင်ခွင့် အားလုံး ရယူထားသည်'
+    allRightsReserved: 'မူပိုင်ခွင့် အားလုံး ရယူထားသည်',
+
+    // Campaign + CTAs
+    getFreeEsim: 'အခမဲ့ eSIM ရယူရန်',
+    tapToInstall: 'တပ်ဆင်ရန် ထိပါ',
+    noQrActivation: 'QR မလိုအပ်သော အသက်သွင်းမှု',
+    scanToActivate: 'စကင်ဖတ်ပြီး အသက်သွင်းရန်',
+    iosInstallEsim: 'iOS eSIM တပ်ဆင်ရန်',
+    androidInstallEsim: 'Android eSIM တပ်ဆင်ရန်',
+    installEsimNow: 'eSIM ကို ယခု တပ်ဆင်ရန်',
+    copyLpaString: 'LPA စာသားကို ကူးယူရန်',
+    copySuccess: 'ကော်ပီကူးပြီးပါပြီ',
+    copyError: 'ကော်ပီမအောင်မြင်ပါ',
+    recommendedForYourDevice: 'သင့်စက်ပစ္စည်းအတွက် အကြံပြုပြီး',
+    campaignTitle: '၄ နှစ်ပြည့် အခမဲ့ eSIM | eSIM Myanmar',
+    campaignSubtitle: 'အကောင့်မလို၊ စာရင်းသွင်းချင်စရာမလို၊ အစီအစဉ်ရွေးချယ်စရာမလိုဘဲ အခမဲ့ eSIM ကို ချက်ချင်းရယူနိုင်ပါသည်။',
+    backToOptions: 'ရွေးချယ်မှုများသို့ ပြန်သွားရန်',
+    call: 'ခေါ်ဆိုရန်'
   }
 };
 
