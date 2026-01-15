@@ -3,10 +3,12 @@
 ## ESIM MYANMAR COMPANY LIMITED
 Copyright 2025-2026 - All Rights Reserved
 
-### Official Domains
-- Primary: esim.com.mm
-- Mirror: www.esim.com.mm
-- Firebase: esim-myanmar-ia6gw.web.app
+### Official Domains and Access Links
+- Primary Public Endpoints: esim.com.mm, www.esim.com.mm
+- Progressive Web/Mobile Environment: exp://exp.host/@esim-myanmar/esim-myanmar
+- Expo-Hosted Deployment: esim-myanmar.expo.app
+- Cloudflare Pages Static Deployment: https://esim-myanmar.pages.dev/
+- Firebase Hosting: esim-myanmar-ia6gw.web.app
 
 ### Contact Information
 - Email: info@esim.com.mm
@@ -26,6 +28,7 @@ Copyright 2025-2026 - All Rights Reserved
 - Deployment: Firebase, Vercel, Cloudflare
 
 ### Key Features
+- No 5GB Fee
 - eSIM Transfer Android to Apple
 - Phone Number Registration
 - 5G and VoLTE Support

@@ -1,0 +1,318 @@
+/* Accessibility Enhancements - WCAG 2.2 AA Compliant */
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00FFFF;
+  color: #1e2f3c;
+  padding: 12px 24px;
+  font-weight: 600;
+  z-index: 9999;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #00FFFF;
+  outline-offset: 2px;
+}
+
+/* Focus indicators */
+*:focus {
+  outline: 2px solid #00FFFF;
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #00FFFF;
+  outline-offset: 2px;
+}
+
+/* Minimum touch target size */
+button,
+a,
+input,
+select,
+textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-color: currentColor !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Keyboard navigation indicators */
+.keyboard-nav *:focus {
+  outline: 3px solid #00FFFF;
+  outline-offset: 3px;
+}
+
+/* Color contrast enhancements */
+.text-contrast-high {
+  color: #FFFFFF;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Link underlines for accessibility */
+a:not(.btn):not(.button) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:not(.btn):not(.button):hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Form field enhancements */
+input:invalid,
+select:invalid,
+textarea:invalid {
+  border-color: #EF4444;
+  outline-color: #EF4444;
+}
+
+input:valid,
+select:valid,
+textarea:valid {
+  border-color: #10B981;
+}
+
+/* Error messages */
+.error-message {
+  color: #EF4444;
+  font-size: 14px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Success messages */
+.success-message {
+  color: #10B981;
+  font-size: 14px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Loading states */
+.loading {
+  cursor: wait;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Disabled states */
+:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  
+  * {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Container queries for responsive components */
+@container (max-width: 640px) {
+  .container-responsive {
+    padding: 1rem;
+  }
+}
+
+/* Smooth scrolling with accessibility consideration */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Improved table accessibility */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  font-weight: 600;
+}
+
+/* Better list styling */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+/* Tooltip accessibility */
+[role="tooltip"] {
+  position: absolute;
+  z-index: 9999;
+  background: #1e2f3c;
+  color: #F8F9FA;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* Modal accessibility */
+[role="dialog"] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9998;
+}
+
+/* Alert accessibility */
+[role="alert"] {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+/* Progress indicators */
+[role="progressbar"] {
+  height: 8px;
+  background: rgba(248, 249, 250, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Status indicators */
+[role="status"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Navigation landmarks */
+nav[aria-label] {
+  position: relative;
+}
+
+/* Form validation */
+[aria-invalid="true"] {
+  border-color: #EF4444;
+}
+
+[aria-invalid="false"] {
+  border-color: #10B981;
+}
+
+/* Live regions */
+[aria-live="polite"],
+[aria-live="assertive"] {
+  position: relative;
+}
+
+/* Expandable sections */
+[aria-expanded="false"] + * {
+  display: none;
+}
+
+[aria-expanded="true"] + * {
+  display: block;
+}

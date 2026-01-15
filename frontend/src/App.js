@@ -16,17 +16,12 @@ import './App.css';
 
 // Core Pages
 import HomePage from './pages/Home';
-import PlansPage from './pages/Plans';
 import FeaturesPage from './pages/Features';
 import CoveragePage from './pages/Coverage';
 import SupportPage from './pages/Support';
-import LoginPage from './pages/auth/Login';
-import RegisterPage from './pages/auth/Register';
-import ForgotPassword from './pages/auth/ForgotPassword';
 import DashboardPage from './pages/customer/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
 import PartnerDashboard from './pages/partner/Dashboard';
-import ESIMRegistration from './pages/ESIMRegistration';
 import Partners from './pages/Partners';
 import Anniversary from './pages/Anniversary';
 
@@ -41,11 +36,9 @@ const HowItWorks = lazy(() => import('./pages/HowItWorks'));
 const SupportedDevices = lazy(() => import('./pages/SupportedDevices'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Contact = lazy(() => import('./pages/Contact'));
+const Blog = lazy(() => import('./pages/Blog'));
 
 // Payment Pages - Lazy loaded
-const PaymentPage = lazy(() => import('./pages/payment/PaymentPage'));
-const PaymentSuccess = lazy(() => import('./pages/payment/PaymentSuccess'));
-const PaymentCancel = lazy(() => import('./pages/payment/PaymentCancel'));
 
 // Legal Pages - Lazy loaded
 const PrivacyPolicy = lazy(() => import('./pages/legal/PrivacyPolicy'));
@@ -137,6 +130,8 @@ function App() {
                   <Route path="/supported-devices" element={<SupportedDevices />} />
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:id" element={<Blog />} />
                   
                   {/* Legal Pages */}
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />

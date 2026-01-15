@@ -21,9 +21,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run optimize",
+    "optimize": "npm run minify-css && npm run minify-js",
+    "minify-css": "echo 'CSS minification handled by build'",
+    "minify-js": "echo 'JS minification handled by build'",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": [
